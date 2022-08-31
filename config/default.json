@@ -1,6 +1,0 @@
-{
-  "serverPort" : 5000,
-  "dbUrl" : "",
-  "secretKey": "",
-  "staticPath" : ""
-}
