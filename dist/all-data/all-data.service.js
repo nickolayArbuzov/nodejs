@@ -18,6 +18,7 @@ let AllDataService = class AllDataService {
     }
     async deleteAllData() {
         await this.videoService.deleteAllVideos();
+        return;
     }
 };
 AllDataService = __decorate([

@@ -11,6 +11,7 @@ export class AllDataService {
 
   async deleteAllData() {
     await this.videoService.deleteAllVideos()
+    return
   }
   
 }

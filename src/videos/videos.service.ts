@@ -29,8 +29,9 @@ export class VideoService {
   async deleteVideo(id) {
     await this.videoRepository.delete(id)
   }
-  async deleteAllVideos() {
+  async deleteAllVideos(): Promise<void> {
     await this.videoRepository.clear()
+    return
   }
   
 }

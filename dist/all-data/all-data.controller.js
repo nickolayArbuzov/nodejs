@@ -17,18 +17,18 @@ let AllDataController = class AllDataController {
         this.allDataService = allDataService;
     }
     delete() {
-        this.allDataService.deleteAllData();
+        return this.allDataService.deleteAllData();
     }
 };
 __decorate([
-    (0, common_1.Delete)(),
+    (0, common_1.Delete)('/all-data'),
     (0, common_1.HttpCode)(204),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], AllDataController.prototype, "delete", null);
 AllDataController = __decorate([
-    (0, common_1.Controller)('test/all-data'),
+    (0, common_1.Controller)('test'),
     __metadata("design:paramtypes", [all_data_service_1.AllDataService])
 ], AllDataController);
 exports.AllDataController = AllDataController;

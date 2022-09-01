@@ -2,15 +2,15 @@ import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put} from '@nestjs
 import {AllDataService} from "./all-data.service";
 
 
-@Controller('test/all-data')
+@Controller('test')
 export class AllDataController {
 
     constructor(private allDataService: AllDataService) {}
 
-    @Delete()
+    @Delete('/all-data')
     @HttpCode(204)
     delete(){
-        this.allDataService.deleteAllData()
+       return this.allDataService.deleteAllData()
     }
 
 }
