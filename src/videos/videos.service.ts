@@ -20,8 +20,10 @@ export class VideoService {
 
   async createVideo(dto: CreateVideoDto) {
     const newVideo = new Video()
-    newVideo.description = 'fds'
-    newVideo.name = 'fdsdfd'
+    newVideo.title = dto.title
+    newVideo.author = dto.author
+    newVideo.availableResolutions = dto.availableResolutions
+    newVideo.publicationDate = new Date
     const video = await this.videoRepository.insert(newVideo);
     return newVideo;
   }
