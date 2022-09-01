@@ -17,6 +17,7 @@ const post_module_1 = require("./posts/post.module");
 const comment_module_1 = require("./comments/comment.module");
 const user_module_1 = require("./users/user.module");
 const videos_module_1 = require("./videos/videos.module");
+const all_data_module_1 = require("./all-data/all-data.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -34,6 +35,7 @@ AppModule = __decorate([
             comment_module_1.CommentModule,
             user_module_1.UserModule,
             videos_module_1.VideoModule,
+            all_data_module_1.AllDataModule,
         ],
     })
 ], AppModule);

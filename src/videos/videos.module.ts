@@ -11,5 +11,6 @@ import { VideoService } from './videos.service';
     ...videoProviders,
     VideoService,
   ],
+  exports: [VideoService]
 })
 export class VideoModule {}

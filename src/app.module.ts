@@ -12,6 +12,7 @@ import { Contact } from './test/contact.entity';
 import { Employee } from './test/employee.entity';
 import { Meeting } from './test/meeting.entity';
 import { Task } from './test/task.entity';
+import { AllDataModule } from './all-data/all-data.module';
 
 
 @Module({
@@ -28,6 +29,7 @@ import { Task } from './test/task.entity';
     CommentModule,
     UserModule,
     VideoModule,
+    AllDataModule,
   ],
 })
 export class AppModule {}
