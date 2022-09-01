@@ -22,6 +22,7 @@ let AllDataController = class AllDataController {
 };
 __decorate([
     (0, common_1.Delete)(),
+    (0, common_1.HttpCode)(204),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)

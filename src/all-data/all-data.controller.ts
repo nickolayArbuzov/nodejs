@@ -8,6 +8,7 @@ export class AllDataController {
     constructor(private allDataService: AllDataService) {}
 
     @Delete()
+    @HttpCode(204)
     delete(){
         this.allDataService.deleteAllData()
     }
