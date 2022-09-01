@@ -21,5 +21,5 @@ export class Video {
   minAgeRestriction: number;
 
   @Column()
-  publicationDate: Date;
+  publicationDate: string;
 }
