@@ -38,7 +38,6 @@ let VideoService = class VideoService {
     }
     async deleteAllVideos() {
         await this.videoRepository.clear();
-        console.log(1);
     }
 };
 VideoService = __decorate([
