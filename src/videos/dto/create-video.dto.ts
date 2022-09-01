@@ -4,6 +4,6 @@ export class CreateVideoDto {
     readonly canBeDownloaded: boolean;
     readonly minAgeRestriction: number | null;
     readonly createdAt: Date;
-    readonly publicationDate: Date;
+    readonly publicationDate: string;
     readonly availableResolutions: string[];
 }
