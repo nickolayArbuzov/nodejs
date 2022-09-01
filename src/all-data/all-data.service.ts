@@ -10,7 +10,7 @@ export class AllDataService {
   ) {}
 
   async deleteAllData() {
-    await this.videoService.deleteAllVideos()
+    return await this.videoService.deleteAllVideos()
   }
   
 }
