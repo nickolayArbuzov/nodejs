@@ -7,7 +7,7 @@ export class AllDataController {
 
     constructor(private allDataService: AllDataService) {}
 
-    @Delete('/all-data')
+    @Delete('all-data')
     @HttpCode(204)
     delete(){
        return this.allDataService.deleteAllData()
