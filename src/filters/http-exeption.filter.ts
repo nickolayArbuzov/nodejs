@@ -17,6 +17,10 @@ export class HttpExceptionFilter implements ExceptionFilter {
             .json({ errorsMessages: res.message?.map(m => {
                 return {message: m, field: m.split(' ')[0]}
             }) })
+    } else {
+        response
+            .status(status)
+            .json({})
     }
   }
 }
