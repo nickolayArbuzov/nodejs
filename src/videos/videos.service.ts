@@ -37,7 +37,8 @@ export class VideoService {
     newVideo.title = dto.title
     newVideo.author = dto.author
     newVideo.availableResolutions = dto.availableResolutions
-    newVideo.minAgeRestriction = null
+    newVideo.minAgeRestriction = dto.minAgeRestriction
+    newVideo.canBeDownloaded = dto.canBeDownloaded
     let date = new Date
     newVideo.createdAt = date.toISOString()
     newVideo.publicationDate = addDays(date, 1).toISOString()
