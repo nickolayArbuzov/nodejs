@@ -2,10 +2,10 @@ import { IsString, Length, IsNumber, ValidateIf, IsBoolean} from 'class-validato
 
 export class CreateVideoDto {
     @IsString()
-    @Length(1, 40)
+    //@Length(1, 40)
     readonly title: string;
     @IsString()
-    @Length(1, 20)
+    //@Length(1, 20)
     readonly author: string;
     readonly canBeDownloaded: boolean;
     //@IsNumber()
@@ -16,10 +16,10 @@ export class CreateVideoDto {
 
 export class UpdateVideoDto {
     @IsString()
-    @Length(1, 40)
+    //@Length(1, 40)
     readonly title: string;
     @IsString()
-    @Length(1, 20)
+    //@Length(1, 20)
     readonly author: string;
     @IsBoolean()
     readonly canBeDownloaded: boolean;
