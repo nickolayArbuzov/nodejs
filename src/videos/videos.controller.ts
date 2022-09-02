@@ -25,8 +25,7 @@ export class VideoController {
     @HttpCode(204)
     @Delete(':id')
     delete(@Param('id') id: number){
-        this.videoService.deleteVideo(id)
-        return 1
+        return this.videoService.deleteVideo(id)
     }
 
     @HttpCode(204)

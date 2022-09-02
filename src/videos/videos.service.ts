@@ -56,12 +56,12 @@ export class VideoService {
   }
 
   async deleteVideo(id) {
-    try {
+    const donorVideo = await this.videoRepository.findOne({where: {id: id}});
+    if(donorVideo) {
       await this.videoRepository.delete(id)
-    } catch {
+    } else {
       throw new HttpException('Video not found', HttpStatus.NOT_FOUND);
     }
-    
   }
   async deleteAllVideos(): Promise<void> {
     await this.videoRepository.clear()
