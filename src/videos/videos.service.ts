@@ -2,6 +2,7 @@ import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Video } from './videos.entity';
 import { CreateVideoDto } from './dto/create-video.dto';
+import { addDays } from '../helpers/date';
 
 @Injectable()
 export class VideoService {
@@ -19,13 +20,14 @@ export class VideoService {
   }
 
   async createVideo(dto: CreateVideoDto) {
+
     const newVideo = new Video()
     newVideo.title = dto.title
     newVideo.author = dto.author
     newVideo.availableResolutions = dto.availableResolutions
     let date = new Date
     newVideo.createdAt = date.toISOString()
-    newVideo.publicationDate = date.toISOString()
+    newVideo.publicationDate = addDays(date, 1).toISOString()
     const video = await this.videoRepository.insert(newVideo);
     return newVideo;
   }
