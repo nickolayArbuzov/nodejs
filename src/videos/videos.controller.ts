@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put, Req} from '@nestjs/common';
 import {VideoService} from "./videos.service";
 import { CreateVideoDto, UpdateVideoDto } from './dto/video.dto';
 
@@ -18,7 +18,7 @@ export class VideoController {
     }
 
     @Post()
-    
+
     create(@Body() videoDto: CreateVideoDto) {
         return this.videoService.createVideo(videoDto);
     }
