@@ -10,10 +10,11 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
     const status = exception.getStatus();
     const res: any = exception.getResponse()
-    response
-      .status(status)
-      .json({ errorsMessages: res.message?.map(m => {
-        return {message: m, field: m.split(' ')[0]}
-    }) });
+    response.status(status)
+    if(res.message) {
+        response.json({ errorsMessages: res.message?.map(m => {
+            return {message: m, field: m.split(' ')[0]}
+        }) })
+    }
   }
 }
