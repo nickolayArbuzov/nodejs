@@ -8,8 +8,8 @@ export class CreateVideoDto {
     @Length(1, 20)
     readonly author: string;
     readonly canBeDownloaded: boolean;
-    @IsNumber()
-    @ValidateIf((object, value) => value !== null)
+    //@IsNumber()
+    //@ValidateIf((object, value) => value !== null)
     readonly minAgeRestriction: number | null;
     readonly availableResolutions: string[];
 }
