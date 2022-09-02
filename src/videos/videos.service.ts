@@ -16,7 +16,7 @@ export class VideoService {
   }
 
   async findOne(id) {
-    return this.videoRepository.findOne(id);
+    return this.videoRepository.findOne({where: {id: id}});
   }
 
   async createVideo(dto: CreateVideoDto) {
@@ -24,10 +24,10 @@ export class VideoService {
     newVideo.title = dto.title
     newVideo.author = dto.author
     newVideo.availableResolutions = dto.availableResolutions
+    newVideo.minAgeRestriction = null
     let date = new Date
     newVideo.createdAt = date.toISOString()
     newVideo.publicationDate = addDays(date, 1).toISOString()
-    newVideo.minAgeRestriction = null
     const video = await this.videoRepository.insert(newVideo);
     return newVideo;
   }
