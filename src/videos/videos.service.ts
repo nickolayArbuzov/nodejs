@@ -16,7 +16,11 @@ export class VideoService {
   }
 
   async findOne(id) {
-    return this.videoRepository.findOne({where: {id: id}});
+    try {
+      return this.videoRepository.findOne({where: {id: id}});
+    } catch {
+
+    }
   }
 
   async createVideo(dto: CreateVideoDto) {
@@ -33,22 +37,31 @@ export class VideoService {
   }
 
   async updateVideo(id: number, dto: UpdateVideoDto) {
-    const donorVideo = await this.videoRepository.findOne({where: {id: id}});
-    const newVideo = {
-      ...donorVideo, 
-      title: dto.title, 
-      author: dto.author, 
-      availableResolutions: dto.availableResolutions,
-      minAgeRestriction: dto.minAgeRestriction,
-      canBeDownloaded: dto.canBeDownloaded,
-      publicationDate: dto.publicationDate,
-    } 
-    const video = await this.videoRepository.update(id, newVideo);
-    return newVideo;
+    try {
+      const donorVideo = await this.videoRepository.findOne({where: {id: id}});
+      const newVideo = {
+        ...donorVideo, 
+        title: dto.title, 
+        author: dto.author, 
+        availableResolutions: dto.availableResolutions,
+        minAgeRestriction: dto.minAgeRestriction,
+        canBeDownloaded: dto.canBeDownloaded,
+        publicationDate: dto.publicationDate,
+      } 
+      const video = await this.videoRepository.update(id, newVideo);
+      return newVideo;
+    } catch {
+
+    }
   }
 
   async deleteVideo(id) {
-    await this.videoRepository.delete(id)
+    try {
+      await this.videoRepository.delete(id)
+    } catch {
+
+    }
+    
   }
   async deleteAllVideos(): Promise<void> {
     await this.videoRepository.clear()
