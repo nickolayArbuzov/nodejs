@@ -28,7 +28,9 @@ export class VideoController {
         return 1
     }
 
-    @Put()
-    update(){}
+    @Put(':id')
+    update(@Param('id') id: number, @Body() videoDto: CreateVideoDto){
+        this.videoService.updateVideo(id, videoDto)
+    }
 
 }

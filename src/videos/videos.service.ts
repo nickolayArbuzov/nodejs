@@ -32,6 +32,19 @@ export class VideoService {
     return newVideo;
   }
 
+  async updateVideo(id: number, dto: CreateVideoDto) {
+    const newVideo = new Video()
+    newVideo.title = dto.title
+    newVideo.author = dto.author
+    newVideo.availableResolutions = dto.availableResolutions
+    newVideo.minAgeRestriction = null
+    let date = new Date
+    newVideo.createdAt = date.toISOString()
+    newVideo.publicationDate = addDays(date, 1).toISOString()
+    const video = await this.videoRepository.update(id, newVideo);
+    return newVideo;
+  }
+
   async deleteVideo(id) {
     await this.videoRepository.delete(id)
   }
