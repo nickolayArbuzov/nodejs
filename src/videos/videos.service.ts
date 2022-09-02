@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Video } from './videos.entity';
-import { CreateVideoDto } from './dto/create-video.dto';
+import { CreateVideoDto, UpdateVideoDto } from './dto/video.dto';
 import { addDays } from '../helpers/date';
 
 @Injectable()
@@ -32,7 +32,7 @@ export class VideoService {
     return newVideo;
   }
 
-  async updateVideo(id: number, dto: CreateVideoDto) {
+  async updateVideo(id: number, dto: UpdateVideoDto) {
     const donorVideo = await this.videoRepository.findOne({where: {id: id}});
     const newVideo = {
       ...donorVideo, 
@@ -41,7 +41,8 @@ export class VideoService {
       availableResolutions: dto.availableResolutions,
       minAgeRestriction: dto.minAgeRestriction,
       canBeDownloaded: dto.canBeDownloaded,
-    }
+      publicationDate: dto.publicationDate,
+    } 
     const video = await this.videoRepository.update(id, newVideo);
     return newVideo;
   }

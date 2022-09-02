@@ -1,6 +1,6 @@
 import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put} from '@nestjs/common';
 import {VideoService} from "./videos.service";
-import { CreateVideoDto } from './dto/create-video.dto';
+import { CreateVideoDto, UpdateVideoDto } from './dto/video.dto';
 
 
 @Controller('videos')
@@ -31,7 +31,7 @@ export class VideoController {
 
     @HttpCode(204)
     @Put(':id')
-    update(@Param('id') id: number, @Body() videoDto: CreateVideoDto){
+    update(@Param('id') id: number, @Body() videoDto: UpdateVideoDto){
         this.videoService.updateVideo(id, videoDto)
     }
 
