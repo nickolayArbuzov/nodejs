@@ -24,7 +24,8 @@ export class VideoService {
     newVideo.author = dto.author
     newVideo.availableResolutions = dto.availableResolutions
     let date = new Date
-    newVideo.publicationDate = date
+    newVideo.createdAt = date.toISOString()
+    newVideo.publicationDate = date.toISOString()
     const video = await this.videoRepository.insert(newVideo);
     return newVideo;
   }
