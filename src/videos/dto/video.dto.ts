@@ -1,4 +1,4 @@
-import { IsString, Length, IsNumber, ValidateIf} from 'class-validator';
+import { IsString, Length, IsNumber, ValidateIf, IsBoolean} from 'class-validator';
 
 export class CreateVideoDto {
     @IsString()
@@ -7,6 +7,7 @@ export class CreateVideoDto {
     @IsString()
     @Length(1, 20)
     readonly author: string;
+    @IsBoolean()
     readonly canBeDownloaded: boolean;
     //@IsNumber()
     //@ValidateIf((object, value) => value !== null)
