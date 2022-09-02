@@ -33,8 +33,13 @@ export class VideoController {
     @Put(':id')
     update(@Param('id', ParseIntPipe) id: number, @Body() videoDto: UpdateVideoDto){
         console.log('put')
-        this.videoService.updateVideo(id, videoDto)
+        return this.videoService.updateVideo(id, videoDto)
     }
 
-    
+    @Delete() 
+    @Put()
+    wrongroute(){
+        console.log('wrong')
+        throw new HttpException('Route not found', HttpStatus.NOT_FOUND);
+    }
 }
