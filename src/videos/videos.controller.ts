@@ -28,11 +28,11 @@ export class VideoController {
         this.videoService.deleteVideo(id)
         return 1
     }
-    
+
     @HttpCode(204)
     @Put(':id')
     update(@Param('id') id: number, @Body() videoDto: CreateVideoDto){
-        this.videoService.updateVideo(id, videoDto)
+        //this.videoService.updateVideo(id, videoDto)
     }
 
 }
