@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Video } from './videos.entity';
 import { CreateVideoDto, UpdateVideoDto } from './dto/video.dto';
@@ -19,7 +19,7 @@ export class VideoService {
     try {
       return this.videoRepository.findOne({where: {id: id}});
     } catch {
-
+      throw new HttpException('Video not found', HttpStatus.NOT_FOUND);
     }
   }
 
@@ -51,7 +51,7 @@ export class VideoService {
       const video = await this.videoRepository.update(id, newVideo);
       return newVideo;
     } catch {
-
+      throw new HttpException('Video not found', HttpStatus.NOT_FOUND);
     }
   }
 
@@ -59,7 +59,7 @@ export class VideoService {
     try {
       await this.videoRepository.delete(id)
     } catch {
-
+      throw new HttpException('Video not found', HttpStatus.NOT_FOUND);
     }
     
   }
