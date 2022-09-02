@@ -12,7 +12,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const res: any = exception.getResponse()
     response
       .status(status)
-      .json({ errorsMessages: res.message.map(m => {
+      .json({ errorsMessages: res.message?.map(m => {
         return {message: m, field: m.split(' ')[0]}
     }) });
   }

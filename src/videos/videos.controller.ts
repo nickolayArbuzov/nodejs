@@ -18,7 +18,6 @@ export class VideoController {
     }
 
     @Post()
-
     create(@Body() videoDto: CreateVideoDto) {
         return this.videoService.createVideo(videoDto);
     }
@@ -26,14 +25,12 @@ export class VideoController {
     @HttpCode(204)
     @Delete(':id')
     delete(@Param('id', ParseIntPipe) id: number){
-        console.log('delete')
         return this.videoService.deleteVideo(id)
     }
 
     @HttpCode(204)
     @Put(':id')
     update(@Param('id', ParseIntPipe) id: number, @Body() videoDto: UpdateVideoDto){
-        console.log('put')
         return this.videoService.updateVideo(id, videoDto)
     }
 
