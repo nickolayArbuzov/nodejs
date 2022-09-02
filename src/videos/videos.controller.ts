@@ -36,10 +36,10 @@ export class VideoController {
         return this.videoService.updateVideo(id, videoDto)
     }
 
-    @Delete() 
+    /*@Delete() 
     @Put()
     wrongroute(){
         console.log('wrong')
         throw new HttpException('Route not found', HttpStatus.NOT_FOUND);
-    }
+    }*/
 }
