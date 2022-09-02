@@ -18,6 +18,7 @@ export class VideoController {
     }
 
     @Post()
+    
     create(@Body() videoDto: CreateVideoDto) {
         return this.videoService.createVideo(videoDto);
     }

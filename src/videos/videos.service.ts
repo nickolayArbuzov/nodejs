@@ -39,7 +39,7 @@ export class VideoService {
 
   async updateVideo(id: number, dto: UpdateVideoDto) {
     const donorVideo = await this.videoRepository.findOne({where: {id: id}});
-    if(donorVideo && dto.title) {
+    if(donorVideo) {
       const newVideo = {
         ...donorVideo, 
         title: dto.title, 
