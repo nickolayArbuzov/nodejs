@@ -7,7 +7,6 @@ export class CreateVideoDto {
     @IsString()
     @Length(1, 20)
     readonly author: string;
-    @IsBoolean()
     readonly canBeDownloaded: boolean;
     //@IsNumber()
     //@ValidateIf((object, value) => value !== null)
@@ -15,6 +14,18 @@ export class CreateVideoDto {
     readonly availableResolutions: string[];
 }
 
-export class UpdateVideoDto extends CreateVideoDto{
+export class UpdateVideoDto {
+    @IsString()
+    @Length(1, 40)
+    readonly title: string;
+    @IsString()
+    @Length(1, 20)
+    readonly author: string;
+    @IsBoolean()
+    readonly canBeDownloaded: boolean;
+    //@IsNumber()
+    //@ValidateIf((object, value) => value !== null)
+    readonly minAgeRestriction: number | null;
+    readonly availableResolutions: string[];
     readonly publicationDate: string;
 }
