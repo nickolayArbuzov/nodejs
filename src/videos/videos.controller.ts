@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put} from '@nestjs/common';
 import {VideoService} from "./videos.service";
 import { CreateVideoDto, UpdateVideoDto } from './dto/video.dto';
 
@@ -13,7 +13,7 @@ export class VideoController {
     }
 
     @Get(':id')
-    getOne(@Param('id') id: number) {
+    getOne(@Param('id', ParseIntPipe) id: number) {
         return this.videoService.findOne(id)
     }
 
@@ -24,14 +24,17 @@ export class VideoController {
 
     @HttpCode(204)
     @Delete(':id')
-    delete(@Param('id') id: number){
+    delete(@Param('id', ParseIntPipe) id: number){
+        console.log('delete')
         return this.videoService.deleteVideo(id)
     }
 
     @HttpCode(204)
     @Put(':id')
-    update(@Param('id') id: number, @Body() videoDto: UpdateVideoDto){
+    update(@Param('id', ParseIntPipe) id: number, @Body() videoDto: UpdateVideoDto){
+        console.log('put')
         this.videoService.updateVideo(id, videoDto)
     }
 
+    
 }
