@@ -16,9 +16,10 @@ export class VideoService {
   }
 
   async findOne(id) {
-    try {
-      return this.videoRepository.findOne({where: {id: id}});
-    } catch {
+    const donorVideo = await this.videoRepository.findOne({where: {id: id}});
+    if(donorVideo) {
+      return donorVideo
+    } else {
       throw new HttpException('Video not found', HttpStatus.NOT_FOUND);
     }
   }
@@ -37,8 +38,8 @@ export class VideoService {
   }
 
   async updateVideo(id: number, dto: UpdateVideoDto) {
-    try {
-      const donorVideo = await this.videoRepository.findOne({where: {id: id}});
+    const donorVideo = await this.videoRepository.findOne({where: {id: id}});
+    if(donorVideo) {
       const newVideo = {
         ...donorVideo, 
         title: dto.title, 
@@ -50,7 +51,7 @@ export class VideoService {
       } 
       const video = await this.videoRepository.update(id, newVideo);
       return newVideo;
-    } catch {
+    } else {
       throw new HttpException('Video not found', HttpStatus.NOT_FOUND);
     }
   }
