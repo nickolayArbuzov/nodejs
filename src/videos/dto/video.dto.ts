@@ -26,8 +26,8 @@ export class CreateVideoDto {
     @IsNumber()
     @Min(1)
     @Max(18)
-    @ValidateIf((object, value) => value !== null)
-    readonly minAgeRestriction: number | null;
+    @ValidateIf(value => value !== undefined)
+    readonly minAgeRestriction: number | undefined;
 
     @IsEnum(availableResolutions)
     readonly availableResolutions: availableResolutions[];
@@ -49,8 +49,8 @@ export class UpdateVideoDto {
     @IsNumber()
     @Min(1)
     @Max(18)
-    //@ValidateIf((object, value) => value !== null)
-    readonly minAgeRestriction: number | null;
+    @ValidateIf(value => value !== undefined)
+    readonly minAgeRestriction: number | undefined;
 
     readonly availableResolutions: availableResolutions[];
 
