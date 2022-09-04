@@ -1,6 +1,6 @@
 import { IsString, Length, IsNumber, ValidateIf, IsBoolean, Min, Max, IsEnum, IsIn} from 'class-validator';
 
-enum availableResolutions {
+export enum availableResolutions {
     P144,
     P240,
     P360,
@@ -52,7 +52,7 @@ export class UpdateVideoDto {
     //@ValidateIf((object, value) => value !== null)
     readonly minAgeRestriction: number | null;
 
-    readonly availableResolutions: string[];
+    readonly availableResolutions: availableResolutions[];
 
     readonly publicationDate: string;
 }

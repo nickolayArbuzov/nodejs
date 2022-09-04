@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { availableResolutions } from './dto/video.dto';
 
 @Entity('video')
 export class Video {
@@ -12,7 +13,7 @@ export class Video {
   author: string;
 
   @Column('text', {array: true})
-  availableResolutions: string[];
+  availableResolutions: availableResolutions[];
 
   @Column({default: false})
   canBeDownloaded: boolean;
