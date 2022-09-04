@@ -1,5 +1,16 @@
 import { IsString, Length, IsNumber, ValidateIf, IsBoolean, Min, Max, IsEnum, IsIn} from 'class-validator';
 
+const availableResolutions = {
+    P144: 'P144', 
+    P240: 'P240',
+    P360: 'P360', 
+    P480: 'P480',
+    P720: 'P720', 
+    P1080: 'P1080',
+    P1440: 'P1440', 
+    P2160: 'P2160',
+}
+
 export class CreateVideoDto {
 
     @IsString()
@@ -15,10 +26,10 @@ export class CreateVideoDto {
     @IsNumber()
     @Min(1)
     @Max(18)
-    //@ValidateIf((object, value) => value !== null)
+    @ValidateIf((object, value) => value !== null)
     readonly minAgeRestriction: number | null;
 
-    @IsIn(['P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P2160'])
+    @IsEnum(availableResolutions)
     readonly availableResolutions: string[];
 }
 
