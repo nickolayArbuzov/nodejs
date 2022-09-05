@@ -31,7 +31,7 @@ export class CreateVideoDto {
     //@ValidateIf(value => value !== undefined)
     readonly minAgeRestriction: number | undefined;
 
-    @IsEnum(availableResolutions) //custom
+    @IsEnum(availableResolutions, {each: true}) //custom
     readonly availableResolutions: availableResolutions[];
 }
 
@@ -55,7 +55,7 @@ export class UpdateVideoDto {
     @ValidateIf(value => value !== undefined)
     readonly minAgeRestriction: number | undefined;
 
-    @IsEnum(availableResolutions)
+    @IsEnum(availableResolutions, {each: true})
     readonly availableResolutions: availableResolutions[];
 
     readonly publicationDate: string;
