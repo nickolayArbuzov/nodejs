@@ -14,7 +14,7 @@ export class PostController {
     }
 
     @Get(':id')
-    getOne(@Param('id', ParseIntPipe) id: number) {
+    getOne(@Param('id') id: string) {
         return this.postService.findOne(id)
     }
 
@@ -24,12 +24,12 @@ export class PostController {
     }
 
     @Delete(':id')
-    delete(@Param('id', ParseIntPipe) id: number){
+    delete(@Param('id') id: string){
         return this.postService.deletePost(id)
     }
 
     @Put()
-    update(@Param('id', ParseIntPipe) id: number, @Body() postDto: UpdatePostDto){
+    update(@Param('id') id: string, @Body() postDto: UpdatePostDto){
         return this.postService.updatePost(id, postDto)
     }
 

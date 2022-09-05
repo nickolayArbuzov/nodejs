@@ -17,7 +17,7 @@ export class BloggerService {
     return this.bloggerRepository.find({relations: ['posts']});
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const donorBlogger = await this.bloggerRepository.findOne({where: {id: id}});
     if(donorBlogger) {
       return donorBlogger
@@ -34,7 +34,7 @@ export class BloggerService {
     return newBlogger;
   }
 
-  async updateBlogger(id: number, dto: UpdateBloggerDto) {
+  async updateBlogger(id: string, dto: UpdateBloggerDto) {
     const donorBlogger = await this.bloggerRepository.findOne({where: {id: id}});
     if(donorBlogger) {
       const newBlogger = {
@@ -49,7 +49,7 @@ export class BloggerService {
     }
   }
 
-  async deleteBlogger(id: number) {
+  async deleteBlogger(id: string) {
     const donorBlogger = await this.bloggerRepository.findOne({where: {id: id}});
     if(donorBlogger) {
       await this.bloggerRepository.delete(id)

@@ -14,7 +14,7 @@ export class PostService {
     return this.postRepository.find();
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const donorPost = await this.postRepository.findOne({where: {id: id}});
     if(donorPost) {
       return donorPost
@@ -34,7 +34,7 @@ export class PostService {
     return post;
   }
 
-  async updatePost(id: number, dto: UpdatePostDto) {
+  async updatePost(id: string, dto: UpdatePostDto) {
     const donorPost = await this.postRepository.findOne({where: {id: id}});
     if(donorPost) {
       const newPost = {
@@ -50,7 +50,7 @@ export class PostService {
     }
   }
 
-  async deletePost(id: number) {
+  async deletePost(id: string) {
     const donorPost = await this.postRepository.findOne({where: {id: id}});
     if(donorPost) {
       await this.postRepository.delete(id)

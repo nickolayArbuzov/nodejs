@@ -4,7 +4,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 @Entity('blogger')
 export class Blogger {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Column({ length: 15 })
   name: string;

@@ -13,7 +13,7 @@ export class BloggerController {
     }
 
     @Get(':id')
-    getOne(@Param('id', ParseIntPipe) id: number) {
+    getOne(@Param('id') id: string) {
         return this.bloggerService.findOne(id)
     }
 
@@ -23,12 +23,12 @@ export class BloggerController {
     }
 
     @Delete(':id')
-    delete(@Param('id', ParseIntPipe) id: number){
+    delete(@Param('id') id: string){
         return this.bloggerService.deleteBlogger(id)
     }
 
     @Put()
-    update(@Param('id', ParseIntPipe) id: number, @Body() bloggerDto: UpdateBloggerDto){
+    update(@Param('id') id: string, @Body() bloggerDto: UpdateBloggerDto){
         return this.bloggerService.updateBlogger(id, bloggerDto)
     }
 
