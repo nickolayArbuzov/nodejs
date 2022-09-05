@@ -1,9 +1,9 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { Post } from '../posts/post.entity';
 import { PostService } from '../posts/post.service';
 import { Repository } from 'typeorm';
 import { Blogger } from './blogger.entity';
-import { CreateBloggerDto } from './dto/create-blogger.dto';
+import { CreateBloggerDto, UpdateBloggerDto } from './dto/blogger.dto';
 
 @Injectable()
 export class BloggerService {
@@ -16,6 +16,15 @@ export class BloggerService {
   async findAll() {
     return this.bloggerRepository.find({relations: ['posts']});
   }
+
+  async findOne(id: number) {
+    const donorBlogger = await this.bloggerRepository.findOne({where: {id: id}});
+    if(donorBlogger) {
+      return donorBlogger
+    } else {
+      throw new HttpException('Blogger not found', HttpStatus.NOT_FOUND);
+    }
+  }
   
   async createBlogger(dto: CreateBloggerDto) {
     const newBlogger = new Blogger()
@@ -25,7 +34,22 @@ export class BloggerService {
     return blogger;
   }
 
-  async deleteBlogger(id) {
+  async updateBlogger(id: number, dto: UpdateBloggerDto) {
+    const donorBlogger = await this.bloggerRepository.findOne({where: {id: id}});
+    if(donorBlogger) {
+      const newBlogger = {
+        ...donorBlogger, 
+        name: dto.name,
+        url: dto.url,
+      } 
+      const blogger = await this.bloggerRepository.update(id, newBlogger);
+      return newBlogger;
+    } else {
+      throw new HttpException('Blogger not found', HttpStatus.NOT_FOUND);
+    }
+  }
+
+  async deleteBlogger(id: number) {
     try {
       await this.bloggerRepository.delete(id)
       return "success"
