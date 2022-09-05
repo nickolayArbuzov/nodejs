@@ -29,7 +29,7 @@ export class BloggerService {
   async createBlogger(dto: CreateBloggerDto) {
     const newBlogger = new Blogger()
     newBlogger.name = dto.name
-    newBlogger.url = dto.youtubeUrl
+    newBlogger.youtubeUrl = dto.youtubeUrl
     const blogger = await this.bloggerRepository.insert(newBlogger);
     return newBlogger;
   }
@@ -40,7 +40,7 @@ export class BloggerService {
       const newBlogger = {
         ...donorBlogger, 
         name: dto.name,
-        url: dto.youtubeUrl,
+        youtubeUrl: dto.youtubeUrl,
       } 
       const blogger = await this.bloggerRepository.update(id, newBlogger);
       return newBlogger;

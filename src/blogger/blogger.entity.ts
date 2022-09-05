@@ -10,7 +10,7 @@ export class Blogger {
   name: string;
 
   @Column({ length: 100 })
-  url: string;
+  youtubeUrl: string;
 
   @OneToMany(() => Post, post => post.blogger)
   posts: Post[]
