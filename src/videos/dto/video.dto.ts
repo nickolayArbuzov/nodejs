@@ -1,4 +1,4 @@
-import { IsString, Length, IsNumber, IsBoolean, Min, Max, IsEnum, IsOptional, IsDate} from 'class-validator';
+import { IsString, Length, IsNumber, IsBoolean, Min, Max, IsEnum, IsOptional, IsDateString} from 'class-validator';
 
 export enum availableResolutions {
     P144 = 'P144',
@@ -37,6 +37,6 @@ export class CreateVideoDto {
 
 export class UpdateVideoDto extends CreateVideoDto {
 
-    @IsDate()
+    @IsDateString()
     readonly publicationDate: string;
 }
