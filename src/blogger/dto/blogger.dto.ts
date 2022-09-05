@@ -7,7 +7,7 @@ export class CreateBloggerDto {
     
     @IsString()
     @Length(1, 100)
-    @Matches(/^https:([a-zA-Z0-9_-]+\.)+[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*\/?$/)
+    //@Matches(/^https:([a-zA-Z0-9_-]+\.)+[a-zA-Z0-9_-]+(\/[a-zA-Z0-9_-]+)*\/?$/)
     readonly url: string;
 }
 
