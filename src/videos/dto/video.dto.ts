@@ -21,7 +21,6 @@ export class CreateVideoDto {
     @Length(1, 20)
     readonly author: string;
 
-    
     readonly canBeDownloaded: boolean;
 
     @IsOptional()
@@ -35,28 +34,7 @@ export class CreateVideoDto {
     readonly availableResolutions: availableResolutions[];
 }
 
-export class UpdateVideoDto {
-
-    @IsString()
-    @Length(1, 40)
-    readonly title: string;
-
-    @IsString()
-    @Length(1, 20)
-    readonly author: string;
-
-    @IsBoolean()
-    readonly canBeDownloaded: boolean;
-
-    @IsOptional()
-    @IsNumber()
-    @Min(1)
-    @Max(18)
-    @ValidateIf(value => value !== undefined)
-    readonly minAgeRestriction: number | undefined;
-
-    @IsEnum(availableResolutions, {each: true})
-    readonly availableResolutions: availableResolutions[];
+export class UpdateVideoDto extends CreateVideoDto {
 
     readonly publicationDate: string;
 }
