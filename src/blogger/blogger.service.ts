@@ -35,7 +35,7 @@ export class BloggerService {
   }
 
   async deleteAllBloggers(): Promise<void> {
-    await this.bloggerRepository.clear()
+    await this.bloggerRepository.delete({})
   }
   
 }

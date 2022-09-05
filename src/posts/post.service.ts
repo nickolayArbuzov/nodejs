@@ -26,7 +26,7 @@ export class PostService {
   }
 
   async deleteAllPosts(): Promise<void> {
-    await this.postRepository.clear()
+    await this.postRepository.delete({})
   }
 
 }

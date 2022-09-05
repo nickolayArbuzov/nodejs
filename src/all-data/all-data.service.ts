@@ -13,8 +13,8 @@ export class AllDataService {
 
   deleteAllData(): void {
     this.videoService.deleteAllVideos()
-    this.bloggerService.deleteAllBloggers()
     this.postService.deleteAllPosts()
+    this.bloggerService.deleteAllBloggers()
   }
   
 }
