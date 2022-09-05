@@ -31,7 +31,7 @@ export class BloggerService {
     newBlogger.name = dto.name
     newBlogger.url = dto.youtubeUrl
     const blogger = await this.bloggerRepository.insert(newBlogger);
-    return blogger;
+    return newBlogger;
   }
 
   async updateBlogger(id: number, dto: UpdateBloggerDto) {
@@ -50,11 +50,11 @@ export class BloggerService {
   }
 
   async deleteBlogger(id: number) {
-    try {
+    const donorBlogger = await this.bloggerRepository.findOne({where: {id: id}});
+    if(donorBlogger) {
       await this.bloggerRepository.delete(id)
-      return "success"
-    } catch (e) {
-      return "fail"
+    } else {
+      throw new HttpException('Blogger not found', HttpStatus.NOT_FOUND);
     }
   }
 

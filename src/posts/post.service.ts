@@ -51,11 +51,11 @@ export class PostService {
   }
 
   async deletePost(id: number) {
-    try {
+    const donorPost = await this.postRepository.findOne({where: {id: id}});
+    if(donorPost) {
       await this.postRepository.delete(id)
-      return "success"
-    } catch (e) {
-      return "fail"
+    } else {
+      throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
     }
   }
 
