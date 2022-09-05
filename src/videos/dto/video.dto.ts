@@ -1,4 +1,4 @@
-import { IsString, Length, IsNumber, ValidateIf, IsBoolean, Min, Max, IsEnum, IsIn, IsOptional} from 'class-validator';
+import { IsString, Length, IsNumber, IsBoolean, Min, Max, IsEnum, IsOptional, IsDate} from 'class-validator';
 
 export enum availableResolutions {
     P144 = 'P144',
@@ -21,13 +21,14 @@ export class CreateVideoDto {
     @Length(1, 20)
     readonly author: string;
 
+    @IsOptional()
+    @IsBoolean()
     readonly canBeDownloaded: boolean;
 
     @IsOptional()
     @IsNumber()
     @Min(1)
     @Max(18)
-    //@ValidateIf(value => value !== undefined)
     readonly minAgeRestriction: number | undefined;
 
     @IsEnum(availableResolutions, {each: true}) //custom
@@ -36,5 +37,6 @@ export class CreateVideoDto {
 
 export class UpdateVideoDto extends CreateVideoDto {
 
+    @IsDate()
     readonly publicationDate: string;
 }
