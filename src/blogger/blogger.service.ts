@@ -33,5 +33,9 @@ export class BloggerService {
       return "fail"
     }
   }
+
+  async deleteAllBloggers(): Promise<void> {
+    await this.bloggerRepository.clear()
+  }
   
 }

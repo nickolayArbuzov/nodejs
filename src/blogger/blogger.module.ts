@@ -13,5 +13,6 @@ import { BloggerService } from './blogger.service';
     ...bloggerProviders,
     BloggerService,
   ],
+  exports: [BloggerService],
 })
 export class BloggerModule {}
