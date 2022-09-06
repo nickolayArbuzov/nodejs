@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, Param, ParseIntPipe, ParseUUIDPipe, Post, Put} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, ParseUUIDPipe, Post, Put} from '@nestjs/common';
 import {BloggerService} from "./blogger.service";
 import { CreateBloggerDto, UpdateBloggerDto } from './dto/blogger.dto';
 
@@ -22,11 +22,13 @@ export class BloggerController {
         return this.bloggerService.createBlogger(bloggerDto);
     }
 
+    @HttpCode(204)
     @Delete(':id')
     delete(@Param('id') id: string){
         return this.bloggerService.deleteBlogger(id)
     }
 
+    @HttpCode(204)
     @Put(':id')
     update(@Param('id') id: string, @Body() bloggerDto: UpdateBloggerDto){
         return this.bloggerService.updateBlogger(id, bloggerDto)
