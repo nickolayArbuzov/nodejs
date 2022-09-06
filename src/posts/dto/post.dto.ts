@@ -6,7 +6,7 @@ export class CreatePostDto {
     readonly title: string;
 
     @IsString()
-    @Length(1, 10)
+    @Length(1, 100)
     readonly shortDescription: string;
     
     @IsString()
