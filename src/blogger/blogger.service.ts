@@ -16,8 +16,8 @@ export class BloggerService {
   async findAll() {
     const all = await this.bloggerRepository.find({relations: ['posts']});
     // TODO: automapper
-    //return all.map(a => {return {id: a.id.toString(), name: a.name, youtubeUrl: a.youtubeUrl}})
-    return all
+    return all.map(a => {return {id: a.id.toString(), name: a.name, youtubeUrl: a.youtubeUrl}})
+    //return all
   }
 
   async findOne(id: string) {
