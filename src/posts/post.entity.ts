@@ -21,7 +21,7 @@ export class Post {
   @Column()
   bloggerName: string;
 
-  @ManyToOne(() => Blogger, blogger => blogger.posts, {onDelete: 'SET NULL'})
+  @ManyToOne(() => Blogger, blogger => blogger.posts, {onDelete: 'CASCADE'})
   blogger: Blogger
   
 }

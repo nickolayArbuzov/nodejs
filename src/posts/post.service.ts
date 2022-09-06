@@ -39,6 +39,7 @@ export class PostService {
     newPost.bloggerId = dto.bloggerId
     newPost.bloggerName = bloggerName.name
     const post = await this.postRepository.insert(newPost);
+    console.log(newPost)
     // TODO something with id(number => string)
     return {...newPost, id: newPost.id.toString(), bloggerId: newPost.bloggerId.toString()};
   }
