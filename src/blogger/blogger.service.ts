@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { Blogger } from './blogger.entity';
 import { CreateBloggerDto, UpdateBloggerDto } from './dto/blogger.dto';
 
+
 @Injectable()
 export class BloggerService {
   constructor(
@@ -14,13 +15,16 @@ export class BloggerService {
   ) {}
 
   async findAll() {
-    return this.bloggerRepository.find({relations: ['posts']});
+    const all = await this.bloggerRepository.find({relations: ['posts']});
+    // TODO: automapper
+    return all.map(a => {return {id: a.id.toString(), name: a.name, youtubeUrl: a.youtubeUrl}})
   }
 
   async findOne(id: string) {
     const donorBlogger = await this.bloggerRepository.findOne({where: {id: id}});
     if(donorBlogger) {
-      return donorBlogger
+      // TODO somothing with id(number => string)
+      return {...donorBlogger, id: donorBlogger.id.toString()}
     } else {
       throw new HttpException('Blogger not found', HttpStatus.NOT_FOUND);
     }
@@ -31,14 +35,17 @@ export class BloggerService {
     newBlogger.name = dto.name
     newBlogger.youtubeUrl = dto.youtubeUrl
     const blogger = await this.bloggerRepository.insert(newBlogger);
-    return newBlogger;
+    // TODO somothing with id(number => string)
+    return {...newBlogger, id: newBlogger.id.toString()};
   }
 
   async updateBlogger(id: string, dto: UpdateBloggerDto) {
     const donorBlogger = await this.bloggerRepository.findOne({where: {id: id}});
     if(donorBlogger) {
+      // TODO somothing with id(number => string)
       const newBlogger = {
-        ...donorBlogger, 
+        ...donorBlogger,
+        id: donorBlogger.id.toString(), 
         name: dto.name,
         youtubeUrl: dto.youtubeUrl,
       } 
