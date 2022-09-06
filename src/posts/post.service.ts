@@ -3,11 +3,14 @@ import { Blogger } from '../blogger/blogger.entity';
 import { Repository } from 'typeorm';
 import { CreatePostDto, UpdatePostDto } from './dto/post.dto';
 import { Post } from './post.entity';
+import { BloggerService } from '../blogger/blogger.service';
 
 @Injectable()
 export class PostService {
   constructor(
-    @Inject('POST_REPOSITORY') private postRepository: Repository<Post>,
+    @Inject('POST_REPOSITORY') 
+    private readonly postRepository: Repository<Post>,
+    private readonly bloggerService: BloggerService,
   ) {}
 
 
@@ -28,12 +31,13 @@ export class PostService {
   }
 
   async createPost(dto: CreatePostDto) {
+    const bloggerName = await this.bloggerService.findOne(dto.bloggerId)
     const newPost = new Post()
     newPost.content = dto.content
     newPost.shortDescription = dto.shortDescription
     newPost.title = dto.title
     newPost.bloggerId = dto.bloggerId
-    newPost.bloggerName = dto.bloggerName
+    newPost.bloggerName = bloggerName.name
     const post = await this.postRepository.insert(newPost);
     // TODO something with id(number => string)
     return {...newPost, id: newPost.id.toString()};

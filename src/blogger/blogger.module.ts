@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { PostModule } from '../posts/post.module';
 import { PostService } from '../posts/post.service';
 import { DatabaseModule } from '../database/database.module';
@@ -8,7 +8,7 @@ import { BloggerService } from './blogger.service';
 
 @Module({
   controllers: [BloggerController],
-  imports: [DatabaseModule, PostModule],
+  imports: [DatabaseModule],
   providers: [
     ...bloggerProviders,
     BloggerService,

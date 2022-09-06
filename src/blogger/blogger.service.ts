@@ -10,8 +10,7 @@ import { CreateBloggerDto, UpdateBloggerDto } from './dto/blogger.dto';
 export class BloggerService {
   constructor(
     @Inject('BLOGGER_REPOSITORY') 
-    private bloggerRepository: Repository<Blogger>,
-    private readonly postService: PostService,
+    private readonly bloggerRepository: Repository<Blogger>,
   ) {}
 
   async findAll() {
