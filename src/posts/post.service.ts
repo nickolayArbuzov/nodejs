@@ -10,14 +10,18 @@ export class PostService {
     @Inject('POST_REPOSITORY') private postRepository: Repository<Post>,
   ) {}
 
-  async findAll(): Promise<Post[]> {
-    return this.postRepository.find();
+
+  async findAll() {
+    const all = await this.postRepository.find();
+    // TODO: automapper
+    return all.map(a => {return {...a, id: a.id.toString()}})
   }
 
   async findOne(id: string) {
     const donorPost = await this.postRepository.findOne({where: {id: id}});
     if(donorPost) {
-      return donorPost
+      // TODO somothing with id(number => string)
+      return {...donorPost, id: donorPost.id.toString()}
     } else {
       throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
     }
@@ -30,15 +34,17 @@ export class PostService {
     newPost.title = dto.title
     newPost.bloggerId = Number(dto.bloggerId)
     const post = await this.postRepository.insert(newPost);
-  
-    return post;
+    // TODO somothing with id(number => string)
+    return {...newPost, id: newPost.id.toString()};
   }
 
   async updatePost(id: string, dto: UpdatePostDto) {
     const donorPost = await this.postRepository.findOne({where: {id: id}});
     if(donorPost) {
+      // TODO somothing with id(number => string)
       const newPost = {
         ...donorPost, 
+        id: donorPost.id.toString(),
         title: dto.title,
         shortDescription: dto.shortDescription,
         content: dto.content

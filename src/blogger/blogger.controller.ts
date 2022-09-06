@@ -27,7 +27,7 @@ export class BloggerController {
         return this.bloggerService.deleteBlogger(id)
     }
 
-    @Put()
+    @Put(':id')
     update(@Param('id') id: string, @Body() bloggerDto: UpdateBloggerDto){
         return this.bloggerService.updateBlogger(id, bloggerDto)
     }

@@ -28,7 +28,7 @@ export class PostController {
         return this.postService.deletePost(id)
     }
 
-    @Put()
+    @Put(':id')
     update(@Param('id') id: string, @Body() postDto: UpdatePostDto){
         return this.postService.updatePost(id, postDto)
     }
