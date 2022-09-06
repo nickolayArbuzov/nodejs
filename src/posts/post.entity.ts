@@ -16,7 +16,10 @@ export class Post {
   content: string;
 
   @Column()
-  bloggerId: number;
+  bloggerId: string;
+
+  @Column()
+  bloggerName: string;
 
   @ManyToOne(() => Blogger, blogger => blogger.posts, {onDelete: 'SET NULL'})
   blogger: Blogger

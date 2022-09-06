@@ -20,7 +20,7 @@ export class PostService {
   async findOne(id: string) {
     const donorPost = await this.postRepository.findOne({where: {id: id}});
     if(donorPost) {
-      // TODO somothing with id(number => string)
+      // TODO something with id(number => string)
       return {...donorPost, id: donorPost.id.toString()}
     } else {
       throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
@@ -32,16 +32,16 @@ export class PostService {
     newPost.content = dto.content
     newPost.shortDescription = dto.shortDescription
     newPost.title = dto.title
-    newPost.bloggerId = Number(dto.bloggerId)
+    newPost.bloggerId = dto.bloggerId
     const post = await this.postRepository.insert(newPost);
-    // TODO somothing with id(number => string)
+    // TODO something with id(number => string)
     return {...newPost, id: newPost.id.toString()};
   }
 
   async updatePost(id: string, dto: UpdatePostDto) {
     const donorPost = await this.postRepository.findOne({where: {id: id}});
     if(donorPost) {
-      // TODO somothing with id(number => string)
+      // TODO something with id(number => string)
       const newPost = {
         ...donorPost, 
         id: donorPost.id.toString(),

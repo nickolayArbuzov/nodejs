@@ -14,6 +14,8 @@ export class CreatePostDto {
     readonly content: string;
 
     readonly bloggerId: string;
+
+    readonly bloggerName: string;
 }
 
 export class UpdatePostDto extends CreatePostDto {}

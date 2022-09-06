@@ -23,7 +23,7 @@ export class BloggerService {
   async findOne(id: string) {
     const donorBlogger = await this.bloggerRepository.findOne({where: {id: id}});
     if(donorBlogger) {
-      // TODO somothing with id(number => string)
+      // TODO something with id(number => string)
       return {...donorBlogger, id: donorBlogger.id.toString()}
     } else {
       throw new HttpException('Blogger not found', HttpStatus.NOT_FOUND);
@@ -35,14 +35,14 @@ export class BloggerService {
     newBlogger.name = dto.name
     newBlogger.youtubeUrl = dto.youtubeUrl
     const blogger = await this.bloggerRepository.insert(newBlogger);
-    // TODO somothing with id(number => string)
+    // TODO something with id(number => string)
     return {...newBlogger, id: newBlogger.id.toString()};
   }
 
   async updateBlogger(id: string, dto: UpdateBloggerDto) {
     const donorBlogger = await this.bloggerRepository.findOne({where: {id: id}});
     if(donorBlogger) {
-      // TODO somothing with id(number => string)
+      // TODO something with id(number => string)
       const newBlogger = {
         ...donorBlogger,
         id: donorBlogger.id.toString(), 
