@@ -16,6 +16,7 @@ export class AuthGuard implements CanActivate {
         console.log('headers match')
         return true;
     }
+    console.log('mismatch')
     throw new UnauthorizedException()
   }
 }
