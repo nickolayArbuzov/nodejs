@@ -9,11 +9,8 @@ export class AuthGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request: Request = context.switchToHttp().getRequest();
     console.log('request.headers.authorization', request.headers.authorization)
-    if (!request.headers.authorization){
-        console.log('no headers')
-        return true
-    }
-    if (request.headers.authorization.split(' ')[1] === new Buffer('admin:qwerty').toString('base64')){
+
+    if (request.headers.authorization.split(' ')[1] === 'admin:qwerty'){
         console.log('headers match')
         return true;
     }
