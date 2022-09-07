@@ -15,6 +15,12 @@ export class BloggerService {
 
   async findAll() {
     const all = await this.bloggerRepository.find({relations: ['posts']});
+    /*this.bloggerRepository
+    .createQueryBuilder('b')
+    .innerJoin('b.posts', 'p')
+    .where('p.content = :con', { con: 'a'})
+    .select('')
+    .addSelect('')*/
     // TODO: automapper
     return all.map(a => {return {id: a.id.toString(), name: a.name, youtubeUrl: a.youtubeUrl}})
     //return all
