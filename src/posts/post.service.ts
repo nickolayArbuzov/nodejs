@@ -13,7 +13,6 @@ export class PostService {
     private readonly bloggerService: BloggerService,
   ) {}
 
-
   async findAll() {
     const all = await this.postRepository.find();
     // TODO: automapper
@@ -28,6 +27,10 @@ export class PostService {
     } else {
       throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
     }
+  }
+
+  async findAllByBlogId(id: string) {
+    return await this.postRepository.find({where: {bloggerId: id}})
   }
 
   async createPost(dto: CreatePostDto) {

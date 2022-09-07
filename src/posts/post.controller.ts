@@ -8,7 +8,6 @@ import { AuthGuard } from '../guards/auth.guard';
 export class PostController {
 
     constructor(private postService: PostService) {}
-
     @Get()
     getAll() {
         return this.postService.findAll();
