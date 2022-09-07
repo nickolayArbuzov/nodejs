@@ -24,7 +24,7 @@ export class PostService {
     const donorPost = await this.postRepository.findOne({where: {id: id}});
     if(donorPost) {
       // TODO something with id(number => string)
-      return {...donorPost, id: donorPost.id.toString()}
+      return {...donorPost, id: donorPost.id.toString(), bloggerId: donorPost.bloggerId.toString()}
     } else {
       throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
     }
