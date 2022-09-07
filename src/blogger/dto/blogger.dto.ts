@@ -1,6 +1,9 @@
+import { Transform, TransformFnParams } from "class-transformer";
 import { IsString, Length, Matches } from "class-validator";
 
 export class CreateBloggerDto {
+    
+    @Transform(({ value }: TransformFnParams) => value?.trim())
     @IsString()
     @Length(1, 15)
     readonly name: string;
@@ -12,3 +15,4 @@ export class CreateBloggerDto {
 }
 
 export class UpdateBloggerDto extends CreateBloggerDto {}
+

@@ -11,6 +11,6 @@ import { VideoService } from './videos.service';
     ...videoProviders,
     VideoService,
   ],
-  exports: [VideoService]
+  exports: [VideoService, videoProviders.find(v => v.provide === 'VIDEO_REPOSITORY')]
 })
 export class VideoModule {}

@@ -12,6 +12,6 @@ import { PostService } from './post.service';
     ...postProviders,
     PostService,
   ],
-  exports: [PostService],
+  exports: [PostService, postProviders.find(p => p.provide === 'POST_REPOSITORY')],
 })
 export class PostModule {}

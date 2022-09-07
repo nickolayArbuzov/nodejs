@@ -13,6 +13,6 @@ import { BloggerService } from './blogger.service';
     ...bloggerProviders,
     BloggerService,
   ],
-  exports: [BloggerService, bloggerProviders[0]],
+  exports: [BloggerService, bloggerProviders.find(b => b.provide==='BLOGGER_REPOSITORY')],
 })
 export class BloggerModule {}

@@ -44,7 +44,7 @@ export class PostService {
       return {...newPost, id: newPost.id.toString(), bloggerId: newPost.bloggerId.toString()};
     }
     else {
-      throw new HttpException('Blogger for add-post, not found', HttpStatus.NOT_FOUND);
+      throw new HttpException('Blogger for create-post, not found', HttpStatus.NOT_FOUND);
     }
   }
 
@@ -73,10 +73,6 @@ export class PostService {
     } else {
       throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
     }
-  }
-
-  async deleteAllPosts(): Promise<void> {
-    await this.postRepository.delete({})
   }
 
 }

@@ -1,22 +1,23 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Blogger } from 'src/blogger/blogger.entity';
+import { Post } from 'src/posts/post.entity';
+import { Video } from 'src/videos/videos.entity';
 import { Repository } from 'typeorm';
-import { BloggerService } from '../blogger/blogger.service';
-import { PostService } from '../posts/post.service';
-import { VideoService } from '../videos/videos.service';
 
 @Injectable()
 export class AllDataService {
   constructor(
-    private readonly videoService: VideoService,
+    @Inject('VIDEO_REPOSITORY')
+    private readonly videoRepository: Repository<Video>,
     @Inject('BLOGGER_REPOSITORY') 
     private readonly bloggerRepository: Repository<Blogger>,
-    private readonly postService: PostService,
+    @Inject('POST_REPOSITORY')
+    private readonly postRepository: Repository<Post>,
   ) {}
 
   deleteAllData(): void {
-    this.videoService.deleteAllVideos()
-    this.postService.deleteAllPosts()
+    this.videoRepository.delete({})
+    this.postRepository.delete({})
     this.bloggerRepository.delete({})
   }
   

@@ -64,9 +64,5 @@ export class BloggerService {
       throw new HttpException('Blogger not found', HttpStatus.NOT_FOUND);
     }
   }
-
-  async deleteAllBloggers(): Promise<void> {
-    await this.bloggerRepository.delete({})
-  }
   
 }

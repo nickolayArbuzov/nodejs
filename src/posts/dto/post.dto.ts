@@ -13,9 +13,8 @@ export class CreatePostDto {
     @Length(1, 1000)
     readonly content: string;
 
+    @IsString()
     readonly bloggerId: string;
-
-    readonly bloggerName: string;
 }
 
 export class UpdatePostDto extends CreatePostDto {}
