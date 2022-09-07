@@ -1,10 +1,14 @@
+import { Transform, TransformFnParams } from "class-transformer";
 import { IsString, Length } from "class-validator";
 
 export class CreatePostDto {
+    
+    @Transform(({ value }: TransformFnParams) => value?.trim())
     @IsString()
     @Length(1, 30)
     readonly title: string;
 
+    @Transform(({ value }: TransformFnParams) => value?.trim())
     @IsString()
     @Length(1, 100)
     readonly shortDescription: string;
