@@ -17,7 +17,7 @@ export class PostService {
   async findAll() {
     const all = await this.postRepository.find();
     // TODO: automapper
-    return all.map(a => {return {...a, id: a.id.toString()}})
+    return all.map(a => {return {...a, id: a.id.toString(), bloggerId: a.bloggerId.toString()}})
   }
 
   async findOne(id: string) {
