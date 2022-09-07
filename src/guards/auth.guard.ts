@@ -9,9 +9,11 @@ export class AuthGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request: Request = context.switchToHttp().getRequest();
     if (!request.headers.authorization){
+        console.log('no headers')
         return true
     }
     if (request.headers.authorization === new Buffer('admin:qwerty').toString('base64')){
+        console.log('headers match')
         return true;
     }
     throw new UnauthorizedException()
