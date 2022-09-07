@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate {
     const request: Request = context.switchToHttp().getRequest();
     console.log('request.headers.authorization', request.headers.authorization)
 
-    if (request.headers.authorization.split(' ')[1] === new Buffer('admin:qwerty').toString('base64')){
+    if (request.headers?.authorization?.split(' ')[1] === new Buffer('admin:qwerty').toString('base64')){
         console.log('headers match')
         return true;
     }
