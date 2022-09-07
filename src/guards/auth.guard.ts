@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
         console.log('no headers')
         return true
     }
-    if (request.headers.authorization === new Buffer('admin:qwerty').toString('base64')){
+    if (request.headers.authorization.split(' ')[1] === new Buffer('admin:qwerty').toString('base64')){
         console.log('headers match')
         return true;
     }
