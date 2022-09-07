@@ -31,17 +31,21 @@ export class PostService {
   }
 
   async createPost(dto: CreatePostDto) {
-    const bloggerName = await this.bloggerService.findOne(dto.bloggerId)
-    const newPost = new Post()
-    newPost.content = dto.content
-    newPost.shortDescription = dto.shortDescription
-    newPost.title = dto.title
-    newPost.bloggerId = dto.bloggerId
-    newPost.bloggerName = bloggerName.name
-    const post = await this.postRepository.insert(newPost);
-    console.log(newPost)
-    // TODO something with id(number => string)
-    return {...newPost, id: newPost.id.toString(), bloggerId: newPost.bloggerId.toString()};
+    const donorBlogger = await this.bloggerService.findOne(dto.bloggerId)
+    if (donorBlogger) {
+      const newPost = new Post()
+      newPost.content = dto.content
+      newPost.shortDescription = dto.shortDescription
+      newPost.title = dto.title
+      newPost.bloggerId = dto.bloggerId
+      newPost.bloggerName = donorBlogger.name
+      const post = await this.postRepository.insert(newPost);
+      // TODO something with id(number => string)
+      return {...newPost, id: newPost.id.toString(), bloggerId: newPost.bloggerId.toString()};
+    }
+    else {
+      throw new HttpException('Blogger for add-post, not found', HttpStatus.NOT_FOUND);
+    }
   }
 
   async updatePost(id: string, dto: UpdatePostDto) {
