@@ -25,7 +25,7 @@ export class BloggerController {
 
     @Get(':id/posts') 
     getPostByBlogId(@Param('id') id: string, @Body() any: any) { 
-        console.log('body', any)
+        console.log('get-post', any)
         return this.postService.findAllByBlogId(id)
     }
 
@@ -36,7 +36,8 @@ export class BloggerController {
     }
 
     @Post(':id/posts') 
-    creatPostForBlogId(@Param('id') id: string, @Body() postDto: CreatePostDto) {
+    creatPostForBlogId(@Param('id') id: string, @Body() any: any) {
+        console.log('add-post', any)
         return id
     }
 

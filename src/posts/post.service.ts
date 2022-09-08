@@ -53,6 +53,10 @@ export class PostService {
     }
   }
 
+  async creatPostForBlogId(dto: any){
+    console.log('dto', dto)
+  }
+
   async updatePost(id: string, dto: UpdatePostDto) {
     const donorPost = await this.postRepository.findOne({where: {id: id}});
     if(donorPost) {
