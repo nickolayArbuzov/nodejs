@@ -25,7 +25,7 @@ export class BloggerController {
 
     @Get(':id/posts') 
     getPostByBlogId(@Param('id') id: string, @Body() any: any) { 
-        console.log(any)
+        console.log('body', any)
         return this.postService.findAllByBlogId(id)
     }
 
