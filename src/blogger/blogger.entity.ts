@@ -15,7 +15,7 @@ export class Blogger {
   @Column()
   createdAt: string;
 
-  @OneToMany(() => Post, post => post.blogger)
+  @OneToMany(() => Post, post => post.blog)
   posts: Post[]
 
 }

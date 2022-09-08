@@ -16,37 +16,37 @@ export class PostService {
   async findAll() {
     const all = await this.postRepository.find();
     // TODO: automapper
-    return all.map(a => {return {...a, id: a.id.toString(), bloggerId: a.bloggerId.toString(), createdAt: a.createdAt}})
+    return all.map(a => {return {...a, id: a.id.toString(), bloggerId: a.blogId.toString(), createdAt: a.createdAt}})
   }
 
   async findOne(id: string) {
     const donorPost = await this.postRepository.findOne({where: {id: id}});
     if(donorPost) {
       // TODO something with id(number => string)
-      return {...donorPost, id: donorPost.id.toString(), bloggerId: donorPost.bloggerId.toString()}
+      return {...donorPost, id: donorPost.id.toString(), bloggerId: donorPost.blogId.toString()}
     } else {
       throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
     }
   }
 
   async findAllByBlogId(id: string) {
-    return await this.postRepository.find({where: {bloggerId: id}})
+    return await this.postRepository.find({where: {blogId: id}})
   }
 
   async createPost(dto: CreatePostDto) {
-    const donorBlogger = await this.bloggerService.findOne(dto.bloggerId)
+    const donorBlogger = await this.bloggerService.findOne(dto.blogId)
     if (donorBlogger) {
       const newPost = new Post()
       newPost.content = dto.content
       newPost.shortDescription = dto.shortDescription
       newPost.title = dto.title
-      newPost.bloggerId = dto.bloggerId
-      newPost.bloggerName = donorBlogger.name
+      newPost.blogId = dto.blogId
+      newPost.blogName = donorBlogger.name
       let date = new Date
       newPost.createdAt = date.toISOString()
       const post = await this.postRepository.insert(newPost);
       // TODO something with id(number => string)
-      return {...newPost, id: newPost.id.toString(), bloggerId: newPost.bloggerId.toString()};
+      return {...newPost, id: newPost.id.toString(), bloggerId: newPost.blogId.toString()};
     }
     else {
       throw new HttpException('Blogger for create-post, not found', HttpStatus.NOT_FOUND);
