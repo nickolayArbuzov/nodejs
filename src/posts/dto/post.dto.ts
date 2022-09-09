@@ -18,7 +18,7 @@ export class CreatePostDto {
     @Length(1, 1000)
     readonly content: string;
 
-    @IsUUID()
+    @IsString()
     readonly blogId: string;
 }
 
