@@ -13,9 +13,13 @@ export class BloggerService {
     private readonly bloggerRepository: Repository<Blogger>,
   ) {}
 
-  async findAllByBlogId(id) {
+  async findAllPostsByBlogId(id) {
     const blogger = await this.bloggerRepository.findOne({relations: ['posts'], where: {id: id}});
     return blogger.posts;
+  }
+
+  async createPostByBlogId(){
+    
   }
 
   async findAll() {
@@ -28,7 +32,7 @@ export class BloggerService {
     .select('')
     .addSelect('')
     .getMany()*/
-    
+
     // TODO: automapper
     return all.map(a => {return {id: a.id.toString(), name: a.name, youtubeUrl: a.youtubeUrl, createdAt: a.createdAt}})
     //return all
