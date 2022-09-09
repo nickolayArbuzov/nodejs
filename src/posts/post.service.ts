@@ -46,15 +46,15 @@ export class PostService {
       newPost.createdAt = date.toISOString()
       const post = await this.postRepository.insert(newPost);
       // TODO something with id(number => string)
-      return {...newPost, id: newPost.id.toString(), bloggerId: newPost.blogId.toString()};
+      return {...newPost, id: newPost.id.toString(), blogId: newPost.blogId.toString()};
     }
     else {
       throw new HttpException('Blogger for create-post, not found', HttpStatus.NOT_FOUND);
     }
   }
 
-  async creatPostForBlogId(dto: any){
-    console.log('dto', dto)
+  async creatPostForBlogId(id: string, dto: any){
+    console.log('add-post-for-blog', id, dto)
   }
 
   async updatePost(id: string, dto: UpdatePostDto) {

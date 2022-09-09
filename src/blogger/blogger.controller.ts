@@ -11,6 +11,7 @@ export class BloggerController {
 
     constructor(
         private bloggerService: BloggerService,
+        private postService: PostService,
     ) {}
     @Get()
     getAll() {
@@ -25,7 +26,7 @@ export class BloggerController {
     @Get(':id/posts') 
     getPostByBlogId(@Param('id') id: string) { 
         console.log('get-post', id)
-        return this.bloggerService.findAllByBlogId(id)
+        return this.bloggerService.findAllPostsByBlogId(id)
     }
 
     @UseGuards(AuthGuard)
@@ -36,8 +37,7 @@ export class BloggerController {
 
     @Post(':id/posts') 
     creatPostForBlogId(@Param('id') id: string, @Body() any: any) {
-        console.log('add-post', any)
-        return id
+        return this.postService.creatPostForBlogId(id, any)
     }
 
     @UseGuards(AuthGuard)
