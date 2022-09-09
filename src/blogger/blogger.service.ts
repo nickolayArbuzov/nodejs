@@ -14,7 +14,7 @@ export class BloggerService {
     private readonly bloggerRepository: Repository<Blogger>,
   ) {}
 
-  async findAllPostsByBlogId(id) {
+  async findAllPostsByBlogId(id: string) {
     const blogger = await this.bloggerRepository.findOne({relations: ['posts'], where: {id: id}});
     return blogger.posts;
   }
