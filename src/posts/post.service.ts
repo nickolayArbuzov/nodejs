@@ -15,9 +15,11 @@ export class PostService {
   ) {}
 
   async findAll(query: QueryDto) {
-    const all = await this.postRepository.find();
+    const all = await this.postRepository.find({order: {'createdAt': {direction: 'ASC'}}});
     //TODO: property order in returned obj's
-    const returnedPosts = all.map(a => {return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, createdAt: a.createdAt, id: a.id}})
+    const returnedPosts = all.map(a => {
+      return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, createdAt: a.createdAt, id: a.id}
+    })
     return {pagesCount: Math.ceil(all.length/10), page: 1, pageSize :10, totalCount: returnedPosts.length, items: returnedPosts}
   }
 

@@ -19,7 +19,10 @@ export class BloggerService {
   async findAllPostsByBlogId(id: string) {
     const blogger = await this.bloggerRepository.findOne({relations: ['posts'], where: {id: id}});
     if (blogger) {
-      const returnedPosts = blogger.posts.map(a => {return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, createdAt: a.createdAt, id: a.id}})
+      //TODO: property order in returned obj's
+      const returnedPosts = blogger.posts.map(a => {
+        return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, createdAt: a.createdAt, id: a.id}
+      })
       return {pagesCount: Math.ceil(returnedPosts.length/10), page: 1, pageSize :10, totalCount: returnedPosts.length, items: returnedPosts}
     } else {
       throw new HttpException('Blogger not found', HttpStatus.NOT_FOUND);
