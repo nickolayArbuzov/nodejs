@@ -54,7 +54,6 @@ export class PostService {
   }
 
   async creatPostForBlogId(id: string, dto: any){
-    console.log('add-post-for-blog', id, dto)
   }
 
   async updatePost(id: string, dto: UpdatePostDto) {
