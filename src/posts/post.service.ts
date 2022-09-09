@@ -28,11 +28,6 @@ export class PostService {
     }
   }
 
-  async findAllByBlogId(id: string) {
-    const allByBlogId = await this.postRepository.find({where: {blogId: id}})
-    return {pagesCount: Math.ceil(allByBlogId.length/10), page: 1, pageSize :10, totalCount: allByBlogId.length, items: allByBlogId}
-  }
-
   async createPost(dto: CreatePostDto) {
     const donorBlogger = await this.bloggerService.findOne(dto.blogId)
     if (donorBlogger) {
