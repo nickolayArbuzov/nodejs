@@ -16,8 +16,8 @@ export class BloggerService {
     private readonly postRepository: Repository<Post>,
   ) {}
 
-  async findAllPostsByBlogId(id: string) {
-    const blogger = await this.bloggerRepository.findOne({relations: ['posts'], where: {id: id}});
+  /*async findAllPostsByBlogId(id: string) {
+    const blogger = await this.bloggerRepository.findOne({relations: ['posts'], where: {id: id}, order: {'createdAt': {direction: 'DESC'}}});
     if (blogger) {
       //TODO: property order in returned obj's
       const returnedPosts = blogger.posts.map(a => {
@@ -27,15 +27,14 @@ export class BloggerService {
     } else {
       throw new HttpException('Blogger not found', HttpStatus.NOT_FOUND);
     }
-  
-  }
+  }*/
 
   async createPostByBlogId(){
     
   }
 
   async findAll(query: QueryDto) {
-    const all = await this.bloggerRepository.find({relations: ['posts']});
+    const all = await this.bloggerRepository.find({relations: ['posts'], order: {createdAt: 'DESC'}});
     // TODO: research QueryBuilder
     /*this.bloggerRepository
     .createQueryBuilder('b')

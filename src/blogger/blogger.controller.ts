@@ -26,7 +26,7 @@ export class BloggerController {
 
     @Get(':id/posts') 
     getPostByBlogId(@Param('id') id: string) { 
-        return this.bloggerService.findAllPostsByBlogId(id)
+        return this.postService.findAllPostsByBlogId(id)
     }
 
     @UseGuards(AuthGuard)

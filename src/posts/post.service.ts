@@ -15,13 +15,23 @@ export class PostService {
   ) {}
 
   async findAll(query: QueryDto) {
-    const all = await this.postRepository.find({order: {'createdAt': {direction: 'ASC'}}});
+    console.log('query-findAll', query)
+    const all = await this.postRepository.find({order: {'createdAt': {direction: 'DESC'}}});
     //TODO: property order in returned obj's
     const returnedPosts = all.map(a => {
       return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, createdAt: a.createdAt, id: a.id}
     })
     return {pagesCount: Math.ceil(all.length/10), page: 1, pageSize :10, totalCount: returnedPosts.length, items: returnedPosts}
   }
+
+  async findAllPostsByBlogId(id: string) {
+    const posts = await this.postRepository.find({where: {blogId: id}, order: {'createdAt': {direction: 'DESC'}}});
+    //TODO: property order in returned obj's
+    const returnedPosts = posts.map(a => {
+      return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, createdAt: a.createdAt, id: a.id}
+    })
+    return {pagesCount: Math.ceil(returnedPosts.length/10), page: 1, pageSize :10, totalCount: returnedPosts.length, items: returnedPosts}
+  } 
 
   async findOne(id: string) {
     const donorPost = await this.postRepository.findOne({where: {id: id}});
