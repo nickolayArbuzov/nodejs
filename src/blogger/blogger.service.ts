@@ -12,6 +12,8 @@ export class BloggerService {
   constructor(
     @Inject('BLOGGER_REPOSITORY') 
     private readonly bloggerRepository: Repository<Blogger>,
+    @Inject('BLOGGER_REPOSITORY') 
+    private readonly postRepository: Repository<Post>,
   ) {}
 
   async findAllPostsByBlogId(id: string) {
@@ -29,7 +31,6 @@ export class BloggerService {
   }
 
   async findAll(query: QueryDto) {
-    console.log('query-blog', query)
     const all = await this.bloggerRepository.find({relations: ['posts']});
     // TODO: research QueryBuilder
     /*this.bloggerRepository

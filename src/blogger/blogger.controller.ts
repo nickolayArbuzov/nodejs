@@ -36,10 +36,8 @@ export class BloggerController {
     }
 
     @Post(':id/posts') 
-    creatPostForBlogId(@Param('id') id: string, @Body() any: any) {
-        console.log('create-post-for-blog-id', id)
-        console.log('create-post-for-blog-any', any)
-        return this.postService.creatPostForBlogId(id, any)
+    creatPostForBlogId(@Param('id') id: string, @Body() postDto: CreatePostDto) {
+        return this.postService.creatPostForBlogId(id, postDto)
     }
 
     @UseGuards(AuthGuard)

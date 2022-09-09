@@ -15,7 +15,6 @@ export class PostService {
   ) {}
 
   async findAll(query: QueryDto) {
-    console.log('query-post', query)
     const all = await this.postRepository.find();
     return {pagesCount: Math.ceil(all.length/10), page: 1, pageSize :10, totalCount: all.length, items: all}
   }
@@ -52,7 +51,8 @@ export class PostService {
     }
   }
 
-  async creatPostForBlogId(id: string, dto: any){
+  async creatPostForBlogId(id: string, dto: CreatePostDto){
+    console.log('create-post', dto)
   }
 
   async updatePost(id: string, dto: UpdatePostDto) {
