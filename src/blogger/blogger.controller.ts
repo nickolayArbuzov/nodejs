@@ -36,14 +36,14 @@ export class BloggerController {
     }
 
     @Post(':id/posts') 
-    // creatPostForBlogId(@Param('id') id: string, @Body() postDto: CreatePostDto) {
-    //     return this.postService.creatPostForBlogId(id, postDto)
-    // }
-    creatPostForBlogId(@Param('id') id: string, @Request() req) {
-        console.log('typeof id', typeof id);
-        
-        // return this.postService.creatPostForBlogId(id, postDto)
+    creatPostForBlogId(@Param('id') id: string, @Body() postDto: CreatePostDto) {
+        return this.postService.creatPostForBlogId(id, postDto)
     }
+    /*creatPostForBlogId(@Param('id') id: string, @Request() req) {
+        console.log('typeof id', typeof id);
+
+        // return this.postService.creatPostForBlogId(id, postDto)
+    }*/
 
     @UseGuards(AuthGuard)
     @HttpCode(204)
