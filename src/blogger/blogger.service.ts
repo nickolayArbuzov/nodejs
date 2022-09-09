@@ -42,8 +42,9 @@ export class BloggerService {
     .getMany()*/
 
     // TODO: automapper
-    return all.map(a => {return {id: a.id, name: a.name, youtubeUrl: a.youtubeUrl, createdAt: a.createdAt}})
-    //return all
+    //TODO: property order in returned obj's
+    const returnedBlogs = all.map(a => {return {name: a.name, youtubeUrl: a.youtubeUrl, createdAt: a.createdAt, id: a.id}})
+    return {pagesCount: Math.ceil(returnedBlogs.length/10), page: 1, pageSize :10, totalCount: returnedBlogs.length, items: returnedBlogs}
   }
 
   async findOne(id: string) {
