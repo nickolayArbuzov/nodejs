@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { CreatePostDto, UpdatePostDto } from './dto/post.dto';
 import { Post } from './post.entity';
 import { BloggerService } from '../blogger/blogger.service';
+import { QueryDto } from '../commonDTO/query.dto';
 
 @Injectable()
 export class PostService {

@@ -2,7 +2,7 @@ import {Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, ParseUUIDP
 import {PostService} from "./post.service";
 import { CreatePostDto, UpdatePostDto } from './dto/post.dto';
 import { AuthGuard } from '../guards/auth.guard';
-import { QueryDto } from 'src/commonDTO/query.dto';
+import { QueryDto } from '../commonDTO/query.dto';
 
 
 @Controller('posts')

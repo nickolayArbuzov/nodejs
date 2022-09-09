@@ -4,6 +4,7 @@ import { PostService } from '../posts/post.service';
 import { Repository } from 'typeorm';
 import { Blogger } from './blogger.entity';
 import { CreateBloggerDto, UpdateBloggerDto } from './dto/blogger.dto';
+import { QueryDto } from '../commonDTO/query.dto';
 
 
 @Injectable()
@@ -22,7 +23,7 @@ export class BloggerService {
     
   }
 
-  async findAll(query) {
+  async findAll(query: QueryDto) {
     console.log('query', query)
     const all = await this.bloggerRepository.find({relations: ['posts']});
     // TODO: research QueryBuilder

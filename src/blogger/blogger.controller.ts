@@ -4,7 +4,7 @@ import { PostService } from '../posts/post.service';
 import { AuthGuard } from '../guards/auth.guard';
 import {BloggerService} from "./blogger.service";
 import { CreateBloggerDto, UpdateBloggerDto } from './dto/blogger.dto';
-import { QueryDto } from 'src/commonDTO/query.dto';
+import { QueryDto } from '../commonDTO/query.dto';
 
 
 @Controller('blogs')
