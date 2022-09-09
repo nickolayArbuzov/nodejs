@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, HttpCode, Inject, Param, ParseIntPipe, ParseUUIDPipe, Post, Put, Query, UseGuards} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, Inject, Param, ParseIntPipe, ParseUUIDPipe, Post, Put, Query, UseGuards, Request} from '@nestjs/common';
 import { CreatePostDto } from '../posts/dto/post.dto';
 import { PostService } from '../posts/post.service';
 import { AuthGuard } from '../guards/auth.guard';
@@ -36,8 +36,13 @@ export class BloggerController {
     }
 
     @Post(':id/posts') 
-    creatPostForBlogId(@Param('id') id: string, @Body() postDto: CreatePostDto) {
-        return this.postService.creatPostForBlogId(id, postDto)
+    // creatPostForBlogId(@Param('id') id: string, @Body() postDto: CreatePostDto) {
+    //     return this.postService.creatPostForBlogId(id, postDto)
+    // }
+    creatPostForBlogId(@Param('id') id: string, @Request() req) {
+        console.log('typeof id', typeof id);
+        
+        // return this.postService.creatPostForBlogId(id, postDto)
     }
 
     @UseGuards(AuthGuard)
