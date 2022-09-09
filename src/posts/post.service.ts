@@ -52,7 +52,8 @@ export class PostService {
   }
 
   async creatPostForBlogId(id: string, dto: CreatePostDto){
-    console.log('create-post', dto)
+    console.log('create-post-id', id)
+    console.log('create-post-dto', dto)
   }
 
   async updatePost(id: string, dto: UpdatePostDto) {

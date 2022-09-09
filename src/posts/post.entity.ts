@@ -18,7 +18,7 @@ export class Post {
   @Column()
   createdAt: string;
 
-  @Column()
+  @Column('uuid')
   blogId: string;
 
   @Column()
