@@ -5,10 +5,11 @@ import { DatabaseModule } from '../database/database.module';
 import { BloggerController } from './blogger.controller';
 import { bloggerProviders } from './blogger.providers';
 import { BloggerService } from './blogger.service';
+import { PostController } from 'src/posts/post.controller';
 
 @Module({
   controllers: [BloggerController],
-  imports: [DatabaseModule, forwardRef(() => PostModule)],
+  imports: [DatabaseModule],
   providers: [
     ...bloggerProviders,
     BloggerService,

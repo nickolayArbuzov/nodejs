@@ -1,6 +1,6 @@
-import {Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, ParseUUIDPipe, Post, Put, UseGuards} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, ParseUUIDPipe, Post, Put, Query, UseGuards} from '@nestjs/common';
 import {PostService} from "./post.service";
-import { CreatePostDto, UpdatePostDto } from './dto/post.dto';
+import { CreatePostDto, QueryDto, UpdatePostDto } from './dto/post.dto';
 import { AuthGuard } from '../guards/auth.guard';
 
 
@@ -9,7 +9,8 @@ export class PostController {
 
     constructor(private postService: PostService) {}
     @Get()
-    getAll() {
+    getAll(@Query() query: QueryDto) {
+        console.log('query', query)
         return this.postService.findAll();
     }
 

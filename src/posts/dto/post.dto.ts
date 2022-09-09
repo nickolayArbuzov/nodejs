@@ -23,3 +23,10 @@ export class CreatePostDto {
 }
 
 export class UpdatePostDto extends CreatePostDto {}
+
+export class QueryDto {
+    readonly pageNumber: string;
+    readonly pageSize: string;
+    readonly sortBy: string;
+    readonly sortDirection: string;
+}
