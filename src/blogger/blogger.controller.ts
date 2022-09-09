@@ -25,7 +25,7 @@ export class BloggerController {
     }
 
     @Get(':id/posts') 
-    getPostByBlogId(@Param('id') id: string) { 
+    getPostByBlogId(@Param('id', ParseIntPipe) id: string) { 
         return this.bloggerService.findAllPostsByBlogId(id)
     }
 
