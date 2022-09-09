@@ -1,9 +1,10 @@
-import {Body, Controller, Delete, Get, HttpCode, Inject, Param, ParseIntPipe, ParseUUIDPipe, Post, Put, UseGuards} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, Inject, Param, ParseIntPipe, ParseUUIDPipe, Post, Put, Query, UseGuards} from '@nestjs/common';
 import { CreatePostDto } from '../posts/dto/post.dto';
 import { PostService } from '../posts/post.service';
 import { AuthGuard } from '../guards/auth.guard';
 import {BloggerService} from "./blogger.service";
 import { CreateBloggerDto, UpdateBloggerDto } from './dto/blogger.dto';
+import { QueryDto } from 'src/commonDTO/query.dto';
 
 
 @Controller('blogs')
@@ -14,8 +15,8 @@ export class BloggerController {
         private postService: PostService,
     ) {}
     @Get()
-    getAll() {
-        return this.bloggerService.findAll();
+    getAll(@Query() query: QueryDto) {
+        return this.bloggerService.findAll(query);
     }
 
     @Get(':id')

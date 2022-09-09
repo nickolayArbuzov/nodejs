@@ -22,7 +22,8 @@ export class BloggerService {
     
   }
 
-  async findAll() {
+  async findAll(query) {
+    console.log('query', query)
     const all = await this.bloggerRepository.find({relations: ['posts']});
     // TODO: research QueryBuilder
     /*this.bloggerRepository
