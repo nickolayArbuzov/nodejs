@@ -16,21 +16,27 @@ export class PostService {
 
   async findAll(query: QueryDto) {
     console.log('query-findAll', query)
+
+    const queryDefault: QueryDto = {pageNumber: '1', pageSize: '10', sortBy: 'createdAt', sortDirection: 'DESC' }
+
     const all = await this.postRepository.find({order: {'createdAt': {direction: 'DESC'}}});
     //TODO: property order in returned obj's
     const returnedPosts = all.map(a => {
       return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, createdAt: a.createdAt, id: a.id}
     })
-    return {pagesCount: Math.ceil(all.length/10), page: 1, pageSize :10, totalCount: returnedPosts.length, items: returnedPosts}
+    return {pagesCount: Math.ceil(all.length/10), page: queryDefault.pageNumber, pageSize: queryDefault.pageSize, totalCount: returnedPosts.length, items: returnedPosts}
   }
 
   async findAllPostsByBlogId(id: string) {
-    const posts = await this.postRepository.find({where: {blogId: id}, order: {'createdAt': {direction: 'DESC'}}});
+
+    const queryDefault: QueryDto = {pageNumber: '1', pageSize: '10', sortBy: 'createdAt', sortDirection: 'DESC' }
+
+    const posts = await this.postRepository.find({where: {blogId: id}, order: {'createdAt': {direction: 'DESC'}}, take: 10, skip: 0});
     //TODO: property order in returned obj's
     const returnedPosts = posts.map(a => {
       return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, createdAt: a.createdAt, id: a.id}
     })
-    return {pagesCount: Math.ceil(returnedPosts.length/10), page: 1, pageSize :10, totalCount: returnedPosts.length, items: returnedPosts}
+    return {pagesCount: Math.ceil(returnedPosts.length/10), page: queryDefault.pageNumber, pageSize: queryDefault.pageSize, totalCount: returnedPosts.length, items: returnedPosts}
   } 
 
   async findOne(id: string) {

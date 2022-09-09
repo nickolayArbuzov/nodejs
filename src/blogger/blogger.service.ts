@@ -34,6 +34,9 @@ export class BloggerService {
   }
 
   async findAll(query: QueryDto) {
+
+    const queryDefault: QueryDto = {pageNumber: '1', pageSize: '10', sortBy: 'createdAt', sortDirection: 'DESC' }
+
     const all = await this.bloggerRepository.find({relations: ['posts'], order: {createdAt: 'DESC'}});
     // TODO: research QueryBuilder
     /*this.bloggerRepository
@@ -47,7 +50,7 @@ export class BloggerService {
     // TODO: automapper
     //TODO: property order in returned obj's
     const returnedBlogs = all.map(a => {return {name: a.name, youtubeUrl: a.youtubeUrl, createdAt: a.createdAt, id: a.id}})
-    return {pagesCount: Math.ceil(returnedBlogs.length/10), page: 1, pageSize :10, totalCount: returnedBlogs.length, items: returnedBlogs}
+    return {pagesCount: Math.ceil(returnedBlogs.length/10), page: queryDefault.pageNumber, pageSize: queryDefault.pageSize, totalCount: returnedBlogs.length, items: returnedBlogs}
   }
 
   async findOne(id: string) {
