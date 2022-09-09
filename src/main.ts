@@ -8,6 +8,7 @@ async function start() {
   const app = await NestFactory.create(AppModule, { cors: true })
   app.useGlobalPipes(new ValidationPipe({
     stopAtFirstError: true,
+    transform: true,
     exceptionFactory: (errors) => {
       const customErrors = [];
       errors.forEach(e => {
