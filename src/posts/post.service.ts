@@ -15,7 +15,7 @@ export class PostService {
   ) {}
 
   async findAll(query: QueryDto) {
-    console.log('query', query)
+    console.log('query-post', query)
     const all = await this.postRepository.find();
     // TODO: automapper
     return all.map(a => {return {...a, id: a.id.toString(), bloggerId: a.blogId.toString(), createdAt: a.createdAt}})
