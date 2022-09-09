@@ -17,15 +17,13 @@ export class PostService {
   async findAll(query: QueryDto) {
     console.log('query-post', query)
     const all = await this.postRepository.find();
-    // TODO: automapper
-    return all.map(a => {return {...a, id: a.id.toString(), bloggerId: a.blogId.toString(), createdAt: a.createdAt}})
+    return all
   }
 
   async findOne(id: string) {
     const donorPost = await this.postRepository.findOne({where: {id: id}});
     if(donorPost) {
-      // TODO something with id(number => string)
-      return {...donorPost, id: donorPost.id.toString(), bloggerId: donorPost.blogId.toString()}
+      return donorPost
     } else {
       throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
     }
@@ -47,8 +45,7 @@ export class PostService {
       let date = new Date
       newPost.createdAt = date.toISOString()
       const post = await this.postRepository.insert(newPost);
-      // TODO something with id(number => string)
-      return {...newPost, id: newPost.id.toString(), blogId: newPost.blogId.toString()};
+      return newPost
     }
     else {
       throw new HttpException('Blogger for create-post, not found', HttpStatus.NOT_FOUND);
@@ -61,10 +58,8 @@ export class PostService {
   async updatePost(id: string, dto: UpdatePostDto) {
     const donorPost = await this.postRepository.findOne({where: {id: id}});
     if(donorPost) {
-      // TODO something with id(number => string)
       const newPost = {
         ...donorPost, 
-        id: donorPost.id.toString(),
         title: dto.title,
         shortDescription: dto.shortDescription,
         content: dto.content
