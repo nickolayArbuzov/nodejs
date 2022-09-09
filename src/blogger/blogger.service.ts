@@ -17,7 +17,7 @@ export class BloggerService {
   async findAllPostsByBlogId(id: string) {
     const blogger = await this.bloggerRepository.findOne({relations: ['posts'], where: {id: id}});
     if (blogger) {
-      return blogger.posts;
+      return blogger.posts
     } else {
       throw new HttpException('Blogger not found', HttpStatus.NOT_FOUND);
     }
@@ -49,7 +49,8 @@ export class BloggerService {
     const donorBlogger = await this.bloggerRepository.findOne({where: {id: id}});
     if(donorBlogger) {
       // TODO something with id(number => string)
-      return {...donorBlogger, id: donorBlogger.id.toString()}
+      return donorBlogger
+      //return {...donorBlogger, id: donorBlogger.id.toString()}
     } else {
       throw new HttpException('Blogger not found', HttpStatus.NOT_FOUND);
     }
