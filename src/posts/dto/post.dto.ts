@@ -18,6 +18,11 @@ export class CreatePostDto {
     @Length(1, 1000)
     readonly content: string;
 
+    @IsUUID()
+    readonly blogId: string;
+}
+
+export class CratePostDtoWithoutBlogId extends CreatePostDto {
     @IsOptional()
     @IsUUID()
     readonly blogId: string;

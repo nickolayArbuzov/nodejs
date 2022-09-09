@@ -1,5 +1,5 @@
 import {Body, Controller, Delete, Get, HttpCode, Inject, Param, ParseIntPipe, ParseUUIDPipe, Post, Put, Query, UseGuards, Request} from '@nestjs/common';
-import { CreatePostDto } from '../posts/dto/post.dto';
+import { CratePostDtoWithoutBlogId, CreatePostDto } from '../posts/dto/post.dto';
 import { PostService } from '../posts/post.service';
 import { AuthGuard } from '../guards/auth.guard';
 import {BloggerService} from "./blogger.service";
@@ -36,7 +36,7 @@ export class BloggerController {
     }
 
     @Post(':id/posts') 
-    creatPostForBlogId(@Param('id') id: string, @Body() postDto: CreatePostDto) {
+    creatPostForBlogId(@Param('id') id: string, @Body() postDto: CratePostDtoWithoutBlogId) {
         return this.postService.creatPostForBlogId(id, postDto)
     }
     /*creatPostForBlogId(@Param('id') id: string, @Request() req) {

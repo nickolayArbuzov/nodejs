@@ -52,8 +52,22 @@ export class PostService {
   }
 
   async creatPostForBlogId(id: string, dto: CreatePostDto){
-    console.log('create-post-id', id)
-    console.log('create-post-dto', dto)
+    const donorBlogger = await this.bloggerService.findOne(id)
+    if (donorBlogger) {
+      const newPost = new Post()
+      newPost.content = dto.content
+      newPost.shortDescription = dto.shortDescription
+      newPost.title = dto.title
+      newPost.blogId = id
+      newPost.blogName = donorBlogger.name
+      let date = new Date
+      newPost.createdAt = date.toISOString()
+      const post = await this.postRepository.insert(newPost);
+      return newPost
+    }
+    else {
+      throw new HttpException('Blogger for create-post, not found', HttpStatus.NOT_FOUND);
+    }
   }
 
   async updatePost(id: string, dto: UpdatePostDto) {
