@@ -16,7 +16,12 @@ export class BloggerService {
 
   async findAllPostsByBlogId(id: string) {
     const blogger = await this.bloggerRepository.findOne({relations: ['posts'], where: {id: id}});
-    return blogger.posts;
+    if (blogger) {
+      return blogger.posts;
+    } else {
+      throw new HttpException('Blogger not found', HttpStatus.NOT_FOUND);
+    }
+  
   }
 
   async createPostByBlogId(){
