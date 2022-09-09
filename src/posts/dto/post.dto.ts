@@ -1,5 +1,5 @@
 import { Transform, TransformFnParams } from "class-transformer";
-import { IsString, IsUUID, Length } from "class-validator";
+import { IsMongoId, IsString, IsUUID, Length } from "class-validator";
 
 export class CreatePostDto {
     
@@ -18,7 +18,7 @@ export class CreatePostDto {
     @Length(1, 1000)
     readonly content: string;
 
-    @IsString()
+    @IsMongoId()
     readonly blogId: string;
 }
 
