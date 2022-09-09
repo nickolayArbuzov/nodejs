@@ -13,15 +13,22 @@ export class BloggerService {
     private readonly bloggerRepository: Repository<Blogger>,
   ) {}
 
+  async findAllByBlogId(id) {
+    const blogger = await this.bloggerRepository.findOne({relations: ['posts'], where: {id: id}});
+    return blogger.posts;
+  }
+
   async findAll() {
     const all = await this.bloggerRepository.find({relations: ['posts']});
     // TODO: research QueryBuilder
     /*this.bloggerRepository
     .createQueryBuilder('b')
-    .innerJoin('b.posts', 'p')
+    .innerJoinAndSelect('b.posts', 'p')
     .where('p.content = :con', { con: 'a'})
     .select('')
-    .addSelect('')*/
+    .addSelect('')
+    .getMany()*/
+    
     // TODO: automapper
     return all.map(a => {return {id: a.id.toString(), name: a.name, youtubeUrl: a.youtubeUrl, createdAt: a.createdAt}})
     //return all
