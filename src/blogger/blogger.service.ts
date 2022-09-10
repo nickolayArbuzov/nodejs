@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { Blogger } from './blogger.entity';
 import { CreateBloggerDto, UpdateBloggerDto } from './dto/blogger.dto';
 import { QueryDto } from '../commonDTO/query.dto';
+import { queryDefault } from '../constants/constants';
 
 
 @Injectable()
@@ -34,23 +35,20 @@ export class BloggerService {
   }
 
   async findAll(query: QueryDto) {
+    console.log('query', query)
+    const repo = this.bloggerRepository.createQueryBuilder('blog')
 
-    const queryDefault: QueryDto = {pageNumber: '1', pageSize: '10', sortBy: 'createdAt', sortDirection: 'DESC' }
+    const all = await repo
+      .skip((+queryDefault.pageNumber-1) * +queryDefault.pageSize)
+      .take(+queryDefault.pageSize)
+      .orderBy(`blog.${queryDefault.sortBy}`, queryDefault.sortDirection)
+      .getMany()
 
-    const all = await this.bloggerRepository.find({relations: ['posts'], order: {createdAt: 'DESC'}});
-    // TODO: research QueryBuilder
-    /*this.bloggerRepository
-    .createQueryBuilder('b')
-    .innerJoinAndSelect('b.posts', 'p')
-    .where('p.content = :con', { con: 'a'})
-    .select('')
-    .addSelect('')
-    .getMany()*/
-
-    // TODO: automapper
+    const count = await repo.getCount()
+    //TODO: automapper
     //TODO: property order in returned obj's
     const returnedBlogs = all.map(a => {return {name: a.name, youtubeUrl: a.youtubeUrl, createdAt: a.createdAt, id: a.id}})
-    return {pagesCount: Math.ceil(returnedBlogs.length/10), page: queryDefault.pageNumber, pageSize: queryDefault.pageSize, totalCount: returnedBlogs.length, items: returnedBlogs}
+    return {pagesCount: Math.ceil(count/+queryDefault.pageSize), page: queryDefault.pageNumber, pageSize: queryDefault.pageSize, totalCount: count, items: returnedBlogs}
   }
 
   async findOne(id: string) {
