@@ -17,18 +17,32 @@ export class BloggerService {
     private readonly postRepository: Repository<Post>,
   ) {}
 
-  /*async findAllPostsByBlogId(id: string) {
-    const blogger = await this.bloggerRepository.findOne({relations: ['posts'], where: {id: id}, order: {'createdAt': {direction: 'DESC'}}});
-    if (blogger) {
+  async findAllPostsByBlogId(id: string, query: QueryDto) {
+
+    const blog = this.bloggerRepository.findOne({where: {id: id}})
+
+    if(blog) {
+      const repo = this.bloggerRepository.createQueryBuilder('blog')
+
+      const all = await repo
+        .leftJoinAndSelect('blog.posts', 'posts')
+        .where({id: id})
+        .skip((+queryDefault.pageNumber-1) * +queryDefault.pageSize)
+        .take(+queryDefault.pageSize)
+        .orderBy(`posts.${queryDefault.sortBy}`, queryDefault.sortDirection)
+        .getOne()
+
+      const count = await repo.getCount()
+      //TODO: automapper
       //TODO: property order in returned obj's
-      const returnedPosts = blogger.posts.map(a => {
+      const returnedPosts = all.posts.map(a => {
         return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, createdAt: a.createdAt, id: a.id}
       })
-      return {pagesCount: Math.ceil(returnedPosts.length/10), page: 1, pageSize :10, totalCount: returnedPosts.length, items: returnedPosts}
+      return {pagesCount: Math.ceil(count/+queryDefault.pageSize), page: queryDefault.pageNumber, pageSize: queryDefault.pageSize, totalCount: count, items: returnedPosts}
     } else {
       throw new HttpException('Blogger not found', HttpStatus.NOT_FOUND);
     }
-  }*/
+  }
 
   async createPostByBlogId(){
     
