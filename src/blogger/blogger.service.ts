@@ -31,14 +31,14 @@ export class BloggerService {
         .take(+queryDefault.pageSize)
         .orderBy(`posts.${queryDefault.sortBy}`, queryDefault.sortDirection)
         .getOne()
-      console.log(all)
+
       const count = await repo.getCount()
       //TODO: automapper
       //TODO: property order in returned obj's
       const returnedPosts = all.posts.map(a => {
         return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, createdAt: a.createdAt, id: a.id}
       })
-      return {pagesCount: Math.ceil(count/+queryDefault.pageSize), page: queryDefault.pageNumber, pageSize: queryDefault.pageSize, totalCount: count, items: returnedPosts}
+      return {pagesCount: Math.ceil(count/+queryDefault.pageSize), page: +queryDefault.pageNumber, pageSize: +queryDefault.pageSize, totalCount: count, items: returnedPosts}
     } else {
       throw new HttpException('Blogger not found', HttpStatus.NOT_FOUND);
     }
@@ -62,7 +62,7 @@ export class BloggerService {
     //TODO: automapper
     //TODO: property order in returned obj's
     const returnedBlogs = all.map(a => {return {name: a.name, youtubeUrl: a.youtubeUrl, createdAt: a.createdAt, id: a.id}})
-    return {pagesCount: Math.ceil(count/+queryDefault.pageSize), page: queryDefault.pageNumber, pageSize: queryDefault.pageSize, totalCount: count, items: returnedBlogs}
+    return {pagesCount: Math.ceil(count/+queryDefault.pageSize), page: +queryDefault.pageNumber, pageSize: +queryDefault.pageSize, totalCount: count, items: returnedBlogs}
   }
 
   async findOne(id: string) {

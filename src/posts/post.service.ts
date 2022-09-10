@@ -31,7 +31,7 @@ export class PostService {
     const returnedPosts = all.map(a => {
       return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, createdAt: a.createdAt, id: a.id}
     })
-    return {pagesCount: Math.ceil(count/+queryDefault.pageSize), page: queryDefault.pageNumber, pageSize: queryDefault.pageSize, totalCount: count, items: returnedPosts}
+    return {pagesCount: Math.ceil(count/+queryDefault.pageSize), page: +queryDefault.pageNumber, pageSize: +queryDefault.pageSize, totalCount: count, items: returnedPosts}
   }
 
   async findAllPostsByBlogId(id: string, query: QueryDto) {
