@@ -23,7 +23,7 @@ export class BloggerService {
 
     if(blog) {
       const repo = this.bloggerRepository.createQueryBuilder('blog')
-
+      
       const all = await repo
         .leftJoinAndSelect('blog.posts', 'posts')
         .where({id: id})
@@ -32,7 +32,7 @@ export class BloggerService {
         .orderBy(`posts.${queryDefault.sortBy}`, queryDefault.sortDirection)
         .getOne()
 
-      const count = await repo.getCount()
+      const count = await this.postRepository.count()
       //TODO: automapper
       //TODO: property order in returned obj's
       const returnedPosts = all.posts.map(a => {
