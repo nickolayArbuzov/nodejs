@@ -23,13 +23,15 @@ export class BloggerService {
 
     if(blog) {
       const repo = this.bloggerRepository.createQueryBuilder('blog')
-      
+
+      const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'
+
       const all = await repo
         .leftJoinAndSelect('blog.posts', 'posts')
         .where({id: id})
         .skip((query.pageNumber ? (+query.pageNumber-1) : (+queryDefault.pageNumber-1)) * (query.pageSize ? + +query.pageSize : +queryDefault.pageSize))
         .take(query.pageSize ? +query.pageSize : +queryDefault.pageSize)
-        .orderBy(`blog.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, query.sortDirection ? query.sortDirection : queryDefault.sortDirection)
+        .orderBy(`blog.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, sortDirection)
         .getOne()
 
       const blog = await repo.where({id: id}).getOne()
@@ -57,11 +59,13 @@ export class BloggerService {
   async findAll(query: QueryDto) {
     console.log('query', query)
     const repo = this.bloggerRepository.createQueryBuilder('blog')
+    
+    const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'
 
     const all = await repo
       .skip((query.pageNumber ? (+query.pageNumber-1) : (+queryDefault.pageNumber-1)) * (query.pageSize ? + +query.pageSize : +queryDefault.pageSize))
       .take(query.pageSize ? +query.pageSize : +queryDefault.pageSize)
-      .orderBy(`blog.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, query.sortDirection ? query.sortDirection : queryDefault.sortDirection)
+      .orderBy(`blog.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, sortDirection)
       .getMany()
 
     const count = await repo.getCount()

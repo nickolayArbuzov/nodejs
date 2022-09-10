@@ -19,10 +19,12 @@ export class PostService {
     console.log('query-findAll', query)
     const repo = this.postRepository.createQueryBuilder('post')
 
+    const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'
+
     const all = await repo
       .skip((query.pageNumber ? (+query.pageNumber-1) : (+queryDefault.pageNumber-1)) * (query.pageSize ? + +query.pageSize : +queryDefault.pageSize))
       .take(query.pageSize ? +query.pageSize : +queryDefault.pageSize)
-      .orderBy(`post.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, query.sortDirection ? query.sortDirection : queryDefault.sortDirection)
+      .orderBy(`post.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, sortDirection)
       .getMany()
 
     const count = await repo.getCount()
@@ -45,11 +47,13 @@ export class PostService {
     console.log('query-findAll', query)
     const repo = this.postRepository.createQueryBuilder('post')
 
+    const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'
+
     const all = await repo
       .where({blogId: id})
       .skip((query.pageNumber ? (+query.pageNumber-1) : (+queryDefault.pageNumber-1)) * (query.pageSize ? + +query.pageSize : +queryDefault.pageSize))
       .take(query.pageSize ? +query.pageSize : +queryDefault.pageSize)
-      .orderBy(`post.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, query.sortDirection ? query.sortDirection : queryDefault.sortDirection)
+      .orderBy(`post.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, sortDirection)
       .getMany()
 
     const count = await repo.getCount()
