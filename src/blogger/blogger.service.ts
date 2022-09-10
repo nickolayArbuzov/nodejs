@@ -27,18 +27,24 @@ export class BloggerService {
       const all = await repo
         .leftJoinAndSelect('blog.posts', 'posts')
         .where({id: id})
-        .skip((+queryDefault.pageNumber-1) * +queryDefault.pageSize)
-        .take(+queryDefault.pageSize)
-        .orderBy(`posts.${queryDefault.sortBy}`, queryDefault.sortDirection)
+        .skip((query.pageNumber ? (+query.pageNumber-1) : (+queryDefault.pageNumber-1)) * (query.pageSize ? + +query.pageSize : +queryDefault.pageSize))
+        .take(query.pageSize ? +query.pageSize : +queryDefault.pageSize)
+        .orderBy(`blog.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, query.sortDirection ? query.sortDirection : queryDefault.sortDirection)
         .getOne()
 
-      const count = await this.postRepository.count()
+      const blog = await repo.where({id: id}).getOne()
       //TODO: automapper
       //TODO: property order in returned obj's
       const returnedPosts = all.posts.map(a => {
         return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, createdAt: a.createdAt, id: a.id}
       })
-      return {pagesCount: Math.ceil(count/+queryDefault.pageSize), page: +queryDefault.pageNumber, pageSize: +queryDefault.pageSize, totalCount: count, items: returnedPosts}
+      return {
+        pagesCount: Math.ceil(blog.posts.length/(query.pageSize ? + +query.pageSize : +queryDefault.pageSize)), 
+        page: query.pageNumber ? +query.pageNumber : +queryDefault.pageNumber, 
+        pageSize: query.pageSize ? +query.pageSize : +queryDefault.pageSize, 
+        totalCount: blog.posts.length, 
+        items: returnedPosts
+      }
     } else {
       throw new HttpException('Blogger not found', HttpStatus.NOT_FOUND);
     }
@@ -53,16 +59,22 @@ export class BloggerService {
     const repo = this.bloggerRepository.createQueryBuilder('blog')
 
     const all = await repo
-      .skip((+queryDefault.pageNumber-1) * +queryDefault.pageSize)
-      .take(+queryDefault.pageSize)
-      .orderBy(`blog.${queryDefault.sortBy}`, queryDefault.sortDirection)
+      .skip((query.pageNumber ? (+query.pageNumber-1) : (+queryDefault.pageNumber-1)) * (query.pageSize ? + +query.pageSize : +queryDefault.pageSize))
+      .take(query.pageSize ? +query.pageSize : +queryDefault.pageSize)
+      .orderBy(`blog.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, query.sortDirection ? query.sortDirection : queryDefault.sortDirection)
       .getMany()
 
     const count = await repo.getCount()
     //TODO: automapper
     //TODO: property order in returned obj's
     const returnedBlogs = all.map(a => {return {name: a.name, youtubeUrl: a.youtubeUrl, createdAt: a.createdAt, id: a.id}})
-    return {pagesCount: Math.ceil(count/+queryDefault.pageSize), page: +queryDefault.pageNumber, pageSize: +queryDefault.pageSize, totalCount: count, items: returnedBlogs}
+    return {
+      pagesCount: Math.ceil(count/(query.pageSize ? + +query.pageSize : +queryDefault.pageSize)), 
+      page: query.pageNumber ? +query.pageNumber : +queryDefault.pageNumber, 
+      pageSize: query.pageSize ? +query.pageSize : +queryDefault.pageSize, 
+      totalCount: count, 
+      items: returnedBlogs
+    }
   }
 
   async findOne(id: string) {

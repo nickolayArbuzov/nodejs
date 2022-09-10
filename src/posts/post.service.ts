@@ -20,9 +20,9 @@ export class PostService {
     const repo = this.postRepository.createQueryBuilder('post')
 
     const all = await repo
-      .skip((+queryDefault.pageNumber-1) * +queryDefault.pageSize)
-      .take(+queryDefault.pageSize)
-      .orderBy(`post.${queryDefault.sortBy}`, queryDefault.sortDirection)
+      .skip((query.pageNumber ? (+query.pageNumber-1) : (+queryDefault.pageNumber-1)) * (query.pageSize ? + +query.pageSize : +queryDefault.pageSize))
+      .take(query.pageSize ? +query.pageSize : +queryDefault.pageSize)
+      .orderBy(`post.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, query.sortDirection ? query.sortDirection : queryDefault.sortDirection)
       .getMany()
 
     const count = await repo.getCount()
@@ -31,7 +31,13 @@ export class PostService {
     const returnedPosts = all.map(a => {
       return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, createdAt: a.createdAt, id: a.id}
     })
-    return {pagesCount: Math.ceil(count/+queryDefault.pageSize), page: +queryDefault.pageNumber, pageSize: +queryDefault.pageSize, totalCount: count, items: returnedPosts}
+    return {
+      pagesCount: Math.ceil(count/(query.pageSize ? + +query.pageSize : +queryDefault.pageSize)), 
+      page: query.pageNumber ? +query.pageNumber : +queryDefault.pageNumber, 
+      pageSize: query.pageSize ? +query.pageSize : +queryDefault.pageSize, 
+      totalCount: count, 
+      items: returnedPosts
+    }
   }
 
   async findAllPostsByBlogId(id: string, query: QueryDto) {
@@ -41,9 +47,9 @@ export class PostService {
 
     const all = await repo
       .where({blogId: id})
-      .skip((+queryDefault.pageNumber-1) * +queryDefault.pageSize)
-      .take(+queryDefault.pageSize)
-      .orderBy(`post.${queryDefault.sortBy}`, queryDefault.sortDirection)
+      .skip((query.pageNumber ? (+query.pageNumber-1) : (+queryDefault.pageNumber-1)) * (query.pageSize ? + +query.pageSize : +queryDefault.pageSize))
+      .take(query.pageSize ? +query.pageSize : +queryDefault.pageSize)
+      .orderBy(`post.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, query.sortDirection ? query.sortDirection : queryDefault.sortDirection)
       .getMany()
 
     const count = await repo.getCount()
@@ -52,7 +58,13 @@ export class PostService {
     const returnedPosts = all.map(a => {
       return {content: a.content, shortDescription: a.shortDescription, title: a.title, blogId: a.blogId, blogName: a.blogName, createdAt: a.createdAt, id: a.id}
     })
-    return {pagesCount: Math.ceil(count/+queryDefault.pageSize), page: queryDefault.pageNumber, pageSize: queryDefault.pageSize, totalCount: count, items: returnedPosts}
+    return {
+      pagesCount: Math.ceil(count/(query.pageSize ? + +query.pageSize : +queryDefault.pageSize)), 
+      page: query.pageNumber ? +query.pageNumber : +queryDefault.pageNumber, 
+      pageSize: query.pageSize ? +query.pageSize : +queryDefault.pageSize, 
+      totalCount: count, 
+      items: returnedPosts
+    }
   } 
 
   async findOne(id: string) {
