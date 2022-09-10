@@ -19,7 +19,7 @@ export class BloggerService {
 
   async findAllPostsByBlogId(id: string, query: QueryDto) {
 
-    const blog = this.bloggerRepository.findOne({where: {id: id}})
+    const blog = await this.bloggerRepository.findOne({where: {id: id}})
 
     if(blog) {
       const repo = this.bloggerRepository.createQueryBuilder('blog')
@@ -31,7 +31,7 @@ export class BloggerService {
         .take(+queryDefault.pageSize)
         .orderBy(`posts.${queryDefault.sortBy}`, queryDefault.sortDirection)
         .getOne()
-
+      console.log(all)
       const count = await repo.getCount()
       //TODO: automapper
       //TODO: property order in returned obj's
