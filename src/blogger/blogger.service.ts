@@ -25,13 +25,13 @@ export class BloggerService {
       const repo = this.bloggerRepository.createQueryBuilder('blog')
 
       const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'
-      console.log('query-blogname', query)
+      
       const all = await repo
         .leftJoinAndSelect('blog.posts', 'posts')
         .where({id: id})
         .skip((query.pageNumber ? (+query.pageNumber-1) : (+queryDefault.pageNumber-1)) * (query.pageSize ? + +query.pageSize : +queryDefault.pageSize))
         .take(query.pageSize ? +query.pageSize : +queryDefault.pageSize)
-        .orderBy(`blog.${query.sortBy && query.sortBy !== 'blogName' ? query.sortBy : queryDefault.sortBy}`, sortDirection) // TODO search about sort
+        .orderBy(`blog.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, sortDirection) // TODO search about sort
         .getOne()
 
       const blog = await repo.where({id: id}).getOne()
@@ -57,7 +57,7 @@ export class BloggerService {
   }
 
   async findAll(query: QueryDto) {
-    console.log('query', query)
+    console.log('query-blogname', query)
     const repo = this.bloggerRepository.createQueryBuilder('blog')
     
     const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'
@@ -66,7 +66,7 @@ export class BloggerService {
       .where("LOWER(blog.name) like :name", { name: `LOWER(%${query.searchNameTerm ? query.searchNameTerm : queryDefault.searchNameTerm}%)` })
       .skip((query.pageNumber ? (+query.pageNumber-1) : (+queryDefault.pageNumber-1)) * (query.pageSize ? + +query.pageSize : +queryDefault.pageSize))
       .take(query.pageSize ? +query.pageSize : +queryDefault.pageSize)
-      .orderBy(`blog.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, sortDirection)
+      .orderBy(`blog.${query.sortBy && query.sortBy !== 'blogName' ? query.sortBy : queryDefault.sortBy}`, sortDirection) // TODO search about sort
       .getMany()
 
     const count = await repo.getCount()
