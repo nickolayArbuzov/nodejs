@@ -59,11 +59,13 @@ export class BloggerService {
   async findAll(query: QueryDto) {
     console.log('query-blogname', query.searchNameTerm)
     const repo = this.bloggerRepository.createQueryBuilder('blog')
+    if(query.searchNameTerm) {
+      repo.where("LOWER(blog.name) like :name", { name: `LOWER(%${query.searchNameTerm}%)` })
+    }
     
     const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'
 
     const all = await repo
-      .where("LOWER(blog.name) like :name", { name: `LOWER(%${query.searchNameTerm ? query.searchNameTerm : queryDefault.searchNameTerm}%)` })
       .skip((query.pageNumber ? (+query.pageNumber-1) : (+queryDefault.pageNumber-1)) * (query.pageSize ? + +query.pageSize : +queryDefault.pageSize))
       .take(query.pageSize ? +query.pageSize : +queryDefault.pageSize)
       .orderBy(`blog.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, sortDirection) // TODO search about sort
