@@ -52,10 +52,6 @@ export class BloggerService {
     }
   }
 
-  async createPostByBlogId(){
-    
-  }
-
   async findAll(query: QueryDto) {
     const repo = this.bloggerRepository.createQueryBuilder('blog')
     if(query.searchNameTerm) {

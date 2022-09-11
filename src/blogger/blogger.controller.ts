@@ -35,6 +35,7 @@ export class BloggerController {
         return this.bloggerService.createBlogger(bloggerDto);
     }
 
+    @UseGuards(AuthGuard)
     @Post(':id/posts') 
     creatPostForBlogId(@Param('id') id: string, @Body() postDto: CratePostDtoWithoutBlogId) {
         return this.postService.creatPostForBlogId(id, postDto)
