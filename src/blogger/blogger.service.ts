@@ -75,8 +75,7 @@ export class BloggerService {
     //TODO: automapper
     //TODO: property order in returned obj's
     const returnedBlogs = all.map(a => {return {name: a.name, youtubeUrl: a.youtubeUrl, createdAt: a.createdAt, id: a.id}})
-    console.log('query-blogname', query.searchNameTerm)
-    console.log('query-blogname', queryDefault.searchNameTerm)
+    console.log('returnedBlogs', returnedBlogs)
     return {
       pagesCount: Math.ceil(count/(query.pageSize ? + +query.pageSize : +queryDefault.pageSize)), 
       page: query.pageNumber ? +query.pageNumber : +queryDefault.pageNumber, 
