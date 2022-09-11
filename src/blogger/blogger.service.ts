@@ -57,7 +57,6 @@ export class BloggerService {
   }
 
   async findAll(query: QueryDto) {
-    console.log('query-blogname', query.searchNameTerm)
     const repo = this.bloggerRepository.createQueryBuilder('blog')
     if(query.searchNameTerm) {
       //repo.where("LOWER(blog.name) like :name", { name: `LOWER(%${query.searchNameTerm}%)` })
