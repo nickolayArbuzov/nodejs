@@ -16,7 +16,7 @@ export class PostService {
   ) {}
 
   async findAll(query: QueryDto) {
-    console.log('query-findAll', query)
+
     const repo = this.postRepository.createQueryBuilder('post')
 
     const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'
@@ -44,7 +44,7 @@ export class PostService {
 
   async findAllPostsByBlogId(id: string, query: QueryDto) {
 
-    console.log('query-findAll', query)
+
     const repo = this.postRepository.createQueryBuilder('post')
 
     const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'

@@ -57,7 +57,7 @@ export class BloggerService {
   }
 
   async findAll(query: QueryDto) {
-    console.log('query-blogname', query)
+    console.log('query-blogname', query.searchNameTerm)
     const repo = this.bloggerRepository.createQueryBuilder('blog')
     
     const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'
@@ -66,13 +66,15 @@ export class BloggerService {
       .where("LOWER(blog.name) like :name", { name: `LOWER(%${query.searchNameTerm ? query.searchNameTerm : queryDefault.searchNameTerm}%)` })
       .skip((query.pageNumber ? (+query.pageNumber-1) : (+queryDefault.pageNumber-1)) * (query.pageSize ? + +query.pageSize : +queryDefault.pageSize))
       .take(query.pageSize ? +query.pageSize : +queryDefault.pageSize)
-      .orderBy(`blog.${query.sortBy && query.sortBy !== 'blogName' ? query.sortBy : queryDefault.sortBy}`, sortDirection) // TODO search about sort
+      .orderBy(`blog.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, sortDirection) // TODO search about sort
       .getMany()
 
     const count = await repo.getCount()
     //TODO: automapper
     //TODO: property order in returned obj's
     const returnedBlogs = all.map(a => {return {name: a.name, youtubeUrl: a.youtubeUrl, createdAt: a.createdAt, id: a.id}})
+    console.log('query-blogname', query.searchNameTerm)
+    console.log('query-blogname', queryDefault.searchNameTerm)
     return {
       pagesCount: Math.ceil(count/(query.pageSize ? + +query.pageSize : +queryDefault.pageSize)), 
       page: query.pageNumber ? +query.pageNumber : +queryDefault.pageNumber, 
