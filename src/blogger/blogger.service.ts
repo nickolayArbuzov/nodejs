@@ -60,7 +60,8 @@ export class BloggerService {
     console.log('query-blogname', query.searchNameTerm)
     const repo = this.bloggerRepository.createQueryBuilder('blog')
     if(query.searchNameTerm) {
-      repo.where("LOWER(blog.name) like :name", { name: `LOWER(%${query.searchNameTerm}%)` })
+      //repo.where("LOWER(blog.name) like :name", { name: `LOWER(%${query.searchNameTerm}%)` })
+      repo.where("blog.name like :name", { name: `%${query.searchNameTerm}%` })
     }
     
     const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'
@@ -75,7 +76,6 @@ export class BloggerService {
     //TODO: automapper
     //TODO: property order in returned obj's
     const returnedBlogs = all.map(a => {return {name: a.name, youtubeUrl: a.youtubeUrl, createdAt: a.createdAt, id: a.id}})
-    console.log('returnedBlogs', returnedBlogs)
     return {
       pagesCount: Math.ceil(count/(query.pageSize ? + +query.pageSize : +queryDefault.pageSize)), 
       page: query.pageNumber ? +query.pageNumber : +queryDefault.pageNumber, 
