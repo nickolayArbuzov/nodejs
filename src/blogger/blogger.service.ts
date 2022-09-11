@@ -31,7 +31,7 @@ export class BloggerService {
         .where({id: id})
         .skip((query.pageNumber ? (+query.pageNumber-1) : (+queryDefault.pageNumber-1)) * (query.pageSize ? + +query.pageSize : +queryDefault.pageSize))
         .take(query.pageSize ? +query.pageSize : +queryDefault.pageSize)
-        .orderBy(`blog.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, sortDirection)
+        .orderBy(`blog.${query.sortBy && query.sortBy !== 'blogName' ? query.sortBy : queryDefault.sortBy}`, sortDirection) // TODO search about sort
         .getOne()
 
       const blog = await repo.where({id: id}).getOne()
