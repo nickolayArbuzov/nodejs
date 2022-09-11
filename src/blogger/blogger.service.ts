@@ -25,7 +25,8 @@ export class BloggerService {
       const repo = this.bloggerRepository.createQueryBuilder('blog')
 
       const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'
-      
+      console.log('query', query)
+      console.log('sortDirection', sortDirection)
       const all = await repo
         .leftJoinAndSelect('blog.posts', 'posts')
         .where({id: id})
