@@ -32,7 +32,7 @@ export class BloggerService {
         .where({id: id})
         .skip((query.pageNumber ? (+query.pageNumber-1) : (+queryDefault.pageNumber-1)) * (query.pageSize ? + +query.pageSize : +queryDefault.pageSize))
         .take(query.pageSize ? +query.pageSize : +queryDefault.pageSize)
-        .orderBy(`blog.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, sortDirection) // TODO search about sort
+        .orderBy(`posts.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, sortDirection) // TODO search about sort
         .getOne()
 
       const blog = await repo.where({id: id}).getOne()
@@ -57,7 +57,7 @@ export class BloggerService {
     const repo = this.bloggerRepository.createQueryBuilder('blog')
     if(query.searchNameTerm) {
       //repo.where("LOWER(blog.name) like :name", { name: `LOWER(%${query.searchNameTerm}%)` })
-      repo.where("LOWER(blog.name) like :name", { name: `%${query.searchNameTerm.toLowerCase()}%` })
+      repo.where("blog.name like :name", { name: `%${query.searchNameTerm.toLowerCase()}%` })
     }
     
     const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'
