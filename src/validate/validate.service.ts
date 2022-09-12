@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Blogger } from 'src/blogger/blogger.entity';
+import { Blogger } from '../blogger/blogger.entity';
 import { Repository } from 'typeorm';
 import { registerDecorator, ValidationArguments, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface } from "class-validator";
 
@@ -13,6 +13,22 @@ export function BlogIsExist(validationOptions?: ValidationOptions) {
       validator: BlogIsExistsRule,
     });
   };
+}
+
+@Injectable()
+export class ValidateService{
+  constructor(
+    @Inject('BLOGGER_REPOSITORY') 
+    private readonly blogRepository: Repository<Blogger>,
+  ) {}
+
+ async getBloggerById (value: string) {
+  const blog = await this.blogRepository.findOne({where: {id: value}});
+  if(!blog){
+    return false
+  }
+  return true
+ }
 }
 
 @ValidatorConstraint({ name: 'BlogIsExist', async: true })
@@ -40,18 +56,4 @@ export class BlogIsExistsRule implements ValidatorConstraintInterface {
   
 }
 
-@Injectable()
-export class ValidateService{
-  constructor(
-    @Inject('BLOGGER_REPOSITORY') 
-    private readonly blogRepository: Repository<Blogger>,
-  ) {}
 
- async getBloggerById (value: string) {
-  const blog = await this.blogRepository.findOne({where: {id: value}});
-  if(!blog){
-    return false
-  }
-  return true
- }
-}
