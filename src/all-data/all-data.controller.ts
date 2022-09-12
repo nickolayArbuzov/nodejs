@@ -10,7 +10,7 @@ export class AllDataController {
     @Delete('all-data')
     @HttpCode(204)
     delete(){
-       this.allDataService.deleteAllData()
+       //this.allDataService.deleteAllData()
     }
 
 }
