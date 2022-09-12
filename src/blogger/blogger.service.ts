@@ -25,8 +25,6 @@ export class BloggerService {
       const repo = this.bloggerRepository.createQueryBuilder('blog')
 
       const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'
-      console.log('query', query)
-      console.log('sortDirection', sortDirection)
       const all = await repo
         .leftJoinAndSelect('blog.posts', 'posts')
         .where({id: id})
@@ -34,7 +32,7 @@ export class BloggerService {
         .take(query.pageSize ? +query.pageSize : +queryDefault.pageSize)
         .orderBy(`posts.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, sortDirection) // TODO search about sort
         .getOne()
-
+      console.log('all', all)
       const blog = await repo.where({id: id}).getOne()
       //TODO: automapper
       //TODO: property order in returned obj's
