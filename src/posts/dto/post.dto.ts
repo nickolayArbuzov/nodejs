@@ -20,7 +20,7 @@ export class CreatePostDto {
     readonly content: string;
 
     @IsUUID()
-    //@BlogIsExist()
+    @BlogIsExist()
     readonly blogId: string;
 }
 
