@@ -1,6 +1,6 @@
 import { Transform, TransformFnParams } from "class-transformer";
 import { IsOptional, IsString, IsUUID, Length, Validate } from "class-validator";
-import { BlogIsExist, BlogIsExistsRule } from "../../helpers/customValidation/blogIsExist";
+import { BlogIsExist, BlogIsExistsRule } from "../../validate/validate.service";
 
 export class CreatePostDto {
     
