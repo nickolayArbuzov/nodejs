@@ -32,7 +32,7 @@ export class BloggerService {
         .take(query.pageSize ? +query.pageSize : +queryDefault.pageSize)
         .orderBy(`posts.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, sortDirection) // TODO search about sort
         .getOne()
-      console.log('all', all)
+      //console.log('all', all)
       const blog = await repo.where({id: id}).getOne()
       //TODO: automapper
       //TODO: property order in returned obj's

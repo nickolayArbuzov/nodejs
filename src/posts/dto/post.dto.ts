@@ -1,5 +1,6 @@
 import { Transform, TransformFnParams } from "class-transformer";
-import { IsMongoId, IsOptional, IsString, IsUUID, Length } from "class-validator";
+import { IsOptional, IsString, IsUUID, Length } from "class-validator";
+import { BlogIsExist } from "../../helpers/customValidation/blogIsExist";
 
 export class CreatePostDto {
     
@@ -19,6 +20,7 @@ export class CreatePostDto {
     readonly content: string;
 
     @IsUUID()
+    @BlogIsExist()
     readonly blogId: string;
 }
 
