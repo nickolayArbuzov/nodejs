@@ -1,6 +1,6 @@
 import { Transform, TransformFnParams } from "class-transformer";
-import { IsOptional, IsString, IsUUID, Length } from "class-validator";
-import { BlogIsExist } from "../../helpers/customValidation/blogIsExist";
+import { IsOptional, IsString, IsUUID, Length, Validate } from "class-validator";
+import { BlogIsExist, BlogIsExistsRule } from "../../helpers/customValidation/blogIsExist";
 
 export class CreatePostDto {
     
@@ -20,7 +20,7 @@ export class CreatePostDto {
     readonly content: string;
 
     @IsUUID()
-    @BlogIsExist()
+    @Validate(BlogIsExistsRule)
     readonly blogId: string;
 }
 

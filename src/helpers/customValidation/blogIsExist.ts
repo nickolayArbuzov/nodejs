@@ -32,7 +32,7 @@ export class BlogIsExistsRule implements ValidatorConstraintInterface {
       }
       return true;
     }
-  
+    
     defaultMessage(args: ValidationArguments) {
       return `Blog doesn't exist`;
     }
