@@ -34,6 +34,6 @@ export class BlogIsExistsRule implements ValidatorConstraintInterface {
     }
   
     defaultMessage(args: ValidationArguments) {
-      return `User doesn't exist`;
+      return `Blog doesn't exist`;
     }
 }
