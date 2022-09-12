@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { registerDecorator, ValidationArguments, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface } from "class-validator";
 import { Blogger } from "../../blogger/blogger.entity";
 import { Repository } from "typeorm";
@@ -18,7 +18,7 @@ export function BlogIsExist(validationOptions?: ValidationOptions) {
 @ValidatorConstraint({ name: 'BlogIsExist', async: true })
 @Injectable()
 export class BlogIsExistsRule implements ValidatorConstraintInterface {
-    constructor(private blogRepository: Repository<Blogger>) {}
+    constructor(@Inject('BLOGGER_REPOSITORY') private blogRepository: Repository<Blogger>) {}
   
     async validate(value: string) {
         console.log('value', value)
@@ -27,7 +27,7 @@ export class BlogIsExistsRule implements ValidatorConstraintInterface {
         const blog = await this.blogRepository.findOne({where: {id: value}});
         console.log('blog', blog)
         if(!blog) {
-            return true
+            return false
         }
       } catch (e) {
         console.log('catch')
