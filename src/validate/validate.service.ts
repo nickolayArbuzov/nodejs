@@ -19,27 +19,39 @@ export function BlogIsExist(validationOptions?: ValidationOptions) {
 @Injectable()
 export class BlogIsExistsRule implements ValidatorConstraintInterface {
   constructor(
-    @Inject('BLOGGER_REPOSITORY') 
-    private readonly blogRepository: Repository<Blogger>,
+    private validateService: ValidateService
   ) {}
+
   async validate(value: string) {
     console.log('value', value)
     try {
       console.log('start-try')
-      const blog = await this.blogRepository.findOne({where: {id: value}});
-      console.log('blog', blog)
-      if(!blog) {
-          return false
-      }
+      return await this.validateService.getBloggerById( value);
     } catch (e) {
       console.log('catch')
       return false;
     }
-    return true;
+
   }
 
   defaultMessage(args: ValidationArguments) {
     return `Blog doesn't exist`;
   }
   
+}
+
+@Injectable()
+export class ValidateService{
+  constructor(
+    @Inject('BLOGGER_REPOSITORY') 
+    private readonly blogRepository: Repository<Blogger>,
+  ) {}
+
+ async getBloggerById (value: string) {
+  const blog = await this.blogRepository.findOne({where: {id: value}});
+  if(!blog){
+    return false
+  }
+  return true
+ }
 }
