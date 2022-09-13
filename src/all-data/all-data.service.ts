@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Blogger } from 'src/blogger/blogger.entity';
-import { Post } from 'src/posts/post.entity';
-import { User } from 'src/users/user.entity';
-import { Video } from 'src/videos/videos.entity';
+import { Blogger } from '../blogger/blogger.entity';
+import { Post } from '../posts/post.entity';
+import { User } from '../users/user.entity';
+import { Video } from '../videos/videos.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
