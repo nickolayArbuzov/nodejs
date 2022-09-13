@@ -10,8 +10,16 @@ export class UserService {
     private userRepository: Repository<User>,
   ) {}
 
-  async findAll(): Promise<User[]> {
-    return await this.userRepository.find();
+  async findAll() {
+    const users = await this.userRepository.find();
+    return users.map(u => {
+      return {
+        createdAt: u.createdAt,
+        email: u.email,
+        id: u.id,
+        login: u.login,
+      }
+    })
   }
 
   async createUser(dto: CreateUserDto) {
@@ -21,8 +29,13 @@ export class UserService {
     newUser.email = dto.email
     let date = new Date
     newUser.createdAt = date.toISOString()
-    const blogger = await this.userRepository.insert(newUser);
-    return newUser
+    const user = await this.userRepository.insert(newUser);
+    return {
+      createdAt: newUser.createdAt,
+      email: newUser.email,
+      id: newUser.id,
+      login: newUser.login,
+    }
   }
 
   async deleteUser(id: string){
