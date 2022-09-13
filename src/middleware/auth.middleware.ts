@@ -35,6 +35,8 @@ export class LoggerMiddleware implements NestMiddleware {
       }
       if (errorResponse.errorsMessages.length > 0) {
         res.status(400).json(errorResponse)
+      }else {
+        next()
       }
     }
   
