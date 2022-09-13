@@ -79,15 +79,21 @@ export class BloggerService {
     }
   }
 
-  async findOne(id: string) {
-    console.log('id', id)
+  async findOneForCustomDecorator(id: string) {
     const donorBlogger = await this.bloggerRepository.findOne({where: {id: id}});
     if(donorBlogger) {
-      console.log('donorBlogger', donorBlogger)
       return donorBlogger
     } else {
       return null
-      //throw new HttpException('Blogger not found', HttpStatus.NOT_FOUND);
+    }
+  }
+
+  async findOne(id: string) {
+    const donorBlogger = await this.bloggerRepository.findOne({where: {id: id}});
+    if(donorBlogger) {
+      return donorBlogger
+    } else {
+      throw new HttpException('Blogger not found', HttpStatus.NOT_FOUND);
     }
   }
   

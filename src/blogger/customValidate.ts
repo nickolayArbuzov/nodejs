@@ -22,7 +22,7 @@ export class BlogIsExistRule implements ValidatorConstraintInterface {
 
   async validate(value: string, context: any) {
     try {
-      const blog = await this.blogService.findOne(value)
+      const blog = await this.blogService.findOneForCustomDecorator(value)
       if(blog) {
         return true
       } else return false
