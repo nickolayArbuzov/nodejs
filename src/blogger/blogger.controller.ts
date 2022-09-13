@@ -41,7 +41,6 @@ export class BloggerController {
         return this.postService.creatPostForBlogId(id, postDto)
     }
     /*creatPostForBlogId(@Param('id') id: string, @Request() req) {
-        console.log('typeof id', typeof id);
 
         // return this.postService.creatPostForBlogId(id, postDto)
     }*/

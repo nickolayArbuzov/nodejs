@@ -33,7 +33,6 @@ export class BloggerService {
         .take(pageSize)
         .orderBy(`posts.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, sortDirection) // TODO search about sort
         .getOne()
-      //console.log('all', all)
       const blog = await repo.where({id: id}).getOne()
       //TODO: automapper
       //TODO: property order in returned obj's
@@ -82,7 +81,6 @@ export class BloggerService {
 
   async findOne(id: string) {
     const donorBlogger = await this.bloggerRepository.findOne({where: {id: id}});
-    console.log('donorBlogger', donorBlogger)
     if(donorBlogger) {
       return donorBlogger
     } else {
