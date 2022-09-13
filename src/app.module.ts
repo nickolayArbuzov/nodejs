@@ -34,12 +34,12 @@ import { ValidateModule } from './validate/validate.module';
     AllDataModule,
   ],
 })
-//export class AppModule {}
-export class AppModule implements NestModule {
+export class AppModule {}
+/*export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(LoggerMiddleware)
       .forRoutes({path: 'posts', method: RequestMethod.POST}, {path: 'posts', method: RequestMethod.PUT})
   }
-}
+}*/
 
