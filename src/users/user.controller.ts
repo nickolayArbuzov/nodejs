@@ -18,6 +18,7 @@ export class UserController {
         return this.userService.createUser(userDto)
     }
 
+    @HttpCode(204)
     @Delete(':id')
     delete(@Param('id') id: string){
         return this.userService.deleteUser(id)
