@@ -16,20 +16,25 @@ export class LoggerMiddleware implements NestMiddleware {
     if(req.route.path === '/posts') {
       if (req.body.title?.trim().length < 1 || req.body.title?.trim().length > 30 || !req.body.title){
         errorResponse.errorsMessages.push({ message: 'error', field: "title"})
+        console.log(1)
       } 
       if (req.body.shortDescription?.trim().length < 1 || req.body.shortDescription?.trim().length > 100 || !req.body.shortDescription){
         errorResponse.errorsMessages.push({ message: 'error', field: "shortDescription"})
+        console.log(2)
       }
       if (req.body.content?.trim().length < 1 || req.body.content?.trim().length > 1000 || !req.body.content){
         errorResponse.errorsMessages.push({ message: 'error', field: "content"})
+        console.log(3)
       }
       if (req.body.blogId) {
         blog = await this.blogService.findOne(req.body.blogId)
+        console.log(4)
       }
       if (!blog){
         errorResponse.errorsMessages.push({ message: 'error', field: "blogId"})
       }
       if (errorResponse.errorsMessages.length > 0) {
+        console.log(5)
         res.status(400).json(errorResponse)
       }
     }
