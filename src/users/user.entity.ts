@@ -3,12 +3,18 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 @Entity('user')
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
-  @Column({ length: 500 })
-  name: string;
+  @Column({ length: 10 })
+  login: string;
+
+  @Column({ length: 20 })
+  password: string;
 
   @Column('text')
-  description: string;
+  email: string;
+
+  @Column()
+  createdAt: string;
 
 }

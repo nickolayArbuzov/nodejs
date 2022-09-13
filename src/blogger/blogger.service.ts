@@ -79,6 +79,7 @@ export class BloggerService {
     }
   }
 
+  // TODO: need to refactor
   async findOneForCustomDecorator(id: string) {
     const donorBlogger = await this.bloggerRepository.findOne({where: {id: id}});
     if(donorBlogger) {
