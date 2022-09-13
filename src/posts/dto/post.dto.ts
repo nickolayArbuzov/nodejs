@@ -1,6 +1,6 @@
 import { Transform, TransformFnParams } from "class-transformer";
 import { IsOptional, IsString, IsUUID, Length, Validate } from "class-validator";
-import { BlogIsExistRule } from "../../blogger/customValidate";
+import { BlogIsExistRule, BlogIsExist } from "../../blogger/customValidate";
 
 
 

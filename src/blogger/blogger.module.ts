@@ -15,6 +15,7 @@ import { BlogIsExistRule } from './customValidate';
   providers: [
     ...bloggerProviders,
     BloggerService,
+    BlogIsExistRule,
   ],
   exports: [BloggerService, bloggerProviders.find(b => b.provide==='BLOGGER_REPOSITORY')],
 })

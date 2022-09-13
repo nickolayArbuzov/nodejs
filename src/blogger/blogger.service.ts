@@ -82,9 +82,11 @@ export class BloggerService {
 
   async findOne(id: string) {
     const donorBlogger = await this.bloggerRepository.findOne({where: {id: id}});
+    console.log('donorBlogger', donorBlogger)
     if(donorBlogger) {
       return donorBlogger
     } else {
+      return null
       throw new HttpException('Blogger not found', HttpStatus.NOT_FOUND);
     }
   }

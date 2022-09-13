@@ -15,16 +15,18 @@ export function BlogIsExist(validationOptions?: ValidationOptions) {
   };
 }
 
-@ValidatorConstraint({ name: 'BlogIsExist', async: true })
+@ValidatorConstraint({ name: 'BlogIsExist', async: false })
 @Injectable()
 export class BlogIsExistRule implements ValidatorConstraintInterface {
-  constructor(@Inject() private blogRepository: Repository<Blogger>) {}
+  constructor(private blogService: BloggerService) {}
 
-  async validate(value: string) {
+  async validate(value: string, context: any) {
+    console.log('context', context)
     console.log('validate')
     try {
       console.log('try')
-      const blog = await this.blogRepository.find({where: {id: value}});
+      const blog = await this.blogService.findOne(value)
+      //const blog = await this.blogRepository.find({where: {id: value}});
       console.log('blog', blog)
     } catch (e) {
       console.log('catch')
@@ -38,4 +40,8 @@ export class BlogIsExistRule implements ValidatorConstraintInterface {
   }
 }
 
+
+function Component() {
+  throw new Error('Function not implemented.');
+}
 
