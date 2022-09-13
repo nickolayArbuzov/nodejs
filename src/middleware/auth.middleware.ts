@@ -1,12 +1,14 @@
 import { Injectable, NestMiddleware } from '@nestjs/common'
 import { Request, Response, NextFunction } from 'express'
+import { Blogger } from '../blogger/blogger.entity'
+import { Repository } from 'typeorm'
 import { BloggerService } from '../blogger/blogger.service'
 
 
 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
-  constructor(private blogService: BloggerService) {}
+  constructor(private blogService: Repository<Blogger>) {}
   async use(req: Request, res: Response, next: NextFunction) {
     console.log('req', req.route.path)
     const errorResponse = {
@@ -24,8 +26,9 @@ export class LoggerMiddleware implements NestMiddleware {
         errorResponse.errorsMessages.push({ message: 'error', field: "content"})
       }
       if (req.body.blogId) {
-        console.log('req.body.blogId', req.body.blogId)
-        blog = await this.blogService.findOne(req.body.blogId)
+        
+        blog = await this.blogService.findOne({where: {id: req.body.blogId}})
+        console.log('blog',blog)
       }
       if (!blog){
         errorResponse.errorsMessages.push({ message: 'error', field: "blogId"})

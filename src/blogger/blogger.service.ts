@@ -85,7 +85,7 @@ export class BloggerService {
       return donorBlogger
     } else {
       return null
-      throw new HttpException('Blogger not found', HttpStatus.NOT_FOUND);
+      //throw new HttpException('Blogger not found', HttpStatus.NOT_FOUND);
     }
   }
   
