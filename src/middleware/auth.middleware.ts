@@ -10,10 +10,9 @@ import { BloggerService } from '../blogger/blogger.service'
 export class LoggerMiddleware implements NestMiddleware {
   constructor(private blogService: BloggerService) {}
   async use(req: Request, res: Response, next: NextFunction) {
-    console.log(req.route.path)
+
     if (!(req.headers?.authorization?.split(' ')[1] === new Buffer('admin:qwerty').toString('base64')) || !(req.headers?.authorization?.split(' ')[0] === 'Basic')){
-      console.log('req.headers', req.headers)
-      console.log('401')
+
       res.sendStatus(401)
     }
     const errorResponse = {
@@ -33,7 +32,7 @@ export class LoggerMiddleware implements NestMiddleware {
       if (req.body.blogId) {
         
         blog = await this.blogService.findOne(req.body.blogId)
-        console.log('blog',blog)
+
       }
       if (!blog){
         errorResponse.errorsMessages.push({ message: 'error', field: "blogId"})
