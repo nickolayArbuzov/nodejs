@@ -1,12 +1,10 @@
 import { Module, forwardRef, Global } from '@nestjs/common';
-import { BlogIsExistsRule, ValidateService } from './validate.service';
+import { BlogIsExistsRule,  } from './validate.service';
 import { BloggerModule } from '../blogger/blogger.module';
 
 @Global()
 @Module({
   imports: [BloggerModule],
-  providers: [
-    ValidateService
-  ],
+  providers: [],
 })
 export class ValidateModule {}

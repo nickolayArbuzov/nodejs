@@ -1,7 +1,8 @@
 import { Global, Inject, Injectable } from '@nestjs/common';
-import { Blogger } from '../blogger/blogger.entity';
+import { Blogger } from './blogger.entity';
 import { Repository } from 'typeorm';
 import { registerDecorator, ValidationArguments, ValidationOptions, ValidatorConstraint, ValidatorConstraintInterface } from "class-validator";
+import { BloggerService } from './blogger.service';
 
 export function BlogIsExist(validationOptions?: ValidationOptions) {
   return function (object: any, propertyName: string) {
@@ -9,35 +10,32 @@ export function BlogIsExist(validationOptions?: ValidationOptions) {
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,
-      validator: BlogIsExistsRule,
+      validator: BlogIsExistRule,
     });
   };
 }
 
-
-@ValidatorConstraint({ async: true })
+@ValidatorConstraint({ name: 'BlogIsExist', async: true })
 @Injectable()
-export class BlogIsExistsRule implements ValidatorConstraintInterface {
-  constructor(
-    @Inject('BLOGGER_REPOSITORY') 
-    private readonly blogRepository: Repository<Blogger>,
-  ) {}
+export class BlogIsExistRule implements ValidatorConstraintInterface {
+  constructor(@Inject() private blogRepository: Repository<Blogger>) {}
 
   async validate(value: string) {
-    console.log('validate-try1')
-    const blog = await this.blogRepository.findOne({where: {id: value}});
-    console.log('validate-blog', blog)
-    if(!blog){
-       return false
+    console.log('validate')
+    try {
+      console.log('try')
+      const blog = await this.blogRepository.find({where: {id: value}});
+      console.log('blog', blog)
+    } catch (e) {
+      console.log('catch')
+      return false;
     }
-    return true
-    // use repo
+    return true;
   }
 
   defaultMessage(args: ValidationArguments) {
-    return `Blog doesn't exist`;
+    return `User doesn't exist`;
   }
-  
 }
 
 

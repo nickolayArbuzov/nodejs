@@ -32,7 +32,6 @@ import { ValidateModule } from './validate/validate.module';
     UserModule,
     VideoModule,
     AllDataModule,
-    ValidateModule,
   ],
 })
 export class AppModule {}
