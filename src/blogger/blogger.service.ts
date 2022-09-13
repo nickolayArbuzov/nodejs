@@ -76,7 +76,7 @@ export class BloggerService {
       page: query.pageNumber ? +query.pageNumber : +queryDefault.pageNumber, 
       pageSize: query.pageSize ? +query.pageSize : +queryDefault.pageSize, 
       totalCount: count, 
-      items: returnedBlogs.sort((a,b) => a.name > b.name ? 1 : -1)
+      items: query.sortBy === 'name' ? returnedBlogs.sort((a,b) => a.name > b.name ? (sortDirection === 'ASC' ? 1 : -1) : (sortDirection !== 'ASC' ? -1 : 1)) : returnedBlogs
     }
   }
 
