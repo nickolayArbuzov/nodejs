@@ -64,7 +64,7 @@ export class BloggerService {
     const all = await repo
       .skip((query.pageNumber ? (+query.pageNumber-1) : (+queryDefault.pageNumber-1)) * (query.pageSize ? + +query.pageSize : +queryDefault.pageSize))
       .take(query.pageSize ? +query.pageSize : +queryDefault.pageSize)
-      .orderBy(`blog.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, sortDirection) // TODO search about sort
+      .orderBy(`blog.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, sortDirection)
       .getMany()
 
     const count = await repo.getCount()
@@ -76,7 +76,7 @@ export class BloggerService {
       page: query.pageNumber ? +query.pageNumber : +queryDefault.pageNumber, 
       pageSize: query.pageSize ? +query.pageSize : +queryDefault.pageSize, 
       totalCount: count, 
-      items: query.sortBy === 'name' ? returnedBlogs.sort((a,b) => a.name > b.name ? (sortDirection === 'ASC' ? 1 : -1) : (sortDirection !== 'ASC' ? -1 : 1)) : returnedBlogs
+      items: query.sortBy === 'name' ? returnedBlogs.sort((a,b) => a.name > b.name && sortDirection === 'ASC' ? 1 : -1 ) : returnedBlogs
     }
   }
 
