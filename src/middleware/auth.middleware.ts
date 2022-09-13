@@ -8,7 +8,7 @@ import { BloggerService } from '../blogger/blogger.service'
 export class LoggerMiddleware implements NestMiddleware {
   constructor(private blogService: BloggerService) {}
   async use(req: Request, res: Response, next: NextFunction) {
-    console.log('req', req.route.path)
+    console.log('req', req.route)
     const errorResponse = {
       errorsMessages: [],
     }
