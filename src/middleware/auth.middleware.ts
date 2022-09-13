@@ -8,7 +8,7 @@ import { BloggerService } from '../blogger/blogger.service'
 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
-  constructor(private blogService: Repository<Blogger>) {}
+  constructor(private blogService: BloggerService) {}
   async use(req: Request, res: Response, next: NextFunction) {
     console.log('req', req.route.path)
     const errorResponse = {
@@ -27,7 +27,7 @@ export class LoggerMiddleware implements NestMiddleware {
       }
       if (req.body.blogId) {
         
-        blog = await this.blogService.findOne({where: {id: req.body.blogId}})
+        blog = await this.blogService.findOne(req.body.blogId)
         console.log('blog',blog)
       }
       if (!blog){
