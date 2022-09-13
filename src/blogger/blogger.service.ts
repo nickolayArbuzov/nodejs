@@ -55,7 +55,7 @@ export class BloggerService {
     const repo = this.bloggerRepository.createQueryBuilder('blog')
     if(query.searchNameTerm) {
       //repo.where("LOWER(blog.name) like :name", { name: `LOWER(%${query.searchNameTerm}%)` })
-      repo.where("blog.name like :name", { name: `%${query.searchNameTerm.toLowerCase()}%` })
+      repo.where("LOWER(blog.name) like :name", { name: `%${query.searchNameTerm.toLowerCase()}%` })
     }
     
     const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'
