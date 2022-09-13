@@ -23,7 +23,8 @@ export class BlogIsExistRule implements ValidatorConstraintInterface {
   async validate(value: string, context: any) {
     try {
       const blog = await this.blogService.findOne(value)
-      console.log('blog', blog)
+      console.log('blog-valid', blog)
+      return true;
       //const blog = await this.blogRepository.find({where: {id: value}});
     } catch (e) {
       return false;
