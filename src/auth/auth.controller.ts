@@ -10,6 +10,7 @@ export class AuthController {
 
     @Get('login')
     login(@Body() authDto: AuthDto ){
+        console.log('authDto-controller', authDto)
         this.authService.login(authDto)
     }
 
