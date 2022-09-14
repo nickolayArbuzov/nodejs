@@ -6,8 +6,8 @@ import { AuthDto } from './dto/auth.dto';
 @Injectable()
 export class AuthService {
   constructor(
-    /*@Inject('USER_REPOSITORY')
-    private readonly userRepository: Repository<User>,*/
+    @Inject('USER_REPOSITORY')
+    private readonly userRepository: Repository<User>,
   ) {}
 
   login(authDto: AuthDto) {

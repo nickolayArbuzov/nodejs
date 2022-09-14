@@ -10,7 +10,6 @@ export class AuthController {
 
     @Get('login')
     login(@Body() authDto: AuthDto ){
-        return 'login'
         this.authService.login(authDto)
     }
 
