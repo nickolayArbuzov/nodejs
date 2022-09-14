@@ -1,4 +1,6 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
+import { QueryDto } from 'src/commonDTO/query.dto';
+import { queryDefault } from '../constants/constants';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.entity';
@@ -10,16 +12,34 @@ export class UserService {
     private userRepository: Repository<User>,
   ) {}
 
-  async findAll() {
-    const users = await this.userRepository.find();
-    return users.map(u => {
-      return {
-        createdAt: u.createdAt,
-        email: u.email,
-        id: u.id,
-        login: u.login,
-      }
-    })
+  async findAll(query: QueryDto) {
+    
+    const repo = this.userRepository.createQueryBuilder('blog')
+    if(query.searchNameTerm) {
+      //repo.where("LOWER(blog.name) like :name", { name: `LOWER(%${query.searchNameTerm}%)` })
+      repo.where("LOWER(blog.name) like :name", { name: `%${query.searchNameTerm.toLowerCase()}%` })
+    }
+    
+    const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'
+
+    const all = await repo
+      .skip((query.pageNumber ? (+query.pageNumber-1) : (+queryDefault.pageNumber-1)) * (query.pageSize ? + +query.pageSize : +queryDefault.pageSize))
+      .take(query.pageSize ? +query.pageSize : +queryDefault.pageSize)
+      .orderBy(`blog.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, sortDirection)
+      .getMany()
+
+    const count = await repo.getCount()
+    //TODO: automapper
+    //TODO: property order in returned obj's
+    const returnedUsers = all.map(a => {return {createdAt: a.createdAt, email: a.email, id: a.id, login: a.login}})
+    return {
+      pagesCount: Math.ceil(count/(query.pageSize ? + +query.pageSize : +queryDefault.pageSize)), 
+      page: query.pageNumber ? +query.pageNumber : +queryDefault.pageNumber, 
+      pageSize: query.pageSize ? +query.pageSize : +queryDefault.pageSize, 
+      totalCount: count, 
+      items: query.sortBy === 'name' ? returnedUsers.sort((a,b) => a.login > b.login && sortDirection === 'ASC' ? 1 : -1 ) : returnedUsers
+    }
+    
   }
 
   async createUser(dto: CreateUserDto) {

@@ -1,6 +1,7 @@
-import {Body, Controller, Delete, Get, HttpCode, Param, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, Param, Post, Query} from '@nestjs/common';
 import {UserService} from "./user.service";
 import { CreateUserDto } from './dto/create-user.dto';
+import { QueryDto } from '../commonDTO/query.dto';
 
 
 @Controller('users')
@@ -9,8 +10,8 @@ export class UserController {
     constructor(private userService: UserService) {}
 
     @Get()
-    getAll() {
-        return this.userService.findAll()
+    getAll(@Query() query: QueryDto) {
+        return this.userService.findAll(query)
     }
 
     @Post()
