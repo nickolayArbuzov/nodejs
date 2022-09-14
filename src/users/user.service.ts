@@ -1,5 +1,5 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
-import { QueryDto } from 'src/commonDTO/query.dto';
+import { QueryUserDto } from 'src/commonDTO/query.dto';
 import { queryDefault } from '../constants/constants';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -12,11 +12,20 @@ export class UserService {
     private userRepository: Repository<User>,
   ) {}
 
-  async findAll(query: QueryDto) {
+  async findAll(query: QueryUserDto) {
     console.log('user-query', query)
-    const repo = this.userRepository.createQueryBuilder('blog')
-    if(query.searchNameTerm) {
-      repo.where("LOWER(blog.name) like :name", { name: `%${query.searchNameTerm.toLowerCase()}%` })
+    const repo = this.userRepository.createQueryBuilder('user')
+
+    //TODO: add bybass query-obj(helper)
+    if(query.searchEmailTerm && !query.searchLoginTerm) {
+      repo.where("LOWER(user.email) like :email", { email: `%${query.searchEmailTerm.toLowerCase()}%` })
+    }
+    if(!query.searchEmailTerm && query.searchLoginTerm) {
+      repo.where("LOWER(user.login) like :login", { email: `%${query.searchLoginTerm.toLowerCase()}%` })
+    }
+    if(query.searchEmailTerm && query.searchLoginTerm) {
+      repo.where("LOWER(user.email) like :email", { email: `%${query.searchEmailTerm.toLowerCase()}%` })
+      repo.andWhere("LOWER(user.login) like :login", { email: `%${query.searchLoginTerm.toLowerCase()}%` })
     }
     
     const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'
@@ -24,7 +33,7 @@ export class UserService {
     const all = await repo
       .skip((query.pageNumber ? (+query.pageNumber-1) : (+queryDefault.pageNumber-1)) * (query.pageSize ? + +query.pageSize : +queryDefault.pageSize))
       .take(query.pageSize ? +query.pageSize : +queryDefault.pageSize)
-      .orderBy(`blog.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, sortDirection)
+      .orderBy(`user.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, sortDirection)
       .getMany()
 
     const count = await repo.getCount()
