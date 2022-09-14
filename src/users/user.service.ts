@@ -13,7 +13,6 @@ export class UserService {
   ) {}
 
   async findAll(query: QueryUserDto) {
-    console.log('user-query', query)
     const repo = this.userRepository.createQueryBuilder('user')
 
     //TODO: add bybass query-obj(helper)
@@ -21,11 +20,11 @@ export class UserService {
       repo.where("LOWER(user.email) like :email", { email: `%${query.searchEmailTerm.toLowerCase()}%` })
     }
     if(!query.searchEmailTerm && query.searchLoginTerm) {
-      repo.where("LOWER(user.login) like :login", { email: `%${query.searchLoginTerm.toLowerCase()}%` })
+      repo.where("LOWER(user.login) like :login", { login: `%${query.searchLoginTerm.toLowerCase()}%` })
     }
     if(query.searchEmailTerm && query.searchLoginTerm) {
       repo.where("LOWER(user.email) like :email", { email: `%${query.searchEmailTerm.toLowerCase()}%` })
-      repo.andWhere("LOWER(user.login) like :login", { email: `%${query.searchLoginTerm.toLowerCase()}%` })
+      repo.andWhere("LOWER(user.login) like :login", { login: `%${query.searchLoginTerm.toLowerCase()}%` })
     }
     
     const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'
@@ -40,8 +39,6 @@ export class UserService {
     //TODO: automapper
     //TODO: property order in returned obj's
     const returnedUsers = all.map(a => {return {createdAt: a.createdAt, email: a.email, id: a.id, login: a.login}})
-    console.log('returnedUsers', returnedUsers)
-    console.log('user-query', query)
     return {
       pagesCount: Math.ceil(count/(query.pageSize ? + +query.pageSize : +queryDefault.pageSize)), 
       page: query.pageNumber ? +query.pageNumber : +queryDefault.pageNumber, 
