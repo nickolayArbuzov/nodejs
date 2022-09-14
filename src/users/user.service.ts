@@ -39,6 +39,10 @@ export class UserService {
     //TODO: automapper
     //TODO: property order in returned obj's
     const returnedUsers = all.map(a => {return {createdAt: a.createdAt, email: a.email, id: a.id, login: a.login}})
+    const alluser = await this.userRepository.find()
+    console.log('alluser', alluser)
+    console.log('returnedUsers', returnedUsers)
+    console.log('user-query', query)
     return {
       pagesCount: Math.ceil(count/(query.pageSize ? + +query.pageSize : +queryDefault.pageSize)), 
       page: query.pageNumber ? +query.pageNumber : +queryDefault.pageNumber, 
