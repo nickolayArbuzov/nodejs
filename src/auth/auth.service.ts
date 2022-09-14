@@ -12,14 +12,12 @@ export class AuthService {
 
   async login(authDto: AuthDto) {
     const all = await this.userRepository.find()
-    console.log('all', all)
-    console.log('authDTO', authDto)
     const auth = await this.userRepository.findOne({where: {login: authDto.login, password: authDto.password}})
-    console.log('finded-auth', auth)
     if (auth) {
       return auth
     } 
     else {
+      console.log('authfind', auth)
       throw new HttpException('Auth not found', HttpStatus.UNAUTHORIZED);
     }
   }
