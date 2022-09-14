@@ -8,7 +8,7 @@ export class AuthController {
 
     constructor(private authService: AuthService) {}
 
-    @Get('login')
+    @Post('login')
     login(@Body() authDto: AuthDto ){
         console.log('authDto-controller', authDto)
         this.authService.login(authDto)
