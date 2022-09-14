@@ -13,10 +13,9 @@ export class UserService {
   ) {}
 
   async findAll(query: QueryDto) {
-    
+    console.log('user-query', query)
     const repo = this.userRepository.createQueryBuilder('blog')
     if(query.searchNameTerm) {
-      //repo.where("LOWER(blog.name) like :name", { name: `LOWER(%${query.searchNameTerm}%)` })
       repo.where("LOWER(blog.name) like :name", { name: `%${query.searchNameTerm.toLowerCase()}%` })
     }
     
