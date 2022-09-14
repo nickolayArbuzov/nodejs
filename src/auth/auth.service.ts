@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { User } from '../users/user.entity';
 import { Repository } from 'typeorm';
 import { AuthDto } from './dto/auth.dto';
@@ -11,8 +11,13 @@ export class AuthService {
   ) {}
 
   login(authDto: AuthDto) {
-    console.log('authDto', authDto)
-    //this.userRepository.findOne({})
+    const auth = this.userRepository.findOne({where: {login: authDto.login, password: authDto.password}})
+    if (auth) {
+      return auth
+    } 
+    else {
+      throw new HttpException('Auth not found', HttpStatus.UNAUTHORIZED);
+    }
   }
   
 }
