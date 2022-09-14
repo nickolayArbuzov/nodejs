@@ -24,7 +24,7 @@ export class UserService {
     }
     if(query.searchEmailTerm && query.searchLoginTerm) {
       repo.where("LOWER(user.email) like :email", { email: `%${query.searchEmailTerm.toLowerCase()}%` })
-      repo.orWhere("LOWER(user.login) like :login", { login: `%${query.searchLoginTerm.toLowerCase()}%` })
+      repo.andWhere("LOWER(user.login) like :login", { login: `%${query.searchLoginTerm.toLowerCase()}%` })
     }
     
     const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'
@@ -44,6 +44,7 @@ export class UserService {
       page: query.pageNumber ? +query.pageNumber : +queryDefault.pageNumber, 
       pageSize: query.pageSize ? +query.pageSize : +queryDefault.pageSize, 
       totalCount: count, 
+      // скорее всего связано с различной сортировкой в js и postgresql
       items: query.sortBy === 'login' ? returnedUsers.sort((a,b) => a.login > b.login && sortDirection === 'ASC' ? 1 : -1 ) : returnedUsers
     }
     

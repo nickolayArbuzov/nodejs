@@ -75,6 +75,7 @@ export class BloggerService {
       page: query.pageNumber ? +query.pageNumber : +queryDefault.pageNumber, 
       pageSize: query.pageSize ? +query.pageSize : +queryDefault.pageSize, 
       totalCount: count, 
+      // скорее всего связано с различной сортировкой в js и postgresql
       items: query.sortBy === 'name' ? returnedBlogs.sort((a,b) => a.name > b.name && sortDirection === 'ASC' ? 1 : -1 ) : returnedBlogs
     }
   }
