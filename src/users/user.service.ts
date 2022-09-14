@@ -24,7 +24,7 @@ export class UserService {
     }
     if(query.searchEmailTerm && query.searchLoginTerm) {
       repo.where("LOWER(user.email) like :email", { email: `%${query.searchEmailTerm.toLowerCase()}%` })
-      repo.andWhere("LOWER(user.login) like :login", { login: `%${query.searchLoginTerm.toLowerCase()}%` })
+      repo.orWhere("LOWER(user.login) like :login", { login: `%${query.searchLoginTerm.toLowerCase()}%` })
     }
     
     const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'
