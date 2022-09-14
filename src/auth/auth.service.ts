@@ -10,8 +10,8 @@ export class AuthService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  login(authDto: AuthDto) {
-    const auth = this.userRepository.findOne({where: {login: authDto.login, password: authDto.password}})
+  async login(authDto: AuthDto) {
+    const auth = await this.userRepository.findOne({where: {login: authDto.login, password: authDto.password}})
     if (auth) {
       return auth
     } 
