@@ -1,4 +1,5 @@
 import {Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, ParseIntPipe, ParseUUIDPipe, Post, Put, Query, Req, UseGuards} from '@nestjs/common';
+import { Request } from 'express';
 import {PostService} from "./post.service";
 import { CreatePostDto, UpdatePostDto } from './dto/post.dto';
 import { AuthGuard } from '../guards/auth.guard';
