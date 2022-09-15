@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, ParseIntPipe, ParseUUIDPipe, Post, Put, Query, UseGuards} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, ParseIntPipe, ParseUUIDPipe, Post, Put, Query, Req, UseGuards} from '@nestjs/common';
 import {PostService} from "./post.service";
 import { CreatePostDto, UpdatePostDto } from './dto/post.dto';
 import { AuthGuard } from '../guards/auth.guard';
@@ -41,7 +41,8 @@ export class PostController {
     }
 
     @Post(':id/comments')
-    async createCommentForPostId(@Param('id') id: string, @Body() commentDto: CreateCommentDto) {
+    async createCommentForPostId(@Param('id') id: string, @Body() commentDto: CreateCommentDto, @Req() req: Request) {
+        console.log('req', req)
         console.log('commentDto', commentDto)
         const post = await this.postService.findOne(id)
         if (post){

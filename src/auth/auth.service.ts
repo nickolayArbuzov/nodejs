@@ -15,7 +15,7 @@ export class AuthService {
   async login(authDto: AuthDto) {
     const auth: User = await this.userRepository.findOne({where: {login: authDto.login, password: authDto.password}})
     if (auth) {
-      const payload = {email: auth.email, login: auth.login}
+      const payload = {id: auth.id, login: auth.login}
       return {accessToken: this.jwtService.sign(payload)}
     } 
     else {
