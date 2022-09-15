@@ -16,7 +16,7 @@ export class AuthService {
     const auth: User = await this.userRepository.findOne({where: {login: authDto.login, password: authDto.password}})
     if (auth) {
       const payload = {email: auth.email, login: auth.login}
-      return {token: this.jwtService.sign(payload)}
+      return {accessToken: this.jwtService.sign(payload)}
     } 
     else {
       throw new HttpException('Auth not found', HttpStatus.UNAUTHORIZED);
