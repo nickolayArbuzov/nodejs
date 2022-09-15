@@ -1,5 +1,5 @@
 import { Injectable, Inject, HttpException, HttpStatus } from '@nestjs/common';
-import { QueryUserDto } from 'src/commonDTO/query.dto';
+import { QueryUserDto } from '../commonDTO/query.dto';
 import { queryDefault } from '../constants/constants';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';

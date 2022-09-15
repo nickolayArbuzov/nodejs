@@ -1,4 +1,4 @@
-import { QueryBlogDto } from "src/commonDTO/query.dto";
+import { QueryBlogDto } from "../commonDTO/query.dto";
 
 export const queryDefault: QueryBlogDto = {
     pageNumber: '1',

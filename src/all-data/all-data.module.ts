@@ -5,7 +5,7 @@ import { VideoModule } from '../videos/videos.module';
 import { BloggerModule } from '../blogger/blogger.module';
 import { PostModule } from '../posts/post.module';
 import { UserModule } from '../users/user.module';
-import { CommentModule } from 'src/comments/comment.module';
+import { CommentModule } from '../comments/comment.module';
 
 @Module({
   controllers: [AllDataController],

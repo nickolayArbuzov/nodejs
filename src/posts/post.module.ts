@@ -1,5 +1,5 @@
 import { forwardRef, Module } from '@nestjs/common';
-import { CommentModule } from 'src/comments/comment.module';
+import { CommentModule } from '../comments/comment.module';
 import { BloggerModule } from '../blogger/blogger.module';
 import { DatabaseModule } from '../database/database.module';
 import { PostController } from './post.controller';
