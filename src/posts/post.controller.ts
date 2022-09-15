@@ -3,8 +3,8 @@ import {PostService} from "./post.service";
 import { CreatePostDto, UpdatePostDto } from './dto/post.dto';
 import { AuthGuard } from '../guards/auth.guard';
 import { QueryBlogDto } from '../commonDTO/query.dto';
-import { CommentService } from 'src/comments/comment.service';
-import { CreateCommentDto } from 'src/comments/dto/comment.dto';
+import { CommentService } from '../comments/comment.service';
+import { CreateCommentDto } from '../comments/dto/comment.dto';
 
 
 @Controller('posts')
