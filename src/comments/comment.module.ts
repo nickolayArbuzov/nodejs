@@ -11,5 +11,6 @@ import { CommentService } from './comment.service';
     ...commentProviders,
     CommentService,
   ],
+  exports: [CommentService, commentProviders.find(b => b.provide==='COMMENT_REPOSITORY')]
 })
 export class CommentModule {}

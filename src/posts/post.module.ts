@@ -1,4 +1,5 @@
 import { forwardRef, Module } from '@nestjs/common';
+import { CommentModule } from 'src/comments/comment.module';
 import { BloggerModule } from '../blogger/blogger.module';
 import { DatabaseModule } from '../database/database.module';
 import { PostController } from './post.controller';
@@ -7,7 +8,7 @@ import { PostService } from './post.service';
 
 @Module({
   controllers: [PostController],
-  imports: [DatabaseModule, forwardRef(() => BloggerModule)],
+  imports: [DatabaseModule, forwardRef(() => BloggerModule), CommentModule],
   providers: [
     ...postProviders,
     PostService,

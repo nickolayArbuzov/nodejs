@@ -8,7 +8,6 @@ export class AuthController {
 
     constructor(private authService: AuthService) {}
 
-    @HttpCode(204)
     @Post('login')
     login(@Body() authDto: AuthDto ){
         return this.authService.login(authDto)

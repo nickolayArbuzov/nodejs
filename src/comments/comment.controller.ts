@@ -1,6 +1,6 @@
-import {Body, Controller, Get, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Put} from '@nestjs/common';
 import {CommentService} from "./comment.service";
-import { CreateCommentDto } from './dto/create-comment.dto';
+import { CreateCommentDto } from './dto/comment.dto'
 
 
 @Controller('comments')
@@ -8,14 +8,19 @@ export class CommentController {
 
     constructor(private commentService: CommentService) {}
 
-    @Post()
-    create(@Body() commentDto: CreateCommentDto) {
-        
+    @Get('id')
+    getOne(@Param('id') id: string) {
+        return this.commentService.findOne(id)
     }
 
-    @Get()
-    getAll() {
-        return 'comments'
+    @Put(':id')
+    update(@Param('id') id: string, @Body() commentDto: CreateCommentDto) {
+        return this.commentService.updateOne(id, commentDto)
+    }
+
+    @Delete(':id')
+    delete(@Param('id') id: string) {
+        return this.commentService.deleteOne(id)
     }
 
 }

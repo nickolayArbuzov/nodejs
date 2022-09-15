@@ -12,9 +12,7 @@ import { queryDefault } from '../constants/constants';
 export class BloggerService {
   constructor(
     @Inject('BLOGGER_REPOSITORY') 
-    private readonly bloggerRepository: Repository<Blogger>,
-    @Inject('BLOGGER_REPOSITORY') 
-    private readonly postRepository: Repository<Post>,
+    private readonly bloggerRepository: Repository<Blogger>
   ) {}
 
   async findAllPostsByBlogId(id: string, query: QueryBlogDto) {

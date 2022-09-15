@@ -29,6 +29,7 @@ export class BloggerController {
         return this.bloggerService.findAllPostsByBlogId(id, query)
     }
 
+    //jwtGuard
     @UseGuards(AuthGuard)
     @Post()
     create(@Body() bloggerDto: CreateBloggerDto) {
@@ -38,6 +39,7 @@ export class BloggerController {
     @UseGuards(AuthGuard)
     @Post(':id/posts') 
     creatPostForBlogId(@Param('id') id: string, @Body() postDto: CratePostDtoWithoutBlogId) {
+        // проверка блокID в блогрепозитории {}
         return this.postService.creatPostForBlogId(id, postDto)
     }
     /*creatPostForBlogId(@Param('id') id: string, @Request() req) {
