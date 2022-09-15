@@ -43,7 +43,7 @@ export class PostController {
 
     @Post(':id/comments')
     async createCommentForPostId(@Param('id') id: string, @Body() commentDto: CreateCommentDto, @Req() req: Request) {
-        console.log('req', req)
+        console.log('req', req.headers?.authorization)
         console.log('commentDto', commentDto)
         const post = await this.postService.findOne(id)
         if (post){
