@@ -5,9 +5,9 @@ export class CreateCommentDto {
     @Length(20, 300)
     readonly content: string;
 
-    @IsUUID()
+    /*@IsUUID()
     readonly userId: string;
 
     @IsString()
-    readonly userLogin: string;
+    readonly userLogin: string;*/
 }
