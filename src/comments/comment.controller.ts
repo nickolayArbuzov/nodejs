@@ -1,6 +1,6 @@
 import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Req, UseGuards} from '@nestjs/common';
 import { Request } from 'express';
-import { AuthGuard } from 'src/guards/auth.guard';
+import { AuthGuard } from '../guards/auth.guard';
 import { JWTGuard } from '../guards/jwt.guard';
 import {CommentService} from "./comment.service";
 import { CreateCommentDto } from './dto/comment.dto'
