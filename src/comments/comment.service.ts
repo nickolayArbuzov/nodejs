@@ -55,6 +55,7 @@ export class CommentService {
   }
 
   async create(postId: string, dto: CreateCommentDto, user: {id: string, login: string}) {
+    console.log('create-user', user)
     const newComment = new Comment()
     newComment.content = dto.content
     newComment.postId = postId
@@ -62,7 +63,7 @@ export class CommentService {
     newComment.userLogin = user.login
     let date = new Date
     newComment.createdAt = date.toISOString()
-    const post = await this.commentRepository.insert(newComment);
+    await this.commentRepository.insert(newComment);
     return {
       content: newComment.content, 
       createdAt: newComment.createdAt, 
@@ -82,7 +83,7 @@ export class CommentService {
         ...donorComment,
         content: dto.content,
       } 
-      const comment = await this.commentRepository.update(id, newComment);
+      await this.commentRepository.update(id, newComment);
       return newComment;
     } else {
       throw new HttpException('Comment not found', HttpStatus.NOT_FOUND);
@@ -91,6 +92,7 @@ export class CommentService {
 
   async deleteOne(id: string, userId: string) {
     const donorComment = await this.commentRepository.findOne({where: {id: id}});
+    console.log('donorComment', donorComment)
     if(donorComment.userId !== userId) {
       throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
     }
