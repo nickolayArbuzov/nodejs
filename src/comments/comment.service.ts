@@ -79,12 +79,16 @@ export class CommentService {
       throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
     }
     if(donorComment) {
-      const newComment = {
-        ...donorComment,
-        content: dto.content,
-      } 
-      await this.commentRepository.update(id, newComment);
-      return newComment;
+      if(donorComment.userId !== userId) {
+        throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+      } else {
+        const newComment = {
+          ...donorComment,
+          content: dto.content,
+        } 
+        await this.commentRepository.update(id, newComment);
+        return newComment;
+      }
     } else {
       throw new HttpException('Comment not found', HttpStatus.NOT_FOUND);
     }
