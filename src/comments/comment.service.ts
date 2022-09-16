@@ -13,6 +13,7 @@ export class CommentService {
   async findOne(id: string) {
     const donorCommnet = await this.commentRepository.findOne({where: {id: id}});
     if(donorCommnet) {
+      console.log('oneComment', donorCommnet)
       return donorCommnet
     } else {
       throw new HttpException('Comment not found', HttpStatus.NOT_FOUND);
@@ -28,7 +29,8 @@ export class CommentService {
     let date = new Date
     newComment.createdAt = date.toISOString()
     const post = await this.commentRepository.insert(newComment);
-    return {content: newComment.content}
+    console.log('newComment', newComment)
+    return newComment
   }
 
   async updateOne(id: string, dto: CreateCommentDto) {
