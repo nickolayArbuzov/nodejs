@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { User } from '../users/user.entity';
 import { Repository } from 'typeorm';
-import { AuthDto } from './dto/auth.dto';
+import { AuthDto, RegistrationConfirmationDto, RegistrationDto, RegistrationEmailResendingDto } from './dto/auth.dto';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class AuthService {
     private jwtService: JwtService
   ) {}
 
-  async login(authDto: AuthDto) {
+  async login(dto: AuthDto) {
     const auth: User = await this.userRepository.findOne({where: {login: authDto.login, password: authDto.password}})
     if (auth) {
       const payload = {id: auth.id, login: auth.login}
@@ -21,6 +21,18 @@ export class AuthService {
     else {
       throw new HttpException('Auth not found', HttpStatus.UNAUTHORIZED);
     }
+  }
+
+  async registration(dto: RegistrationDto) {
+    console.log('registration', dto)
+  }
+
+  async registrationConfirmation(dto: RegistrationConfirmationDto) {
+    console.log('registrationConfirmation', dto)
+  }
+
+  async registrationEmailResending(dto: RegistrationEmailResendingDto) {
+    console.log('registrationEmailResending', dto)
   }
   
 }
