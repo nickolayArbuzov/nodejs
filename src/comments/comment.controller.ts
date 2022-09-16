@@ -13,6 +13,7 @@ export class CommentController {
         return this.commentService.findOne(id)
     }
 
+    @HttpCode(204)
     @Put(':id')
     update(@Param('id') id: string, @Body() commentDto: CreateCommentDto) {
         return this.commentService.updateOne(id, commentDto)

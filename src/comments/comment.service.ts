@@ -13,8 +13,13 @@ export class CommentService {
   async findOne(id: string) {
     const donorCommnet = await this.commentRepository.findOne({where: {id: id}});
     if(donorCommnet) {
-      console.log('oneComment', donorCommnet)
-      return donorCommnet
+      return {
+        content: donorCommnet.content, 
+        createdAt: donorCommnet.createdAt, 
+        id: donorCommnet.id, 
+        userId: donorCommnet.userId, 
+        userLogin: donorCommnet.userLogin,
+      }
     } else {
       throw new HttpException('Comment not found', HttpStatus.NOT_FOUND);
     }
