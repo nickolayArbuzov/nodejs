@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { AuthModule } from 'src/auth/auth.module';
 import { DatabaseModule } from '../database/database.module';
 import { CommentController } from './comment.controller';
 import { commentProviders } from './comment.providers';
@@ -6,7 +7,7 @@ import { CommentService } from './comment.service';
 
 @Module({
   controllers: [CommentController],
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, AuthModule],
   providers: [
     ...commentProviders,
     CommentService,

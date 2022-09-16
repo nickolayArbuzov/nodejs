@@ -1,4 +1,7 @@
-import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Req, UseGuards} from '@nestjs/common';
+import { Request } from 'express';
+import { AuthGuard } from 'src/guards/auth.guard';
+import { JWTGuard } from '../guards/jwt.guard';
 import {CommentService} from "./comment.service";
 import { CreateCommentDto } from './dto/comment.dto'
 
@@ -13,15 +16,19 @@ export class CommentController {
         return this.commentService.findOne(id)
     }
 
+    @UseGuards(JWTGuard)
+    @UseGuards(AuthGuard)
     @HttpCode(204)
     @Put(':id')
-    update(@Param('id') id: string, @Body() commentDto: CreateCommentDto) {
+    update(@Param('id') id: string, @Body() commentDto: CreateCommentDto, @Req() req: Request) {
         return this.commentService.updateOne(id, commentDto)
     }
 
+    @UseGuards(JWTGuard)
+    @UseGuards(AuthGuard)
     @HttpCode(204)
     @Delete(':id')
-    delete(@Param('id') id: string) {
+    delete(@Param('id') id: string, @Req() req: Request) {
         return this.commentService.deleteOne(id)
     }
 

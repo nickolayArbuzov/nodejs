@@ -29,6 +29,7 @@ export class PostController {
     @Get(':id/comments')
     async getCommentsByPostId(@Param('id') id: string) {
         const post = await this.postService.findOne(id)
+        console.log("GET POST COMMENTS", post)
         if (post){
             return this.commentService.findOne(id)
         } else {
@@ -45,7 +46,6 @@ export class PostController {
     @UseGuards(JWTGuard)
     @Post(':id/comments')
     async createCommentForPostId(@Param('id') id: string, @Body() commentDto: CreateCommentDto, @Req() req: Request) {
-        // обращение к req.user - доп свойство из jwtguard
         const post = await this.postService.findOne(id)
         if (post){
             return this.commentService.create(id, commentDto, req.user)
