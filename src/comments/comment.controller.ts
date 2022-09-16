@@ -17,15 +17,15 @@ export class CommentController {
     }
 
     @UseGuards(JWTGuard)
-    @UseGuards(AuthGuard)
+    //@UseGuards(AuthGuard)
     @HttpCode(204)
     @Put(':id')
     update(@Param('id') id: string, @Body() commentDto: CreateCommentDto, @Req() req: Request) {
-        return this.commentService.updateOne(id, commentDto)
+        return this.commentService.updateOne(id, commentDto, req.user.id)
     }
 
     @UseGuards(JWTGuard)
-    @UseGuards(AuthGuard)
+    //@UseGuards(AuthGuard)
     @HttpCode(204)
     @Delete(':id')
     delete(@Param('id') id: string, @Req() req: Request) {

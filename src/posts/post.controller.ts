@@ -27,9 +27,9 @@ export class PostController {
     }
 
     @Get(':id/comments')
-    async getCommentsByPostId(@Param('id') id: string) {
+    async getCommentsByPostId(@Param('id') id: string, @Query() query: any) {
+        console.log('query-comments', query)
         const post = await this.postService.findOne(id)
-        console.log("GET POST COMMENTS", post)
         if (post){
             return this.commentService.findOne(id)
         } else {

@@ -43,8 +43,11 @@ export class CommentService {
     }
   }
 
-  async updateOne(id: string, dto: CreateCommentDto) {
+  async updateOne(id: string, dto: CreateCommentDto, userId: string ) {
     const donorComment = await this.commentRepository.findOne({where: {id: id}});
+    if(donorComment.userId !== userId) {
+      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+    }
     if(donorComment) {
       const newComment = {
         ...donorComment,
@@ -60,7 +63,7 @@ export class CommentService {
   async deleteOne(id: string, userId: string) {
     const donorComment = await this.commentRepository.findOne({where: {id: id}});
     if(donorComment.userId !== userId) {
-      return //error
+      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
     }
     if(donorComment) {
       await this.commentRepository.delete(id)
