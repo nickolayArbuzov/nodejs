@@ -31,7 +31,7 @@ export class PostController {
         console.log('query-comments', query)
         const post = await this.postService.findOne(id)
         if (post){
-            return this.commentService.findOne(id)
+            return this.commentService.findAllCommentsByPostId(id, query)
         } else {
             throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
         }

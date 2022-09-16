@@ -18,7 +18,7 @@ export class CommentService {
     const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'
   
     const all = await repo
-      .where({blogId: id})
+      .where({postId: id})
       .skip((query.pageNumber ? (+query.pageNumber-1) : (+queryDefault.pageNumber-1)) * (query.pageSize ? + +query.pageSize : +queryDefault.pageSize))
       .take(query.pageSize ? +query.pageSize : +queryDefault.pageSize)
       .orderBy(`comment.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, sortDirection)
