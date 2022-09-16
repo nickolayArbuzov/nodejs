@@ -45,7 +45,6 @@ export class PostController {
     @UseGuards(JWTGuard)
     @Post(':id/comments')
     async createCommentForPostId(@Param('id') id: string, @Body() commentDto: CreateCommentDto, @Req() req: Request) {
-        console.log('req-post', req.user)
         const post = await this.postService.findOne(id)
         if (post){
             return this.commentService.create(id, commentDto, req.user)
