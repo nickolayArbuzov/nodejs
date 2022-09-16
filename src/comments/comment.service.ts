@@ -92,12 +92,13 @@ export class CommentService {
 
   async deleteOne(id: string, userId: string) {
     const donorComment = await this.commentRepository.findOne({where: {id: id}});
-    console.log('donorComment', donorComment)
-    if(donorComment.userId !== userId) {
-      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
-    }
+
     if(donorComment) {
-      await this.commentRepository.delete(id)
+      if(donorComment.userId !== userId) {
+        throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+      } else {
+        await this.commentRepository.delete(id)
+      }
     } else {
       throw new HttpException('Comment not found', HttpStatus.NOT_FOUND);
     }
