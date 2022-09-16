@@ -29,7 +29,7 @@ export class CommentController {
     @HttpCode(204)
     @Delete(':id')
     delete(@Param('id') id: string, @Req() req: Request) {
-        return this.commentService.deleteOne(id)
+        return this.commentService.deleteOne(id, req.user.id)
     }
 
 }
