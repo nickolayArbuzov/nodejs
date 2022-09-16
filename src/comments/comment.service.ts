@@ -57,8 +57,11 @@ export class CommentService {
     }
   }
 
-  async deleteOne(id: string) {
+  async deleteOne(id: string, userId: string) {
     const donorComment = await this.commentRepository.findOne({where: {id: id}});
+    if(donorComment.userId !== userId) {
+      return //error
+    }
     if(donorComment) {
       await this.commentRepository.delete(id)
     } else {
