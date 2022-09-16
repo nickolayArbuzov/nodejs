@@ -7,6 +7,7 @@ import { QueryBlogDto } from '../commonDTO/query.dto';
 import { CommentService } from '../comments/comment.service';
 import { CreateCommentDto } from '../comments/dto/comment.dto';
 import {JwtService} from "@nestjs/jwt";
+import { JWTGuard } from '../guards/jwt.guard';
 
 @Controller('posts')
 export class PostController {
@@ -14,7 +15,6 @@ export class PostController {
     constructor(
         private postService: PostService,
         private commentService: CommentService,
-        private jwtService: JwtService,
     ) {}
     @Get()
     getAll(@Query() query: QueryBlogDto) {
@@ -42,12 +42,11 @@ export class PostController {
         return this.postService.createPost(postDto)
     }
 
+    @UseGuards(JWTGuard)
     @Post(':id/comments')
     async createCommentForPostId(@Param('id') id: string, @Body() commentDto: CreateCommentDto, @Req() req: Request) {
-        const token = req.headers?.authorization.split(' ')[1]
-        const user = this.jwtService.verify(token);
-        console.log('token', token)
-        console.log('user', user)
+        // обращение к req.user - доп свойство из jwtguard
+        console.log('token', req.user)
         const post = await this.postService.findOne(id)
         if (post){
             return this.commentService.create(id, commentDto)
