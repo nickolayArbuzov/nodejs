@@ -46,10 +46,9 @@ export class PostController {
     @Post(':id/comments')
     async createCommentForPostId(@Param('id') id: string, @Body() commentDto: CreateCommentDto, @Req() req: Request) {
         // обращение к req.user - доп свойство из jwtguard
-        console.log('token', req.user)
         const post = await this.postService.findOne(id)
         if (post){
-            return this.commentService.create(id, commentDto)
+            return this.commentService.create(id, commentDto, req.user)
         } else {
             throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
         }
