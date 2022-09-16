@@ -1,7 +1,6 @@
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { SimpleConsoleLogger } from 'typeorm';
 
 @Injectable()
 export class JWTGuard implements CanActivate {
@@ -17,11 +16,12 @@ export class JWTGuard implements CanActivate {
       if (request.headers?.authorization?.split(' ')[1] === new Buffer('admin:qwerty').toString('base64') && request.headers?.authorization?.split(' ')[0] === 'Basic'){
         return true;
       }
-      console.log('request.headers?.authorization', request.headers?.authorization)
-      const user = this.jwtService.verify(request.headers?.authorization?.split(' ')[1])
-      if (user){
-        request.user = {id: user.id, login: user.login}
-        return true;
+      if (request.headers?.authorization?.split(' ')[0] === 'Bearer'){
+        const user = this.jwtService.verify(request.headers?.authorization?.split(' ')[1])
+        if (user){
+          request.user = {id: user.id, login: user.login}
+          return true;
+        }
       }
     }
     throw new UnauthorizedException()
