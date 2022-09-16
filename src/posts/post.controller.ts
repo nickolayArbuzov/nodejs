@@ -28,7 +28,6 @@ export class PostController {
 
     @Get(':id/comments')
     async getCommentsByPostId(@Param('id') id: string, @Query() query: any) {
-        console.log('query-comments', query)
         const post = await this.postService.findOne(id)
         if (post){
             return this.commentService.findAllCommentsByPostId(id, query)
@@ -46,6 +45,7 @@ export class PostController {
     @UseGuards(JWTGuard)
     @Post(':id/comments')
     async createCommentForPostId(@Param('id') id: string, @Body() commentDto: CreateCommentDto, @Req() req: Request) {
+        console.log('req-post', req)
         const post = await this.postService.findOne(id)
         if (post){
             return this.commentService.create(id, commentDto, req.user)
