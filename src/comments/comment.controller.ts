@@ -8,7 +8,7 @@ export class CommentController {
 
     constructor(private commentService: CommentService) {}
 
-    @Get('id')
+    @Get(':id')
     getOne(@Param('id') id: string) {
         return this.commentService.findOne(id)
     }
