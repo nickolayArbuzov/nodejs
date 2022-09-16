@@ -19,12 +19,12 @@ export class CommentService {
     }
   }
 
-  async create(postId: string, dto: CreateCommentDto) {
+  async create(postId: string, dto: CreateCommentDto, user: {id: string, login: string}) {
     const newComment = new Comment()
     newComment.content = dto.content
     newComment.postId = postId
-    /*newComment.userId = dto.userId
-    newComment.userLogin = dto.userLogin*/
+    newComment.userId = user.id
+    newComment.userLogin = user.login
     let date = new Date
     newComment.createdAt = date.toISOString()
     const post = await this.commentRepository.insert(newComment);

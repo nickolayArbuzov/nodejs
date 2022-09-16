@@ -2,6 +2,7 @@ import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { Observable } from 'rxjs';
+import { LockNotSupportedOnGivenDriverError } from 'typeorm';
 
 @Injectable()
 export class JWTGuard implements CanActivate {
@@ -14,7 +15,7 @@ export class JWTGuard implements CanActivate {
     const request: Request = context.switchToHttp().getRequest();
     const user = this.jwtService.verify(request.headers?.authorization.split(' ')[1])
     if (user){
-      request.user = user 
+      request.user = {id: user.id, login: user.login}
       return true;
     }
     throw new UnauthorizedException()

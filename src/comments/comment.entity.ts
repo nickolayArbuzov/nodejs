@@ -12,11 +12,11 @@ export class Comment {
   @Column('uuid')
   postId: string;
 
-  /*@Column('uuid')
+  @Column('uuid')
   userId: string;
 
   @Column()
-  userLogin: string;*/
+  userLogin: string;
 
   @Column()
   createdAt: string;
