@@ -1,7 +1,9 @@
 import { Injectable, Inject, HttpStatus, HttpException } from '@nestjs/common';
+import { QueryBlogDto } from '../commonDTO/query.dto';
 import { Repository } from 'typeorm';
 import { Comment } from './comment.entity';
 import { CreateCommentDto } from './dto/comment.dto';
+import { queryDefault } from '../constants/constants';
 
 @Injectable()
 export class CommentService {
@@ -9,6 +11,33 @@ export class CommentService {
     @Inject('COMMENT_REPOSITORY')
     private commentRepository: Repository<Comment>,
   ) {}
+
+  async findAllCommentsByPostId(id: string, query: QueryBlogDto) {
+    const repo = this.commentRepository.createQueryBuilder('comment')
+  
+    const sortDirection = (query.sortDirection ? query.sortDirection.toLocaleUpperCase() : queryDefault.sortDirection.toLocaleUpperCase()) as 'DESC' | 'ASC'
+  
+    const all = await repo
+      .where({blogId: id})
+      .skip((query.pageNumber ? (+query.pageNumber-1) : (+queryDefault.pageNumber-1)) * (query.pageSize ? + +query.pageSize : +queryDefault.pageSize))
+      .take(query.pageSize ? +query.pageSize : +queryDefault.pageSize)
+      .orderBy(`comment.${query.sortBy ? query.sortBy : queryDefault.sortBy}`, sortDirection)
+      .getMany()
+  
+    const count = await repo.getCount()
+    //TODO: automapper
+    //TODO: property order in returned obj's
+    const returnedComments = all.map(a => {
+      return {id: a.id, content: a.content, userId: a.userId, userLogin: a.userLogin, createdAt: a.createdAt}
+    })
+    return {
+      pagesCount: Math.ceil(count/(query.pageSize ? + +query.pageSize : +queryDefault.pageSize)), 
+      page: query.pageNumber ? +query.pageNumber : +queryDefault.pageNumber, 
+      pageSize: query.pageSize ? +query.pageSize : +queryDefault.pageSize, 
+      totalCount: count, 
+      items: returnedComments
+    }
+  }
 
   async findOne(id: string) {
     const donorCommnet = await this.commentRepository.findOne({where: {id: id}});
