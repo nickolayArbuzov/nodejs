@@ -13,7 +13,9 @@ export class JWTGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean {
     const request: Request = context.switchToHttp().getRequest();
+    console.log("BEFORE JWT VERIFY")
     const user = this.jwtService.verify(request.headers?.authorization.split(' ')[1])
+    console.log("AFTER JWT VERIFY", user)
     if (user){
       request.user = {id: user.id, login: user.login}
       return true;
