@@ -29,8 +29,13 @@ export class CommentService {
     let date = new Date
     newComment.createdAt = date.toISOString()
     const post = await this.commentRepository.insert(newComment);
-    console.log('newComment', newComment)
-    return newComment
+    return {
+      content: newComment.content, 
+      createdAt: newComment.createdAt, 
+      id: newComment.id, 
+      userId: newComment.userId, 
+      userLogin: newComment.userLogin,
+    }
   }
 
   async updateOne(id: string, dto: CreateCommentDto) {
