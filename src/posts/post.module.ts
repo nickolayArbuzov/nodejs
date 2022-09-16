@@ -5,7 +5,7 @@ import { DatabaseModule } from '../database/database.module';
 import { PostController } from './post.controller';
 import { postProviders } from './post.providers';
 import { PostService } from './post.service';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   controllers: [PostController],
