@@ -17,14 +17,12 @@ export class JWTGuard implements CanActivate {
         return true;
       }
       try {
-        console.log('try', request.headers?.authorization)
         const user = this.jwtService.verify(request.headers?.authorization?.split(' ')[1])
         if (user){
           request.user = {id: user.id, login: user.login}
           return true;
         }
       } catch {
-        console.log('catch', request.headers?.authorization)
         throw new UnauthorizedException()
       }
     }
