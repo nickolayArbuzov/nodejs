@@ -75,9 +75,7 @@ export class CommentService {
 
   async updateOne(id: string, dto: CreateCommentDto, userId: string ) {
     const donorComment = await this.commentRepository.findOne({where: {id: id}});
-    if(donorComment.userId !== userId) {
-      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
-    }
+    
     if(donorComment) {
       if(donorComment.userId !== userId) {
         throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
