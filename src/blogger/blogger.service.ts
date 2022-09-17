@@ -51,6 +51,7 @@ export class BloggerService {
 
   async findAll(query: QueryBlogDto) {
     const repo = this.bloggerRepository.createQueryBuilder('blog')
+
     if(query.searchNameTerm) {
       //repo.where("LOWER(blog.name) like :name", { name: `LOWER(%${query.searchNameTerm}%)` })
       repo.where("LOWER(blog.name) like :name", { name: `%${query.searchNameTerm.toLowerCase()}%` })

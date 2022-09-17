@@ -20,11 +20,13 @@ export class AuthController {
         return this.authService.registration(registrationDto)
     }
 
+    @HttpCode(204)
     @Post('registration-confirmation')
     registrationConfirmation(@Body() registrationConfirmationDto: RegistrationConfirmationDto ){
         return this.authService.registrationConfirmation(registrationConfirmationDto)
     }
 
+    @HttpCode(204)
     @Post('registration-email-resending')
     registrationEmailResending(@Body() registrationEmailResendingDto: RegistrationEmailResendingDto ){
         return this.authService.registrationEmailResending(registrationEmailResendingDto)

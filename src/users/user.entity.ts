@@ -1,5 +1,5 @@
 import { Comment } from '../comments/comment.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, Code } from 'typeorm';
 
 @Entity('user')
 export class User {
@@ -17,6 +17,12 @@ export class User {
 
   @Column()
   createdAt: string;
+
+  @Column()
+  isActivated: boolean;
+
+  @Column()
+  code: string;
 
   @OneToMany(() => Comment, comment => comment.user)
   comments: Comment[]
