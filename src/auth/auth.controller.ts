@@ -14,6 +14,7 @@ export class AuthController {
         return this.authService.login(authDto)
     }
 
+    @HttpCode(204)
     @Post('registration')
     registration(@Body() registrationDto: RegistrationDto ){
         return this.authService.registration(registrationDto)
