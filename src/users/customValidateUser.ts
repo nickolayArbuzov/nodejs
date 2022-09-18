@@ -52,9 +52,6 @@ export class UserCodeIsConfirmedRule implements ValidatorConstraintInterface {
 
   async validate(value: string) {
     try {
-      console.log('validate-code', value)
-      const users = await this.userService.findAll({pageNumber: '1', pageSize: '100', sortBy: 'createdAt', sortDirection: 'desc'})
-      console.log('validate-code-users', users)
       const user = await this.userService.findOneForCustomDecoratorByCode(value)
       if(user) {
         return true

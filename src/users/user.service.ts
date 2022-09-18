@@ -12,6 +12,10 @@ export class UserService {
     private userRepository: Repository<User>,
   ) {}
 
+  async findAllt () {
+    return await this.userRepository.find()
+  }
+
   async findAll(query: QueryUserDto) {
     const repo = this.userRepository.createQueryBuilder('user')
 
@@ -69,7 +73,7 @@ export class UserService {
 
   async findOneForCustomDecoratorByCode(code: string) {
     const donorUser = await this.userRepository.findOne({where: {code: code}});
-    if(donorUser.isActivated !== true) {
+    if(donorUser && donorUser.isActivated !== true) {
       return donorUser
     } else {
       return null
