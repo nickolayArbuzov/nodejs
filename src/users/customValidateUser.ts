@@ -31,7 +31,7 @@ export class UserMailIsExistRule implements ValidatorConstraintInterface {
 
   async validate(value: string) {
     try {
-      const user = await this.userService.findOneForCustomDecoratorByMail(value)
+      const user = await this.userService.findOneForCustomDecoratorByEmail(value)
       if(!user) {
         return true
       } else return false
@@ -42,6 +42,27 @@ export class UserMailIsExistRule implements ValidatorConstraintInterface {
 
   defaultMessage(args: ValidationArguments) {
     return `Mail already exist`;
+  }
+}
+
+@ValidatorConstraint({ name: 'UserMailIsExist', async: false })
+@Injectable()
+export class UserCodeIsConfirmedRule implements ValidatorConstraintInterface {
+  constructor(private userService: UserService) {}
+
+  async validate(value: string) {
+    try {
+      const user = await this.userService.findOneForCustomDecoratorByCode(value)
+      if(!user) {
+        return true
+      } else return false
+    } catch (e) {
+      return false;
+    }
+  }
+
+  defaultMessage(args: ValidationArguments) {
+    return `Code already confirmed`;
   }
 }
 
