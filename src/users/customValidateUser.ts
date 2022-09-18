@@ -66,3 +66,24 @@ export class UserCodeIsConfirmedRule implements ValidatorConstraintInterface {
   }
 }
 
+@ValidatorConstraint({ name: 'UserMailCheck', async: false })
+@Injectable()
+export class UserMailCheckRule implements ValidatorConstraintInterface {
+  constructor(private userService: UserService) {}
+
+  async validate(value: string) {
+    try {
+      const user = await this.userService.findOneForCustomDecoratorCheckMail(value)
+      if(user) {
+        return true
+      } else return false
+    } catch (e) {
+      return false;
+    }
+  }
+
+  defaultMessage(args: ValidationArguments) {
+    return `Email already confirmed or not exist`;
+  }
+}
+

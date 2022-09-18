@@ -1,8 +1,9 @@
 import { IsString, Length, Matches, Validate } from "class-validator";
-import { UserCodeIsConfirmedRule, UserLoginIsExistRule, UserMailIsExistRule } from "../../users/customValidateUser";
+import { UserCodeIsConfirmedRule, UserLoginIsExistRule, UserMailCheckRule, UserMailIsExistRule } from "../../users/customValidateUser";
 
 export class RegistrationEmailResendingDto {
     
+    @Validate(UserMailCheckRule)
     @IsString()
     readonly email: string;
 

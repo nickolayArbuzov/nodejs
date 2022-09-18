@@ -80,6 +80,15 @@ export class UserService {
     }
   }
 
+  async findOneForCustomDecoratorCheckMail(code: string) {
+    const donorUser = await this.userRepository.findOne({where: {code: code}});
+    if(donorUser && donorUser.isActivated === true) {
+      return donorUser
+    } else {
+      return null
+    }
+  }
+
   async createUser(dto: CreateUserDto) {
     const newUser = new User()
     newUser.login = dto.login

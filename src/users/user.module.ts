@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from '../database/database.module';
-import { UserMailIsExistRule, UserLoginIsExistRule, UserCodeIsConfirmedRule } from './customValidateUser';
+import { UserMailIsExistRule, UserLoginIsExistRule, UserCodeIsConfirmedRule, UserMailCheckRule } from './customValidateUser';
 import { UserController } from './user.controller';
 import { userProviders } from './user.providers';
 import { UserService } from './user.service';
@@ -14,6 +14,7 @@ import { UserService } from './user.service';
     UserMailIsExistRule,
     UserLoginIsExistRule,
     UserCodeIsConfirmedRule,
+    UserMailCheckRule,
   ],
   exports: [userProviders.find(p => p.provide === 'USER_REPOSITORY')],
 })
