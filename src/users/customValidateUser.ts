@@ -53,7 +53,7 @@ export class UserCodeIsConfirmedRule implements ValidatorConstraintInterface {
   async validate(value: string) {
     try {
       const user = await this.userService.findOneForCustomDecoratorByCode(value)
-      if(!user) {
+      if(user) {
         return true
       } else return false
     } catch (e) {
