@@ -26,6 +26,7 @@ export class AuthController {
         return this.authService.registrationConfirmation(registrationConfirmationDto)
     }
 
+    
     @HttpCode(204)
     @Post('registration-email-resending')
     registrationEmailResending(@Body() registrationEmailResendingDto: RegistrationEmailResendingDto ){

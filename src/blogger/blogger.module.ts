@@ -6,7 +6,7 @@ import { BloggerController } from './blogger.controller';
 import { bloggerProviders } from './blogger.providers';
 import { BloggerService } from './blogger.service';
 import { PostController } from '../posts/post.controller';
-import { BlogIsExistRule } from './customValidate';
+import { BlogIsExistRule } from './customValidateBlog';
 
 
 @Module({

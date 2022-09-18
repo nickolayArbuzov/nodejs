@@ -46,8 +46,16 @@ export class UserService {
       totalCount: count, 
       // скорее всего связано с различной сортировкой в js и postgresql
       items: query.sortBy === 'login' ? returnedUsers.sort((a,b) => a.login > b.login && sortDirection === 'ASC' ? 1 : -1 ) : returnedUsers
+    } 
+  }
+
+  async findOneForCustomDecorator(email: string) {
+    const donorUser = await this.userRepository.findOne({where: {email: email}});
+    if(donorUser) {
+      return donorUser
+    } else {
+      return null
     }
-    
   }
 
   async createUser(dto: CreateUserDto) {
@@ -55,9 +63,11 @@ export class UserService {
     newUser.login = dto.login
     newUser.password = dto.password
     newUser.email = dto.email
+    newUser.isActivated = false
+    newUser.code = ''
     let date = new Date
     newUser.createdAt = date.toISOString()
-    const user = await this.userRepository.insert(newUser);
+    await this.userRepository.insert(newUser);
     return {
       createdAt: newUser.createdAt,
       email: newUser.email,
