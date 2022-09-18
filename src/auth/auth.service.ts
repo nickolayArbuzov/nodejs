@@ -26,7 +26,6 @@ export class AuthService {
   }
 
   async registration(dto: RegistrationDto) {
-    console.log('registration', dto)
     const newUser = new User()
     newUser.login = dto.login
     newUser.password = dto.password
@@ -40,7 +39,6 @@ export class AuthService {
   }
 
   async registrationConfirmation(dto: RegistrationConfirmationDto) {
-    console.log('registrationConfirmation', dto)
     const user: User = await this.userRepository.findOne({where: {code: dto.code}})
     if(user && user.isActivated === false) {
       const updateUser = {
@@ -54,7 +52,6 @@ export class AuthService {
   }
 
   async registrationEmailResending(dto: RegistrationEmailResendingDto) {
-    console.log('registrationEmailResending', dto)
     const user: User = await this.userRepository.findOne({where: {email: dto.email}})
     if(user && user.isActivated === false) {
       const updateUser = {
