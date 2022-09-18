@@ -69,7 +69,6 @@ export class UserService {
 
   async findOneForCustomDecoratorByCode(code: string) {
     const donorUser = await this.userRepository.findOne({where: {code: code}});
-    console.log('user-confirm', donorUser)
     if(donorUser.isActivated !== true) {
       return donorUser
     } else {

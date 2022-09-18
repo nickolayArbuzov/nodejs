@@ -45,13 +45,16 @@ export class UserMailIsExistRule implements ValidatorConstraintInterface {
   }
 }
 
-@ValidatorConstraint({ name: 'UserMailIsExist', async: false })
+@ValidatorConstraint({ name: 'UserCodeIsConfirmed', async: false })
 @Injectable()
 export class UserCodeIsConfirmedRule implements ValidatorConstraintInterface {
   constructor(private userService: UserService) {}
 
   async validate(value: string) {
     try {
+      console.log('validate-code', value)
+      const users = await this.userService.findAll({pageNumber: '1', pageSize: '100', sortBy: 'createdAt', sortDirection: 'desc'})
+      console.log('validate-code', users)
       const user = await this.userService.findOneForCustomDecoratorByCode(value)
       if(user) {
         return true
