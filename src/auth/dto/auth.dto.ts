@@ -1,5 +1,5 @@
 import { IsString, Length, Matches, Validate } from "class-validator";
-import { UserIsExistRule } from "../../users/customValidateUser";
+import { UserLoginIsExistRule, UserMailIsExistRule } from "../../users/customValidateUser";
 
 export class RegistrationEmailResendingDto {
     
@@ -19,6 +19,7 @@ export class AuthDto {
 
 export class RegistrationDto {
 
+    @Validate(UserLoginIsExistRule)
     @IsString()
     @Length(3, 10)
     readonly login: string;
@@ -27,7 +28,7 @@ export class RegistrationDto {
     @Length(6, 20)
     readonly password: string;
     
-    @Validate(UserIsExistRule)
+    @Validate(UserMailIsExistRule)
     @IsString()
     @Matches(/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4}$)/)
     readonly email: string;

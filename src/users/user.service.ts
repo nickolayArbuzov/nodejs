@@ -49,8 +49,26 @@ export class UserService {
     } 
   }
 
-  async findOneForCustomDecorator(email: string) {
+  async findOneForCustomDecoratorByMail(email: string) {
     const donorUser = await this.userRepository.findOne({where: {email: email}});
+    if(donorUser) {
+      return donorUser
+    } else {
+      return null
+    }
+  }
+
+  async findOneForCustomDecoratorByLogin(value: string) {
+    const donorUser = await this.userRepository.findOne({where: {login: value}});
+    if(donorUser) {
+      return donorUser
+    } else {
+      return null
+    }
+  }
+
+  async findOneForCustomDecoratorByEmail(value: string) {
+    const donorUser = await this.userRepository.findOne({where: {email: value}});
     if(donorUser) {
       return donorUser
     } else {
