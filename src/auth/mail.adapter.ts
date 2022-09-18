@@ -4,10 +4,12 @@ export const sendEmail = async (email: string, code: string) => {
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
-      auth: {
-        user: process.env.GMAIL_ACCAUNT,
-        pass: process.env.GMAIL_PASSWORD,
-      }
+    host: 'smtp.gmail.com',
+    port: 465,
+    auth: {
+      user: process.env.GMAIL_ACCAUNT,
+      pass: process.env.GMAIL_PASSWORD,
+    }
   })
 
   await transporter.sendMail({
